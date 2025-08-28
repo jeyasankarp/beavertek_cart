@@ -46,7 +46,13 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 					'href'     => $this->url->link('catalog/product', 'user_token=' . $this->session->data['user_token']),
 					'children' => []
 				];
-			}
+
+					$catalog[] = [
+									'name'     => 'Products Import',
+									'href'     => $this->url->link('tool/product_import', 'user_token=' . $this->session->data['user_token']),
+									'children' => []
+								];				
+					}
 
 			if ($this->user->hasPermission('access', 'catalog/subscription_plan')) {
 				$catalog[] = [

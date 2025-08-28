@@ -1020,102 +1020,103 @@ class Product extends \Opencart\System\Engine\Model {
 	 * $results = $this->model_catalog_product->getProducts($filter_data);
 	 */
 	public function getProducts(array $data = []): array {
-		$sql = "SELECT * FROM `" . DB_PREFIX . "product` `p` LEFT JOIN `" . DB_PREFIX . "product_description` `pd` ON (`p`.`product_id` = `pd`.`product_id`)";
+    $sql = "SELECT * FROM `" . DB_PREFIX . "product` `p`
+            LEFT JOIN `" . DB_PREFIX . "product_description` `pd`
+            ON (`p`.`product_id` = `pd`.`product_id`)";
 
-		if (!empty($data['filter_model'])) {
-			$sql .= " LEFT JOIN `" . DB_PREFIX . "product_code` `pc` ON (`p`.`product_id` = `pc`.`product_id`)";
-		}
+    if (!empty($data['filter_model'])) {
+        $sql .= " LEFT JOIN `" . DB_PREFIX . "product_code` `pc`
+                  ON (`p`.`product_id` = `pc`.`product_id`)";
+    }
 
-		$sql .= " WHERE `pd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
+    $sql .= " WHERE `pd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
 
-		if (!empty($data['filter_master_id'])) {
-			$sql .= " AND `p`.`master_id` = '" . (int)$data['filter_master_id'] . "'";
-		}
+    if (!empty($data['filter_master_id'])) {
+        $sql .= " AND `p`.`master_id` = '" . (int)$data['filter_master_id'] . "'";
+    }
 
-		if (!empty($data['filter_name'])) {
-			$sql .= " AND LCASE(`pd`.`name`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_name']) . '%') . "'";
-		}
+    if (!empty($data['filter_name'])) {
+        $sql .= " AND LCASE(`pd`.`name`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_name']) . '%') . "'";
+    }
 
-		if (!empty($data['filter_model'])) {
-			$sql .= " AND (LCASE(`p`.`model`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_model']) . '%') . "' OR LCASE(`pc`.`value`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_model']) . '%') . "')";
-		}
+    if (!empty($data['filter_model'])) {
+        $sql .= " AND (LCASE(`p`.`model`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_model']) . '%') . "'
+                   OR LCASE(`pc`.`value`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_model']) . '%') . "')";
+    }
 
-		if (isset($data['filter_category_id']) && $data['filter_category_id'] !== '') {
-			$sql .= " AND `p`.`product_id` IN (SELECT `p2c`.`product_id` FROM `" . DB_PREFIX . "product_to_category` `p2c` WHERE `p2c`.`category_id` = '" . (int)$data['filter_category_id'] . "')";
-		}
+    if (isset($data['filter_category_id']) && $data['filter_category_id'] !== '') {
+        $sql .= " AND `p`.`product_id` IN (
+                    SELECT `p2c`.`product_id`
+                    FROM `" . DB_PREFIX . "product_to_category` `p2c`
+                    WHERE `p2c`.`category_id` = '" . (int)$data['filter_category_id'] . "'
+                  )";
+    }
 
-		if (isset($data['filter_manufacturer_id']) && $data['filter_manufacturer_id'] !== '') {
-			$sql .= " AND `p`.`manufacturer_id` = '" . (int)$data['filter_manufacturer_id'] . "'";
-		}
+    if (isset($data['filter_manufacturer_id']) && $data['filter_manufacturer_id'] !== '') {
+        $sql .= " AND `p`.`manufacturer_id` = '" . (int)$data['filter_manufacturer_id'] . "'";
+    }
 
-		if (isset($data['filter_price_from']) && $data['filter_price_from'] !== '') {
-			$sql .= " AND `p`.`price` >= '" . (float)$data['filter_price_from'] . "'";
-		}
+    if (isset($data['filter_price_from']) && $data['filter_price_from'] !== '') {
+        $sql .= " AND `p`.`price` >= '" . (float)$data['filter_price_from'] . "'";
+    }
 
-		if (isset($data['filter_price_to']) && $data['filter_price_to'] !== '') {
-			$sql .= " AND `p`.`price` <= '" . (float)$data['filter_price_to'] . "'";
-		}
+    if (isset($data['filter_price_to']) && $data['filter_price_to'] !== '') {
+        $sql .= " AND `p`.`price` <= '" . (float)$data['filter_price_to'] . "'";
+    }
 
-		if (isset($data['filter_quantity_from']) && $data['filter_quantity_from'] !== '') {
-			$sql .= " AND `p`.`quantity` >= '" . (int)$data['filter_quantity_from'] . "'";
-		}
+    if (isset($data['filter_quantity_from']) && $data['filter_quantity_from'] !== '') {
+        $sql .= " AND `p`.`quantity` >= '" . (int)$data['filter_quantity_from'] . "'";
+    }
 
-		if (isset($data['filter_quantity_to']) && $data['filter_quantity_to'] !== '') {
-			$sql .= " AND `p`.`quantity` <= '" . (int)$data['filter_quantity_to'] . "'";
-		}
+    if (isset($data['filter_quantity_to']) && $data['filter_quantity_to'] !== '') {
+        $sql .= " AND `p`.`quantity` <= '" . (int)$data['filter_quantity_to'] . "'";
+    }
 
-		if (isset($data['filter_status']) && $data['filter_status'] !== '') {
-			$sql .= " AND `p`.`status` = '" . (int)$data['filter_status'] . "'";
-		}
+    if (isset($data['filter_status']) && $data['filter_status'] !== '') {
+        $sql .= " AND `p`.`status` = '" . (int)$data['filter_status'] . "'";
+    }
 
-		$sql .= " GROUP BY `p`.`product_id`";
+    $sql .= " GROUP BY `p`.`product_id`";
 
-		$sort_data = [
-			'pd.name',
-			'p.model',
-			'p.price',
-			'p.quantity',
-			'p.status',
-			'p.sort_order'
-		];
+    // Allowed sort fields
+    $sort_data = [
+        'pd.name',
+        'p.model',
+        'p.price',
+        'p.quantity',
+        'p.status',
+        'p.sort_order'
+    ];
 
-		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
-			$sql .= " ORDER BY " . $data['sort'];
-		} else {
-			$sql .= " ORDER BY `pd`.`name`";
-		}
+    // Base sort: newest products first
+    $sql .= " ORDER BY `p`.`date_added` DESC";
 
-		if (isset($data['order']) && ($data['order'] == 'DESC')) {
-			$sql .= " DESC";
-		} else {
-			$sql .= " ASC";
-		}
+    // Apply secondary sort if provided
+    if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
+        $order = (isset($data['order']) && strtoupper($data['order']) === 'ASC') ? 'ASC' : 'DESC';
+        $sql .= ", " . $data['sort'] . " " . $order;
+    }
 
-		if (isset($data['start']) || isset($data['limit'])) {
-			if ($data['start'] < 0) {
-				$data['start'] = 0;
-			}
+    // Pagination
+    if (isset($data['start']) || isset($data['limit'])) {
+        $start = (isset($data['start']) && $data['start'] >= 0) ? (int)$data['start'] : 0;
+        $limit = (isset($data['limit']) && $data['limit'] > 0) ? (int)$data['limit'] : 20;
+        $sql .= " LIMIT " . $start . "," . $limit;
+    }
 
-			if ($data['limit'] < 1) {
-				$data['limit'] = 20;
-			}
+    $product_data = [];
+    $query = $this->db->query($sql);
 
-			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
-		}
+    foreach ($query->rows as $key => $result) {
+        $product_data[$key] = $result;
+        $product_data[$key]['variant'] = $result['variant'] ? json_decode($result['variant'], true) : [];
+        $product_data[$key]['override'] = $result['override'] ? json_decode($result['override'], true) : [];
+    }
 
-		$product_data = [];
+    return $product_data;
+}
 
-		$query = $this->db->query($sql);
 
-		foreach ($query->rows as $key => $result) {
-			$product_data[$key] = $result;
-
-			$product_data[$key]['variant'] = $result['variant'] ? json_decode($result['variant'], true) : [];
-			$product_data[$key]['override'] = $result['override'] ? json_decode($result['override'], true) : [];
-		}
-
-		return $product_data;
-	}
 
 	/**
 	 * Get Total Products

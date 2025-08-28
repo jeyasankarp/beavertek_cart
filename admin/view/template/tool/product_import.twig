@@ -1,0 +1,23 @@
+
+{{ header }}
+{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <h1>{{ heading_title }}</h1>
+    </div>
+  </div>
+  <div class="container-fluid">
+    {% if success %}
+      <div class="alert alert-success">{{ success }}</div>
+    {% endif %}
+    <form action="{{ action }}" method="post" enctype="multipart/form-data" class="card card-body">
+      <div class="form-group">
+        <label for="input-file">{{ entry_file }}</label>
+        <input type="file" name="import" class="form-control" id="input-file" required>
+      </div>
+      <button type="submit" class="btn btn-primary mt-2">{{ button_import }}</button>
+    </form>
+  </div>
+</div>
+{{ footer }}
