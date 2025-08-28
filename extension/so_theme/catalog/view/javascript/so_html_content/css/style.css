@@ -1,0 +1,23 @@
+.so_content_countdown {
+	display: block;
+	margin-top: 10px;
+}
+.so_content_countdown .so_countdown .element_container {
+	width: 70px;
+	height: 70px;
+	display: inline-block;
+	text-align: center;
+	background-color: #229ac8;
+	color: #fff;
+	border-radius: 5px;
+}
+.so_content_countdown .so_countdown .element_container .time_left {
+	display: block;
+	padding: 10px;
+	font-size: 200%;
+	font-weight: bold;
+}
+.so_content_countdown .so_countdown .element_container .time_description {
+	text-transform: uppercase;
+	font-weight: normal;
+}

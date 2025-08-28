@@ -1,0 +1,187 @@
+
+//** simple and lightweight mixin library for Sass **
+//-- url : http://bourbon.io/docs ---
+@import 'bourbon/bourbon';
+
+//** Mixins for Rem Font Sizing **
+//-- url : http://hugogiraudel.com/2013/03/18/ultimate-rem-mixin/
+@import 'utilities/rem';
+
+//** Variables for responsive design in bootstrap with sass **
+//-- url : https://gist.github.com/webinfinita/11407836
+@import 'utilities/bootstrap_breakpoints';
+
+//** Makes supporting both left-to-right (LTR) and right-to-left (RTL) easy.**
+//-- url : https://github.com/tysonmatanich/directional-scss
+@import 'utilities/directional';
+
+//Mixins utilities
+@import 'utilities/theme_variables';
+@import 'utilities/utilities';
+
+/* ================================================================================ */
+
+/*.footer-container{
+  margin-top: 40px;
+}*/
+
+.typefooter-22{
+  margin-top: 0px;
+
+  /* GENERAL */
+  .module .modtitle{
+        color: #333333;
+        font-size: 16px;
+        line-height: 20px;
+        margin-bottom: 15px !important;  
+        font-weight: 600;
+        text-transform: uppercase;   
+        padding-bottom: 0px;       
+  }
+  .module{  
+      ul.menu{
+        li{           
+              a{
+                border: 0 none;               
+                padding: 0;                   
+                font-weight: 400; 
+                line-height: 32px;  
+                position: relative;                
+                display: inline-block;
+                transition: all 0.2s ease-in-out 0s;
+                color: #545454; font-size: 14px;
+                
+                &:hover{
+
+                }
+              }       
+            }
+      }
+  }
+
+
+  .footer-top{
+    border-bottom: 1px solid #dedede;
+    border-top: 1px solid #dedede;
+    padding: 25px 0;
+  }
+  .footer-middle{
+    padding-top: 38px;
+    padding-bottom: 40px;
+  }
+  
+  .newsletter-footer22{
+      .newsletter{
+        background-color: transparent !important;
+        .title-block{ width: 45%; float: $left; position: relative; padding-#{$left}: 50px; padding-top: 15px;
+          &:before{
+            position: absolute; content: "\f1d9"; font-family: "FontAwesome"; top: 25px; #{$left}: 0; font-size: 33px;
+          }
+          .page-heading{           
+             font-weight: 500; font-size: 18px; color: #222; text-transform: capitalize;
+             position: relative; margin-bottom: 0;        
+          }
+          .promotext{
+      
+          }
+        }
+        .block_content{
+          width: 55%; float: $left; 
+          form.signup{
+            display: block;
+            margin-top: 11px;
+ 
+            .form-group{
+              position: relative;
+              .input-box{
+                background-color: #fff;  
+                vertical-align: top;
+                padding-#{$right}: 120px;
+                border-radius: 0px;
+              }
+              .subcribe{
+                position: absolute;
+                top: 0;
+                #{$right}: 0;
+              }
+
+              #txtemail{
+                height: 50px;
+                line-height: 50px;
+                width: 100%; border-radius: 3px;
+                box-shadow: none; font-size: 14px;
+                padding: side-values(0 0 0 15px);
+                border: 1px solid #e1e1e1;           
+                background-color: #fff; border-radius: 0;
+                &::-moz-placeholder {
+                  color: #999;
+                    opacity: 1; 
+                }
+                &:-ms-input-placeholder { color: #999; } 
+                &::-webkit-input-placeholder  { color: #999; } 
+                  &:focus{
+                      z-index: 0;
+                  }
+              }
+            }
+
+            .subcribe button{           
+              border: 0 none;
+              color: #fff;
+              font-weight: 400;
+              font-size: 14px;
+              height: 50px;
+              line-height: 50px;
+              padding: 0 30px;    
+              text-transform: uppercase;
+              &:hover{
+              
+              }
+            }
+          }
+        }
+      }
+  }
+
+  .apps{ float: $right; margin-top: 19px;
+    ul li{ display: inline-block; margin-#{left}: 9px; }
+  }
+  .socials{
+    text-align: center; padding: 20px;
+    border-bottom: 1px solid #dedede;
+    border-top: 1px solid #dedede;
+    li{ display: inline-block; margin: 0 5px;
+      a{
+        width: 40px; height: 40px; background-color: #52555c; font-size: 16px;
+        border-radius: 3px; color: #fff; display: block; line-height: 40px; text-align: center;
+      }
+    }
+  }
+
+
+
+
+  /* FOOTER BOTTOM */
+  .copyright-w{
+
+  }
+  .payment-w{
+    text-align: $right;
+  }
+  .footer-bottom{
+    background-color: #fff;
+    padding: 12px 0;
+      .copyright{
+        color: #666;
+        margin-top: 3px;
+        
+      }
+  }
+
+
+}
+
+
+@media (min-width: 1200px) and (max-width: 1649px){
+  
+}

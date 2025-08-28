@@ -1,0 +1,261 @@
+
+//** simple and lightweight mixin library for Sass **
+//-- url : http://bourbon.io/docs ---
+@import 'bourbon/bourbon';
+
+//** Mixins for Rem Font Sizing **
+//-- url : http://hugogiraudel.com/2013/03/18/ultimate-rem-mixin/
+@import 'utilities/rem';
+
+//** Variables for responsive design in bootstrap with sass **
+//-- url : https://gist.github.com/webinfinita/11407836
+@import 'utilities/bootstrap_breakpoints';
+
+//** Makes supporting both left-to-right (LTR) and right-to-left (RTL) easy.**
+//-- url : https://github.com/tysonmatanich/directional-scss
+@import 'utilities/directional';
+
+//Mixins utilities
+@import 'utilities/theme_variables';
+@import 'utilities/utilities';
+
+/* ================================================================================ */
+
+/*.footer-container{
+  margin-top: 40px;
+}*/
+.typefooter-28{
+  margin-top: 0px; background-color: #fff;
+  
+  /* GENERAL */
+  .module .modtitle{
+        color: $textColor2;
+        font-size: 18px;
+        line-height: 20px;
+        margin-bottom: 15px !important;  
+        font-weight: 500;
+        text-transform: capitalize;   
+        padding-bottom: 0px;
+      
+  }
+  .box-footer{  
+    margin-top: 3px;  
+      ul.menu{
+        li{           
+              a{
+                border: 0 none;               
+                font-size: 14px;
+                padding: 0;       
+                font-weight: 400; 
+                line-height: 38px;  
+                position: relative;
+                padding-#{$left}: 15px;
+                display: inline-block;
+                &:before{
+                  width: 4px; height: 4px; background-color: #aaa;
+                  position: absolute; content: "";
+                  top: 16px;
+                  #{$left}: 0;
+                  border-radius: 50%;
+                }
+              }       
+            }
+      }
+  
+  }
+  .row-top{ background-color: #f2f2f2; border-top: 1px solid #dadada; border-bottom: 1px solid #dadada; }
+  .row-top > .container{
+    padding: 23px 15px; margin: 0 auto; float: none;
+  }
+  .footer-middle{ padding: 35px 0 7px 0; display: inline-block; width: 100%;
+    .box-footer{
+      width: 33.33%; float: $left;
+      h3{ font-size: 15px; color: #222; text-transform: uppercase; }
+      ul{
+        li{ font-size: 13px; line-height: 23px; }
+      }
+      &.box2, &.box3{
+        border-#{$left}: 1px solid #dadada; padding-#{$left}: 33px;
+      }
+    }
+  }
+  .newsletter-footer21{
+      .newsletter{
+        .title-block{  
+          width: 36%;
+          float: $left;   
+          .page-heading{           
+            font-size: 18px;
+            line-height: 42px;    
+            font-weight: 400;
+            text-transform: capitalize;   
+            color: #222;
+          }
+          .promotext{
+            font-size: 14px;
+            color: #fff;
+            display: none;
+          }
+        }
+        .block_content{
+          width: 64%;        
+          float: $left;
+          form.signup{
+            display: block;
+            margin: 0;
+            .form-group{
+              position: relative;
+              .input-box{
+                background-color: #fff;  
+                vertical-align: top;
+                padding-#{$right}: 120px;
+                border-radius: 22px;
+              }
+              .subcribe{
+                position: absolute;
+                top: 0;
+                #{$right}: 0;
+              }
+
+              input.form-control{
+                height: 42px;
+                line-height: 42px;
+                width: 100%; font-size: 14px;
+                box-shadow: none;
+                padding: side-values(0 0 0 20px);
+                border: none; border-radius: 5px;       
+                background-color: #fff;    
+                &::-moz-placeholder {
+                        color: #666;
+                          opacity: 1; 
+                      }
+                      &:-ms-input-placeholder { color: #666; } 
+                      &::-webkit-input-placeholder  { color: #666; } 
+                        &:focus{
+                            z-index: 0;
+                        }
+              }
+            }
+
+            .subcribe button{  
+              background-color: #222;         
+              border: 0 none;
+              color: #fff;
+              font-weight: 500;
+              font-size: 14px;
+              height: 42px;
+              line-height: 42px;
+              padding: 0 17px;    
+              text-transform: uppercase;
+              border-bottom-#{$right}-radius: 5px;
+              border-top-#{$right}-radius: 5px;
+              &:hover{
+                color: $linkColor;
+              }
+            }
+          }
+        }
+      }
+  }
+
+  .socials-w{
+    h2{
+      font-size: 18px;
+      text-transform: capitalize;
+      font-weight: 400;
+      color: #222;
+      float: $left;
+      margin-#{$right}: 20px;
+      line-height: 42px;
+      margin-bottom: 0;
+    }
+  }
+  .socials{
+    float: $left;
+    li{
+      position: relative;
+      float: $left;
+      margin: 0 5px;
+    
+      a{
+        color: #fff;
+          font-size: 18px;
+          width: 42px; height: 42px;
+          line-height: 42px;
+          text-align: center;
+          background-color: rgba(0,0,0,0.2);
+          border-radius: 3px;
+        display: block;
+          span{
+            display: none;
+          }
+          &:hover{
+            
+          }
+      }
+      
+    }
+  }
+  
+  .block-policy{ border-top: 1px solid #f1f1f1; padding-top: 25px; margin-top: 25px;
+    .contentslider{ direction: ltr; }
+    .item-inner{
+      padding-#{$left}: 65px; position: relative; display: block;
+      
+      &:before{
+        position: absolute; content: ""; width: 50px; height: 47px;
+        top: 0; #{$left}: 0; background-image: url("#{$imgPath}icon/id28-policy.png");
+        background-position: 0 0;
+      }
+      .content{ text-align: $left;
+        span{ display: inline-block; width: 100%; }
+        b{ font-size: 16px; color: #222; font-weight: 400; }
+      }
+      &:hover{ color: $background;
+        .content b{ color: $background; }
+      }
+    }
+    .item-2{
+      .item-inner{
+        &:before{
+          background-position: -108px 0;
+        }
+      }
+    }
+    .item-4{
+      .item-inner{
+        &:before{ width: 47px;
+          background-position: -227px 0;
+        }
+      }
+    }
+    .item-5{
+      .item-inner{
+        &:before{ width: 47px;
+          background-position: -340px 0;
+        }
+      }
+    }
+  }
+
+  /* FOOTER BOTTOM */
+
+  .payment-w{
+
+  }
+  .footer-bottom{
+    margin-top: 28px; padding: 15px 0;
+      .copyright{
+        line-height: 32px; font-size: 13px; color: #fff;
+        a{ color: #fff !important; }
+      }
+      .payment-w{ text-align: $right; }
+  }
+}
+
+
+@media (min-width: 1200px) and (max-width: 1649px){
+  .typefooter-1{
+    
+  } 
+}

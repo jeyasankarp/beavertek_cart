@@ -1,0 +1,116 @@
+
+//** simple and lightweight mixin library for Sass **
+//-- url : http://bourbon.io/docs ---
+@import 'bourbon/bourbon';
+
+//** Mixins for Rem Font Sizing **
+//-- url : http://hugogiraudel.com/2013/03/18/ultimate-rem-mixin/
+@import 'utilities/rem';
+
+//** Variables for responsive design in bootstrap with sass **
+//-- url : https://gist.github.com/webinfinita/11407836
+@import 'utilities/bootstrap_breakpoints';
+
+//** Makes supporting both left-to-right (LTR) and right-to-left (RTL) easy.**
+//-- url : https://github.com/tysonmatanich/directional-scss
+@import 'utilities/directional';
+
+//Mixins utilities
+@import 'utilities/theme_variables';
+@import 'utilities/utilities';
+
+/* ================================================================================ */
+
+/*.footer-container{
+  margin-top: 40px;
+}*/
+
+.common-home .typefooter-30{ border-top: none; }
+.typefooter-30{
+  margin-top: 0px; background-color: #fff;
+  border-top: 1px solid #ddd;
+  /* GENERAL */
+  .module .modtitle{
+        color: $textColor2;
+        font-size: 24px;
+        line-height: 20px;
+        margin-bottom: 20px !important;  
+        font-weight: 700;
+        text-transform: capitalize;   
+        padding-bottom: 0px;
+      
+  }
+  .box-footer{  
+    margin-top: 3px;  
+      ul.menu{
+        li{           
+              a{
+                border: 0 none;               
+                font-size: 14px;
+                padding: 0;       
+                font-weight: 400; 
+                line-height: 30px;  
+                position: relative;
+                padding-#{$left}: 20px;
+                display: inline-block;
+                &:before{
+                  width: 10px; height: 15px; 
+                  position: absolute; content: "";
+                  top: 6px;
+                  #{$left}: 0;
+                  background: url("#{$imgPath}icon/f30-icon.png") no-repeat;
+                }
+              }       
+            }
+      }
+  
+  }
+  .box-contact{
+    .modcontent{ padding-bottom: 25px; }
+  }
+  .footer-middle{ 
+    padding-top: 65px;
+  }
+
+  .socials{
+    float: $left;
+    li{
+      position: relative;
+      float: $left;
+      margin-#{$right}: 10px;
+    
+      a{
+        color: #fff;
+          font-size: 18px;
+          width: 42px; height: 42px;
+          line-height: 42px;
+          text-align: center;
+          background-color: #b2b2b2;
+          display: block;
+          span{
+            display: none;
+          }
+          &:hover{
+            
+          }
+      }
+      
+    }
+  }
+  
+
+  /* FOOTER BOTTOM */
+
+  .payment-w{
+
+  }
+  .footer-bottom{
+    margin-top: 20px; padding: 15px 0;
+    > .container{ border-top: 1px solid #ddd; padding-top: 30px; padding-bottom: 30px; }
+      .copyright{
+        line-height: 33px; font-size: 13px;
+      }
+      .payment-w{ text-align: $right; }
+  }
+}
+

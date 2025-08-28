@@ -1,0 +1,299 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  	<div class="page-header">
+    	<div class="container-fluid">
+	      	<div class="float-end">
+				<button type="submit" form="form-featured" data-toggle="tooltip" title="{{ objlang.get('entry_button_save') }} " class="btn btn-primary"><i class="fa fa-save"></i> {{ objlang.get('entry_button_save')}}</button>
+				<a class="btn btn-success" onclick="$('#action').val('save_edit');$('#form-featured').submit();" data-toggle="tooltip" title="{{ objlang.get('entry_button_save_and_edit') }} " ><i class="fa fa-pencil-square-o"></i> {{ objlang.get('entry_button_save_and_edit')}}</a>
+				<a class="btn btn-info" onclick="$('#action').val('save_new');$('#form-featured').submit();" data-toggle="tooltip" title="{{ objlang.get('entry_button_save_and_new') }} " ><i class="fa fa-book"></i>  {{ objlang.get('entry_button_save_and_new')}}</a>
+				<a href="{{ cancel}} " data-toggle="tooltip" title="{{ objlang.get('entry_button_cancel') }} " class="btn btn-danger"><i class="fa fa-reply"></i>  {{ objlang.get('entry_button_cancel')}}</a>
+			</div>
+		        <h1>{{ heading_title_so }}</h1>
+				<ol class="breadcrumb">
+					{% for breadcrumb in breadcrumbs %}
+					<li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+					{% endfor %}
+				</ol>
+    	</div>
+  	</div>
+  	<div class="container-fluid">
+
+    {% if error.warning %}
+    <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error.warning }}
+      <!--<button type="button" class="close" data-bs-dismiss="alert">&times;</button>-->
+    </div>
+    {% endif %}
+
+    {% if success %}
+		<div class="alert alert-success"><i class="fa fa-check-circle"></i>  {{ success }}
+			<!--<button type="button" class="close" data-bs-dismiss="alert">&times;</button>-->
+		</div>
+		<div class="alert alert-info"><i class="fa fa-info-circle"></i> {{ text_layout }}  
+			<!--<button type="button" class="close" data-bs-dismiss="alert">&times;</button>-->
+		</div>
+	{% endif %}
+
+		<div class="card">
+		  <div class="card-header">
+			<h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_edit }}</h3>
+		  </div>
+		  <div class="card-body">
+			<form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-featured" class="form-horizontal">
+				{#//Nav tabs #}
+				<div class="rows">
+						<ul class="nav nav-tabs" role="tablist">
+							<li class="nav-item {% if selectedid == 0 %}active{% endif %}">
+								<a href="{{ link }}" class="nav-link {% if selectedid == 0 %}active{% endif %}"> <span class="fa fa-plus"></span>
+									{{ button_add_module }}
+								</a>
+							</li>
+							{% set i = 1%}
+							{% for key, module in moduletabs %}  
+								<li class="nav-item" role="presentation" {% if module.module_id == selectedid  %} class="active"{% endif %} >
+									<a class="nav-link {% if module.module_id == selectedid  %}active{% endif %}" href="{{ link }}&module_id={{ module.module_id}}" aria-controls="bannermodule-{{ key }} "  >
+										<span class="fa fa-pencil-alt"></span> {{ module.name}}
+									</a>
+								</li>
+							{% set i = i + 1 %}  
+							{% endfor %}
+						</ul>
+				</div>	
+
+				<div class="row">
+					<div class="col-sm-12">
+						{% set module_row = 1 %}
+						{% for key, module in modules %}  	
+								{% if selectedid %}
+									<div class="pull-right">
+										<a href="{{ action }}&delete=1" class="remove btn btn-danger" ><span><i class="fa fa-remove"></i> {{ entry_button_delete }}</span></a>
+									</div>
+								{% endif %} 
+
+							<div  id="tab-module{{module_row}}" class="col-sm-12">
+								<div class="row mb-3"> 
+									{# Module Name #}
+									<input type="hidden" name="action" id="action" value=""/>
+									<label class="col-sm-3 col-form-label" for="input-name"> <b style="font-weight:bold; color:#f00">*</b> <span data-toggle="tooltip" title="{{ objlang.get('entry_name_desc') }} ">{{ objlang.get('entry_name') }}  </span></label>
+									<div class="col-sm-9">
+										<input type="text" name="name" value="{{ module.name }}" placeholder="{{ objlang.get('entry_name') }} " id="input-name" class="form-control" />
+										{% if error.name %} 
+										<div class="text-danger">{{ error.name }} </div>
+										{% endif %}
+									</div>									
+								</div>
+								<div class="row mb-3"> 
+									{# Status #}
+									<label class="col-sm-3 col-form-label" for="input-status"><span data-toggle="tooltip" title="{{ objlang.get('entry_status_desc') }} ">{{ objlang.get('entry_status') }}  </span></label>
+									<div class="col-sm-9">
+										<select name="status" id="input-status" class="form-control">
+											{% if module.status %} 
+												<option value="1" selected="selected">{{ objlang.get('text_enabled') }} </option>
+												<option value="0">{{ objlang.get('text_disabled') }} </option>
+											{% else %}   
+												<option value="1">{{ objlang.get('text_enabled') }} </option>
+												<option value="0" selected="selected">{{ objlang.get('text_disabled') }} </option>
+											 {% endif %}
+										</select>
+									</div>
+								</div>
+								<div class="row mb-3">
+									{# <!--Class suffix -->  #}
+									<label class="col-sm-3 col-form-label" for="input-class_suffix">
+										<span data-toggle="tooltip" title="{{ objlang.get('entry_class_suffix_desc') }} ">{{ objlang.get('entry_class_suffix') }}  </span>
+									</label>
+									<div class="col-sm-9">
+										<input type="text" name="class_suffix" value="{{ module.class_suffix }}" id="input-class_suffix" class="form-control" />
+									</div>
+								</div>
+								<div class="row mb-3"> {# <!-- Store Layout -->  #}
+									<label class="col-sm-3 col-form-label" for="input-store_layout"> <span data-toggle="tooltip" title="{{ objlang.get('entry_store_layout_desc') }} ">{{ objlang.get('entry_store_layout') }}  </span></label>
+									<div class="col-sm-9">
+										<select name="store_layout" id="input-store_layout" class="form-control">
+											{% for option_id, option_value in store_layouts %}
+												{% set selected = (option_id  ==  module.store_layout) ? 'selected'  %}
+												<option value="{{ option_id }}" {{ selected }} >{{ option_value }}</option>
+											{% endfor %}
+										</select>
+									</div>
+								</div>
+								<div class="row mb-3">
+									<label class="col-sm-3 col-form-label" for="input-show_countdown"><span data-toggle="tooltip" title="{{ objlang.get('entry_show_countdown_desc') }} ">{{ objlang.get('entry_show_countdown') }}  </span></label>
+									<div class="col-sm-9">
+										<select name="show_countdown" id="input-show_countdown" class="form-control">
+											{% if module.show_countdown %} 
+												<option value="1" selected="selected">{{ objlang.get('text_enabled') }} </option>
+												<option value="0">{{ objlang.get('text_disabled') }} </option>
+											{% else %}   
+												<option value="1">{{ objlang.get('text_enabled') }} </option>
+												<option value="0" selected="selected">{{ objlang.get('text_disabled') }} </option>
+											 {% endif %}
+										</select>
+									</div>
+								</div>
+								<div class="row mb-3" id="show_countdown">
+									<label class="col-sm-3 col-form-label" for="input-countdown_type"><span data-toggle="tooltip" title="{{ objlang.get('entry_countdown_type_desc') }} ">{{ objlang.get('entry_countdown_type') }}  </span></label>
+									<div class="col-sm-3">
+										<select name="countdown_type" id="input-countdown_type" class="form-control">
+											<option value="date" {{ module.countdown_type == 'date' ? 'selected="selected"' : '' }}>{{ objlang.get('entry_date') }}</option>
+											<option value="time" {{ module.countdown_type == 'time' ? 'selected="selected"' : '' }}>{{ objlang.get('entry_time') }}</option>
+										</select>
+									</div>
+									<div class="col-sm-6 so_countdown_type" id="countdown_type_date" style="display: none;">
+										<div class="row">
+											<label class="col-sm-5 col-form-label" for="input-date_end"><span data-toggle="tooltip" title="{{ objlang.get('entry_date_end_desc') }} ">{{ objlang.get('entry_date_end') }}  </span></label>
+											<div class="col-sm-7">
+												<div class="input-group ">
+													<input type="text" name="date_end" value="{{ module.date_end }}" placeholder="" data-date-format="YYYY-MM-DD HH:mm" id="input-date_end" class="form-control date" />
+													<span class="input-group-btn">
+														<button class="btn btn-default" type="button"><i class="fa fa-calendar"></i></button>
+													</span>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="col-sm-6 so_countdown_type" id="countdown_type_time" style="display: none;">
+										<div class="row">
+											<label class="col-sm-5 col-form-label" for="input-date_end"><span data-toggle="tooltip" title="{{ objlang.get('entry_date_end_desc') }} ">{{ objlang.get('entry_date_end') }}  </span></label>
+											<div class="col-sm-7">
+												<span style="display:inline-block; margin-right:3px; width:55px;">
+													<input type="text" name="countdownday" id="countdownday" size="3" value="{{ module.countdownday }}" class="form-control" />
+													<small style="display:block;" class="text-center">{{ objlang.get('text_for_day') }}</small>
+												</span>
+												<span style="display:inline-block; margin-right:3px; width:55px;">
+													<input type="text" name="countdownhour" id="countdownhour" size="3" value="{{ module.countdownhour }}" class="form-control" />
+													<small style="display:block" class="text-center">{{ objlang.get('text_for_hour') }}</small>
+												</span>
+												<span style="display:inline-block; width:55px;">
+													<input type="text" name="countdownminute" id="countdownminute" size="3" value="{{ module.countdownminute }}" class="form-control" />
+													<small style="display:block" class="text-center">{{ objlang.get('text_for_minute') }}</small>
+												</span>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row mb-3"> {# <!--use cache -->  #}
+									<label class="col-sm-3 col-form-label" for="input-use_cache">
+										<span data-toggle="tooltip" title="{{ objlang.get('entry_use_cache_desc') }} ">{{ objlang.get('entry_use_cache') }} </span>
+									</label>
+									<div class="col-sm-9">
+										<label class="radio-inline">
+											{% if module.use_cache %} 
+												<input type="radio" name="use_cache" value="1" checked="checked" />
+												{{ objlang.get('text_yes') }} 
+											{% else %}   
+												<input type="radio" name="use_cache" value="1" />
+												{{ objlang.get('text_yes') }} 
+											{% endif %}
+										</label>
+										<label class="radio-inline">
+											{% if not module.use_cache %} 
+												<input type="radio" name="use_cache" value="0" checked="checked" />
+												{{ objlang.get('text_no') }} 
+											{% else %}   
+												<input type="radio" name="use_cache" value="0" />
+												{{ objlang.get('text_no') }} 
+											{% endif %} 
+										</label>
+									</div>
+								</div>
+								<div class="row mb-3" id="input-cache_time_form"> {# <!--cache time -->  #} 
+									<label class="col-sm-3 col-form-label" for="input-cache_time">
+										<span data-toggle="tooltip" title="{{ objlang.get('entry_cache_time_desc') }} ">{{ objlang.get('entry_cache_time') }} </span>
+									</label>
+									<div class="col-sm-9">
+										<input type="text" name="cache_time" value="{{ module.cache_time }} " id="input-cache_time" class="form-control" />
+										{% if error.cache_time %} 
+										<div class="text-danger">{{ error.cache_time }} </div>
+										{% endif %}
+									</div>
+								</div>
+							</div>
+							
+							<div class="tab-pane">
+								<ul class="nav nav-tabs" id="language">
+								    {% set i=0 %} 
+									{% for language in languages %} 
+									<li>
+										<button class="nav-link {% if i==0 %}active{% endif %} " data-bs-target="#language{{ language.language_id }}" data-bs-toggle="tab" type="button" role="tab">
+											<img src="language/{{ language.code}}/{{ language.code}}.png" title="{{ language.name }} " /> {{ language.name }} 
+										</button>
+									</li>
+									{% set i = i + 1 %}
+									{% endfor %}
+								</ul>
+
+								<div class="tab-content">
+								  {% set i=0 %} 
+								  {% for language in languages %}
+									<div class="tab-pane {% if i==0 %}active{% endif %}" id="language{{ language.language_id }}">
+										<div class="row mb-3">
+											<label class="col-sm-2 col-form-label" for="input-title{{ language.language_id }} ">{{ objlang.get('entry_title') }} </label>
+											<div class="col-sm-10">
+												<input type="text" name="module_description[{{ language.language_id }}][title]" placeholder="{{ objlang.get('entry_title') }} " id="input-heading{{ language.language_id }}" value="{{ module_description[language.language_id].title  ? module_description[language.language_id].title  : '' }} " class="form-control" />
+											</div>
+										</div>
+										<div class="row mb-3">
+											<label class="col-sm-2 col-form-label" for="input-description{{ language.language_id }} ">{{ objlang.get('entry_description') }} </label>
+											<div class="col-sm-10">
+												<textarea name="module_description[{{language.language_id}}][description]" placeholder="{{ objlang.get('entry_description') }} " id="input-description{{ language.language_id }}" data-oc-toggle="ckeditor" class="form-control">
+												{{ module_description[language.language_id]  ? module_description[language.language_id].description }} 
+												</textarea>
+											</div>
+										</div>
+									</div>
+									{% set i = i + 1 %}
+								  {% endfor %} 
+								</div>
+								
+							</div>
+
+							{% set module_row = module_row + 1 %}
+						{% endfor %}
+					</div>
+				</div>
+			</form>			  
+		  </div>
+		</div>  
+  	</div>
+ 
+  
+  	<script type="text/javascript"><!--
+	$('textarea[data-oc-toggle=\'ckeditor\']').ckeditor();
+  		$("select[name='show_countdown']").on('change', function() {
+			var $value = $(this).val();
+			if ($value == 0) {
+				$('#show_countdown').hide();
+			}
+			else {
+				$('#show_countdown').show();
+			}
+		});
+		$("select[name='show_countdown']").trigger('change');
+
+		$("select[name='countdown_type']").on('change', function() {
+			$('.so_countdown_type').hide();
+			var $value = $(this).val();
+			$('#countdown_type_'+$value).show();
+		});
+		$("select[name='countdown_type']").trigger('change');
+
+		if($("input[name='use_cache']:radio:checked").val() == '0'){
+			$('#input-cache_time_form').hide();
+		}else{
+			$('#input-cache_time_form').show();
+		}
+
+		$("input[name='use_cache']").change(function(){
+			val = $(this).val();
+			if(val ==0)
+			{
+				$('#input-cache_time_form').hide();
+			}else
+			{
+				$('#input-cache_time_form').show();
+			}
+		});
+	//--></script>
+
+</div>
+{{ footer }}

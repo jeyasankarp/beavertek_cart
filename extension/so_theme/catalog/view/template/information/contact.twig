@@ -1,0 +1,99 @@
+{{ header }}
+<div class="breadcrumbs">
+  <div class="container">
+       <div class="current-name">   
+        {% set last = breadcrumbs|length %}
+        {% set i = 0 %}
+        {% for breadcrumb, crumbInfo in breadcrumbs %}  
+            {% set i = i + 1 %}     
+            {% if i == last  %} 
+            {{ crumbInfo.text }}
+          {% endif %}  
+        {% endfor %}
+      </div>
+      <ul class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+        <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+</div>
+<div class="container">
+  <!-- <ul class="breadcrumb">
+    {% for breadcrumb in breadcrumbs %}
+    <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+    {% endfor %}
+  </ul> -->
+  
+  <div class="row">{{ column_left }}
+    {% if column_left and column_right %}
+    {% set class = 'col-sm-6' %}
+    {% elseif column_left or column_right %}
+    {% set class = 'col-sm-9' %}
+    {% else %}
+    {% set class = 'col-sm-12' %}
+    {% endif %}
+    <div id="content" class="{{ class }}">{{ content_top }}
+		<div class="info-contact row">
+			<div class="col-sm-6 col-xs-12 col-12 info-store">
+			  {% if image %} 
+				<div id="map-canvas"><img src="{{ image }} " alt="{{ store }} " title="{{ store }} " /></div>
+			   {% else %}
+			   		<div class="mapouter">
+			   			<div class="gmap_canvas">
+			   				<iframe width="100%" height="480" id="gmap_canvas" src="https://maps.google.com/maps?q={{ soconfig.get_settings('mapaddress') }}&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
+			   			</div>
+			   			<style>
+			   				.mapouter{position:relative;text-align:right;height:480px;width:100%;}
+			   				.gmap_canvas {overflow:hidden;background:none!important;height:480px;width:100%;}
+			   			</style>
+			   		</div>
+				{% endif %}
+
+			</div>
+			
+			<div class="col-sm-6 col-xs-12 col-12 contact-form">
+			   <form id="form-contact" action="{{ send }}" method="post" data-oc-toggle="ajax" class="form-horizontal">
+			  
+				<fieldset>
+					<legend><h2>{{ text_contact }} </h2></legend>
+					 <p>{{ comment }}</p>
+                  
+				  <div class="form-group mb-3 required">
+					<div class="col-sm-12">
+					  <input type="text" name="name" value="{{ name }}" id="input-name" class="form-control" placeholder="{{ entry_name }} *"/>
+					  <div id="error-name" class="invalid-feedback"></div>
+					</div>
+				  </div>
+				  <div class="form-group mb-3 required">
+					<div class="col-sm-12">
+					  <input type="text" name="email" value="{{ email }}" id="input-email" class="form-control" placeholder="{{ entry_email }} *" />
+					  <div id="error-email" class="invalid-feedback"></div>
+					</div>
+				  </div>
+				  <div class="form-group mb-3 required">
+					<div class="col-sm-12">
+					   <textarea name="enquiry" rows="10" id="input-enquiry" class="form-control" placeholder="{{ entry_enquiry }} *" ></textarea>
+					   <div id="error-enquiry" class="invalid-feedback"></div>
+					</div>
+				  </div>
+				  {{ captcha }} 
+				</fieldset>
+				<div class="buttons">
+				  <div class="pull-left">
+					<button class="btn btn-info" type="submit"><span>{{ button_submit }} </span></button>
+				  </div>
+				</div>
+			  </form>
+			</div>
+		</div>
+		
+		
+      
+	  
+      
+      
+      {{ content_bottom }}</div>
+    {{ column_right }}</div>
+</div>
+{{ footer }}

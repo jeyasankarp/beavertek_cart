@@ -1,0 +1,153 @@
+<div class="so_advanced_search">
+	<div class="sas_wrap">
+		<div class="sas_inner">
+			<div class="heading-title"><h2>{{ objlang.get('heading_title') }}</h2></div>
+			<div class="sas_inner-box-search">
+				<div class="row">
+					<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 search-boxes">
+						<select name="make" id="so_make{{ module }}" class="form-control">
+							<option value="">{{ objlang.get('text_select_make') }}</option>
+							{% for make in makes %}
+								<option value="{{ make.make_id }}" {{ make.make_id == make_id ? 'selected="selected"' : '' }}>{{ make.make_name }}</option>
+							{% endfor %}
+						</select>
+					</div>
+					<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 search-boxes">
+						<select name="model" id="so_model{{ module }}" class="form-control">
+							<option value="">{{ objlang.get('text_select_model') }}</option>
+							{% if make_id %}
+								{% for model in models %}
+									{% if model.make_id == make_id %}
+										<option value="{{ model.model_id }}" {{ model.model_id == model_id ? 'selected="selected"' : '' }}>{{ model.model_name }}</option>
+									{% endif %}
+								{% endfor %}
+							{% endif %}
+						</select>
+					</div>
+					<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 search-boxes">
+						<select name="engine" id="so_engine{{ module }}" class="form-control">
+							<option value="">{{ objlang.get('text_select_engine') }}</option>
+							{% if model_id %}
+								{% for engine in engines %}
+									{% if engine.model_id == model_id %}
+										<option value="{{ engine.engine_id }}" {{ engine.engine_id == engine_id ? 'selected="selected"' : '' }}>{{ engine.engine_name }}</option>
+									{% endif %}
+								{% endfor %}
+							{% endif %}
+						</select>
+					</div>
+					<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 search-boxes">
+						<select name="year" id="so_year{{ module }}" class="form-control">
+							<option value="">{{ objlang.get('text_select_year') }}</option>
+							{% if engine_id %}
+								{% for year in years %}
+									{% if year.engine_id == engine_id %}
+										<option value="{{ year.year_id }}" {{ year.year_id == year_id ? 'selected="selected"' : '' }}>{{ year.year_name }}</option>
+									{% endif %}
+								{% endfor %}
+							{% endif %}
+						</select>
+					</div>
+					<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 search-button">
+						<button type="button" id="sas_search_button{{ module }}">{{ objlang.get('button_search') }}</button>
+					</div>
+				</div>				
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+	var loading = '<option value="">{{ text_loading }}</option>';
+	var module = {{ module }};
+	$(document).on('click', '#sas_search_button{{ module }}', function() {
+		var url = '';
+
+		var filter_make = $('#so_make'+module).val();
+		if (filter_make) {
+			url += '&make_id=' + encodeURIComponent(filter_make);
+		}
+
+		var filter_model = $('#so_model'+module).val();
+		if (filter_model) {
+			url += '&model_id=' + encodeURIComponent(filter_model);
+		}
+
+		var filter_engine = $('#so_engine'+module).val();
+		if (filter_engine) {
+			url += '&engine_id=' + encodeURIComponent(filter_engine);
+		}
+
+		var filter_year = $('#so_year'+module).val();
+		if (filter_year) {
+			url += '&year_id=' + encodeURIComponent(filter_year);
+		}
+
+		location = 'index.php?route=product/search&search=' + url;
+	});
+
+	$(document).on('change', '#so_make'+module, function() {
+		if ($(this).val()) {
+			$.ajax({
+                url: 'index.php?route=extension/so_theme/module/so_advanced_search|getModel',
+                type: 'post',
+                data: {make_id : $(this).val()},
+                datatype: "text/html",
+                beforeSend: function() {
+                    $("#so_model"+module).html(loading);
+                    $("#so_engine"+module).html('<option value="">{{ objlang.get("text_select_engine") }}</option>');
+					$("#so_year"+module).html('<option value="">{{ objlang.get("text_select_year") }}</option>');
+                },
+                success: function(data) {
+                    $("#so_model"+module).html(data);
+                }
+            });
+		}
+		else {
+			$("#so_model"+module).html('<option value="">{{ objlang.get("text_select_model") }}</option>');
+			$("#so_engine"+module).html('<option value="">{{ objlang.get("text_select_engine") }}</option>');
+			$("#so_year"+module).html('<option value="">{{ objlang.get("text_select_year") }}</option>');
+		}
+	});
+
+	$(document).on('change', '#so_model'+module, function() {
+		if ($(this).val()) {
+			$.ajax({
+                url: 'index.php?route=extension/so_theme/module/so_advanced_search|getEngine',
+                type: 'post',
+                data: {model_id : $(this).val()},
+                datatype: "text/html",
+                beforeSend: function() {
+                    $("#so_engine"+module).html(loading);
+                    $("#so_year"+module).html('<option value="">{{ objlang.get("text_select_year") }}</option>');
+                },
+                success: function(data) {
+                    $("#so_engine"+module).html(data);
+                }
+            });
+		}
+		else {
+			$("#so_engine"+module).html('<option value="">{{ objlang.get("text_select_engine") }}</option>');
+			$("#so_year"+module).html('<option value="">{{ objlang.get("text_select_year") }}</option>');
+		}
+	});
+
+	$(document).on('change', '#so_engine'+module, function() {
+		if ($(this).val()) {
+			$.ajax({
+                url: 'index.php?route=extension/so_theme/module/so_advanced_search|getYear',
+                type: 'post',
+                data: {engine_id : $(this).val()},
+                datatype: "text/html",
+                beforeSend: function() {
+                    $("#so_year"+module).html(loading);
+                },
+                success: function(data) {
+                    $("#so_year"+module).html(data);
+                }
+            });
+		}
+		else {
+			$("#so_year"+module).html('<option value="">{{ objlang.get("text_select_year") }}</option>');
+		}
+	});
+</script>

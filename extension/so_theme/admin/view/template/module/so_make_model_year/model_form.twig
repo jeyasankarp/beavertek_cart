@@ -1,0 +1,64 @@
+{{ header }}{{ column_left }}
+<div id="content">
+    <div class="page-header">
+        <div class="container-fluid">
+            <div class="float-end">
+                <button type="submit" form="form-model" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i> {{ button_save }}</button>
+                <button type="submit" form="form-model" name="save_stay" value="1" data-toggle="tooltip" title="{{ button_save_stay }}" class="btn btn-success"><i class="fa fa-save"></i> {{ button_save_stay }}</button>
+                <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default btn-light"><i class="fa fa-reply"></i></a>
+            </div>
+            <h1>{{ heading_title }}</h1>
+		    <ol class="breadcrumb">
+		        {% for breadcrumb in breadcrumbs %}
+		        <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+		        {% endfor %}
+		    </ol>
+        </div>
+    </div>
+	
+	<div class="container-fluid">
+        {% if error_warning %}
+            <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+                <!--<button type="button" class="close" data-dismiss="alert">&times;</button>-->
+            </div>
+        {% endif %}
+        {% if success %}
+            <div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> {{ success }}
+                <!--<button type="button" class="close" data-dismiss="alert">&times;</button>-->
+            </div>
+        {% endif %}	
+		<div class="card">
+			<div class="card-header">
+				<h3 class="panel-title"><i class="fa fa-list"></i> {{ text_form }}</h3>
+			</div>	
+			<div class="card-body">	
+                <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-model" class="form-horizontal">
+                    <div class="row mb-3 required">
+                        <label class="col-sm-2 col-form-label" for="input-model_name">{{ entry_model }}</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="model_name" value="{{ model_name }}" placeholder="" id="input-model_name" class="form-control" />
+                            {% if error_name %}
+                                <div class="text-danger">{{ error_name }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="row required">
+                        <label class="col-sm-2 col-form-label" for="input-make_id">{{ entry_make }}</label>
+                        <div class="col-sm-10">
+                            <select name="make_id" class="form-control" id="input-make_id">
+                                <option value="">{{ entry_select_make }}</option>
+                                {% for make in makes %}
+                                    <option value="{{ make.make_id }}" {{ make.make_id == make_id ? 'selected="selected"' : '' }}>{{ make.make_name }}</option>
+                                {% endfor %}
+                            </select>
+                            {% if error_make %}
+                                <div class="text-danger">{{ error_make }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </form>			
+			</div>	
+		</div>	
+	</div>		
+</div>
+{{ footer }}

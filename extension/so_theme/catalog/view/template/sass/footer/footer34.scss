@@ -1,0 +1,252 @@
+
+//** simple and lightweight mixin library for Sass **
+//-- url : http://bourbon.io/docs ---
+@import 'bourbon/bourbon';
+
+//** Mixins for Rem Font Sizing **
+//-- url : http://hugogiraudel.com/2013/03/18/ultimate-rem-mixin/
+@import 'utilities/rem';
+
+//** Variables for responsive design in bootstrap with sass **
+//-- url : https://gist.github.com/webinfinita/11407836
+@import 'utilities/bootstrap_breakpoints';
+
+//** Makes supporting both left-to-right (LTR) and right-to-left (RTL) easy.**
+//-- url : https://github.com/tysonmatanich/directional-scss
+@import 'utilities/directional';
+
+//Mixins utilities
+@import 'utilities/theme_variables';
+@import 'utilities/utilities';
+
+/* ================================================================================ */
+
+/*.footer-container{
+  margin-top: 40px;
+}*/
+
+@media(min-width: 1200px){
+    .common-home .wrapper-full .typefooter-34 .container{
+      width: 100%;
+      padding: 0 60px;
+      @media(min-width: 1200px) and (max-width: 1650px){
+        padding: 0 30px; 
+      }
+    }
+    .common-home .typefooter-34{
+        width: 84%;
+        border-#{$left}: 1px solid #ddd;        
+        margin-#{$left}: 16%;
+    }
+}
+
+.typefooter-34{
+  background-color: #222;
+  clear: both;  
+  background: url("#{$imgPath}id34-bg-footer.jpg") no-repeat;
+  background-size: cover;
+  background-position: center center;
+  /* GENERAL */
+  .module .modtitle{
+    font-size: 22px;
+    color: #fff;
+    text-transform: uppercase;
+    font-weight: 500;
+    line-height: 30px;
+    margin: 0 0 20px;
+      
+  }
+  .box-footer{  
+    margin-top: 3px;  
+      ul.menu{
+        li{           
+              a{
+                border: 0 none;               
+                font-size: 16px;
+                padding: 0;       
+                font-weight: 400; 
+                line-height: 35px;  
+                position: relative;
+                padding-#{$left}: 15px;
+                display: inline-block;
+                color: #ddd;
+                @include transition(all 0.2s ease-in-out 0s);
+                position: relative;
+                &:before{
+                  position: absolute; content: "";
+                  width: 4px; height: 4px;
+                  border-radius: 100%;
+                  top: 17px; #{$left}: 0;
+                  background-color: #ddd;
+                }
+                &:hover{ 
+                  @include transition(all 0.2s ease-in-out 0s);                  
+                }
+              }       
+            }
+      }
+  
+  }
+  .footer-top{  padding-top: 70px; padding-bottom: 50px;
+  }
+ 
+  .box-contact{
+    .modcontent{ padding-bottom: 25px; }
+  }
+  .footer-middle{ 
+    padding: 60px 20px;
+    background-color: rgba(0,0,0,.5);
+    .fmiddle{ float: none; margin: 0 auto; }
+  }
+  .newsletter-footer21{ 
+      .newsletter{
+        background-color: transparent !important;
+        .title-block{ float: $left; width: 40%;
+          .page-heading{           
+            color: #fff;
+            font-size: 20px;
+            margin-bottom: 0px;  
+            font-weight: 500;
+            text-transform: uppercase;   
+            padding-bottom: 0px;     
+            line-height: 46px; 
+          }
+          .promotext{
+            display: none;
+          }
+        }
+        .block_content{ float: $left;
+          form.signup{
+            display: block;
+            margin: 0;
+
+            .form-group{
+              position: relative; background-color: transparent; border-radius: 23px;
+              .input-box{
+                background-color: transparent;
+              }
+              
+              #txtemail{
+                height: 46px;
+                line-height: 46px;
+                width: 100%;
+                box-shadow: none;
+                padding: side-values(0 0 0 15px);
+                border: none; font-size: 14px;         
+                background-color: rgba(255,255,255,.3); border-radius: 23px;
+                &::-moz-placeholder {
+                  color: #999;
+                    opacity: 1; 
+                }
+                &:-ms-input-placeholder { color: #999; } 
+                &::-webkit-input-placeholder  { color: #999; } 
+                  &:focus{
+                      z-index: 0;
+                  }
+              }
+            }
+            .subcribe{
+              position: absolute; top: 0; #{$right}: 0;
+            }
+
+            .subcribe button{           
+              border: 0 none;
+              color: #fff;
+              font-weight: 400;
+              font-size: 14px;
+              height: 44px; 
+              line-height: 44px;
+              padding: 0 30px;   
+              border-radius: 23px;
+              position: relative; overflow: hidden;
+              text-indent: -9999em;
+              background-color: transparent; 
+              &:before{
+                color: #fff;
+                font-weight: 400;
+                font-family: $FontAwesome; content: "\f1d8";
+                position: absolute;
+                top: 0;
+                #{$left}: 0;
+                display: inline-block;
+                text-indent: 0;
+                width: 100%;
+                height: 100%;
+                font-size: 14px;
+                @include transition(all 0.2s ease-in-out 0s);
+              }
+              &:hover{
+              
+              }
+            }
+          }
+        }
+      }
+  }
+
+  .footer-info{
+    ul{
+      li{
+        font-size: 16px;
+        color: #ddd;
+        display: block;
+        padding: 10px 0 15px;
+        i{ margin-#{$right}: 8px; display: inline-block; }
+
+        &:last-child span{ font-size: 22px;
+          font-weight: 700;
+        }
+      }
+    }
+  }
+  .socials{ float: $right;
+    ul{
+      li{ float: $left; margin-#{$left}: 10px;
+        a{
+          width: 46px;
+          height: 46px;
+          border-radius: 50%;
+          background-color: rgba(255,255,255,.3);
+          color: #888;
+          line-height: 46px;
+          text-align: center;
+          font-size: 16px; display: block;
+          &:hover{ color: #fff; }
+
+        }
+      }
+    }
+  }
+  .so-instagram-gallery{ margin-top: 30px; }
+  .so-instagram-gallery .instagram-items-inner{
+    .instagram-item{
+      float: $left;
+        margin-bottom: 10px;
+        padding: side-values(0 0 0 10px);
+        position: relative;
+        width: 33.33%;
+      
+      .img_users a{
+        border: none;
+        &:hover{
+              img{
+                opacity: 0.8;
+              }
+            }
+      } 
+
+    }
+  }
+  /* FOOTER BOTTOM */
+  .payment-w{
+
+  }
+  .footer-bottom{
+    padding: 20px 0;
+      .copyright{
+        line-height: 35px; color: #eee;
+      }
+      .payment-w{ text-align: $right; }
+  }
+}
+

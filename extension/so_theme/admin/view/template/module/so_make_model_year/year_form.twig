@@ -1,0 +1,134 @@
+{{ header }}{{ column_left }}
+<div id="content">
+    <div class="page-header">
+        <div class="container-fluid">
+            <div class="float-end">
+                <button type="submit" form="form-year" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i> {{ button_save }}</button>
+                <button type="submit" form="form-year" name="save_stay" value="1" data-toggle="tooltip" title="{{ button_save_stay }}" class="btn btn-success"><i class="fa fa-save"></i> {{ button_save_stay }}</button>
+                <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default btn-light"><i class="fa fa-reply"></i></a>
+            </div>
+            <h1>{{ heading_title }}</h1>
+		    <ol class="breadcrumb">
+		        {% for breadcrumb in breadcrumbs %}
+		        <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+		        {% endfor %}
+		    </ol>
+        </div>
+    </div>
+	
+	<div class="container-fluid">
+        {% if error_warning %}
+            <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+                <!--<button type="button" class="close" data-dismiss="alert">&times;</button>-->
+            </div>
+        {% endif %}
+        {% if success %}
+            <div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> {{ success }}
+                <!--<button type="button" class="close" data-dismiss="alert">&times;</button>-->
+            </div>
+        {% endif %}	
+		<div class="card">
+			<div class="card-header">
+				<h3 class="panel-title"><i class="fa fa-list"></i> {{ text_form }}</h3>
+			</div>	
+			<div class="card-body">
+                <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-year" class="form-horizontal">
+                    <div class="row mb-3 required">
+                        <label class="col-sm-2 col-form-label" for="input-year_name">{{ entry_year }}</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="year_name" value="{{ year_name }}" placeholder="" id="input-year_name" class="form-control" />
+                            {% if error_name %}
+                                <div class="text-danger">{{ error_name }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="row mb-3 required">
+                        <label class="col-sm-2 col-form-label" for="input-engine_id">{{ entry_engine }}</label>
+                        <div class="col-sm-10">
+                            <select name="engine_id" class="form-control" id="input-engine_id">
+                                <option value="">{{ entry_select_engine }}</option>
+                                {% for engine in engines %}
+                                    <option value="{{ engine.engine_id }}" {{ engine.engine_id == engine_id ? 'selected="selected"' : '' }}>{{ engine.engine_name }}</option>
+                                {% endfor %}
+                            </select>
+                            {% if error_engine %}
+                                <div class="text-danger">{{ error_engine }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="row mb-3 required">
+                        <label class="col-sm-2 col-form-label" for="input-model_id">{{ entry_model }}</label>
+                        <div class="col-sm-10">
+                            <select name="model_id" class="form-control" id="input-model_id">
+                                <option value="">{{ entry_select_model }}</option>
+                                {% if model_info %}
+                                    <option value="{{ model_info.model_id }}" selected="selected">{{ model_info.model_name }}</option>
+                                {% endif%}
+                            </select>
+                            {% if error_model %}
+                                <div class="text-danger">{{ error_model }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="row mb-3 required">
+                        <label class="col-sm-2 col-form-label" for="input-make_id">{{ entry_make }}</label>
+                        <div class="col-sm-10">
+                            <select name="make_id" class="form-control" id="input-make_id">
+                                <option value="">{{ entry_select_make }}</option>
+                                {% if make_info %}
+                                    <option value="{{ make_info.make_id }}" selected="selected">{{ make_info.make_name }}</option>
+                                {% endif%}
+                            </select>
+                            {% if error_make %}
+                                <div class="text-danger">{{ error_make }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </form>			
+		    </div>
+		</div>	
+	</div>	
+	
+</div>
+<script type="text/javascript"><!--
+    var load = '<option>{{ text_loading }}</option>';
+    $('select[name=\'engine_id\']').change(function() {
+        if ($(this).val()) {
+            $.ajax({
+                url: 'index.php?route=extension/so_theme/module/so_make_model_year|get_model&user_token={{ user_token }}',
+                type: 'post',
+                data: {engine_id: $(this).val()},
+                datatype: 'text/html',
+                beforeSend: function() {
+                    $('#input-model_id').html(load);
+                },
+                success: function(data) {
+                    $('#input-model_id').html(data);
+                    $('#input-model_id').prop('disabled', false);
+                }
+            })
+        }
+        else {
+            $('#input-model_id').html('<option value="">{{ entry_select_model }}</option>');
+            $('#input-make_id').html('<option value="">{{ entry_select_make }}</option>');
+        }
+    });
+
+    $('select[name=\'model_id\']').change(function() {
+        $.ajax({
+            url: 'index.php?route=extension/so_theme/module/so_make_model_year|get_make&user_token={{ user_token }}',
+            type: 'post',
+            data: {model_id: $(this).val()},
+            datatype: 'text/html',
+            beforeSend: function() {
+                $('#input-make_id').html(load);
+            },
+            success: function(data) {
+                $('#input-make_id').html(data);
+                $('#input-make_id').prop('disabled', false);
+            }
+        })
+    });
+    // $('select[name=\'model_id\']').trigger('change');
+//--></script>
+{{ footer }}

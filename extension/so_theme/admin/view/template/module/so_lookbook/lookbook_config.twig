@@ -1,0 +1,265 @@
+{{ header }}{{ column_left }}
+<div id="content">
+	<div class="page-header">
+    	<div class="container-fluid">
+      		<div class="float-end">
+				<button type="submit" form="form-lookbook" name="save_stay" value="1" data-toggle="tooltip" title="{{ button_save_stay }}" class="btn btn-success"><i class="fa fa-save"></i> {{ text_save_stay }}</button>      		
+        		<button type="submit" form="form-lookbook" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i> {{ text_save }}</button>
+        		<a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default btn-light"><i class="fa fa-reply"></i></a>
+        	</div>
+      		<h1>{{ heading_title }}</h1>
+      		<ol class="breadcrumb">
+        		{% for breadcrumb in breadcrumbs %}
+        			<li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        		{% endfor %}
+      		</ul>
+    	</div>
+  	</div>
+
+  	<div class="container-fluid">
+  		{% if error_warning %}
+	    	<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+	      		<!--<button type="button" class="close" data-dismiss="alert">&times;</button>-->
+	    	</div>
+	    {% endif %}
+
+	    {% if success %}
+    		<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> {{ success }}
+      			<!--<button type="button" class="close" data-dismiss="alert">&times;</button>-->
+    		</div>
+    	{% endif %}
+
+		<div class="card">
+			<div class="card-header">
+				<h3 class="panel-title"><i class="fa fa-list"></i> {{ text_form }}</h3>
+			</div>	
+			<div class="card-body">
+        		<form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-lookbook" class="form-horizontal">
+					<ul class="nav nav-tabs" role="tablist">
+			            <li class="nav-item"><a class="active nav-link" href="#tab-general" data-bs-toggle="tab">{{ tab_general_setting }}</a></li>
+			            <li class="nav-item"><a class="nav-link" href="#tab-slider" data-bs-toggle="tab">{{ tab_slider_setting }}</a></li>
+		          	</ul>
+		          	<div class="tab-content">
+            			<div class="tab-pane active" id="tab-general">
+		        			<div class="row mb-3">
+			                	<label class="col-sm-2 col-form-label" for="input-min_image_width">{{ entry_min_image_width }}</label>
+			                	<div class="col-sm-4">
+			                		<div class="input-group">
+			                  			<input type="text" name="module_lookbook_min_image_width" value="{{ min_image_width }}" placeholder="" id="input-min_image_width" class="form-control" />
+			                  			<span class="input-group-text">pixel</span>
+			                  		</div>
+			                  	</div>
+			              	</div>
+		        			<div class="row mb-3">
+			                	<label class="col-sm-2 col-form-label" for="input-min_image_height">{{ entry_min_image_height }}</label>
+			                	<div class="col-sm-4">
+			                		<div class="input-group">
+			                  			<input type="text" name="module_lookbook_min_image_height" value="{{ min_image_height }}" placeholder="" id="input-min_image_height" class="form-control" />
+			                  			<span class="input-group-text">pixel</span>
+			                  		</div>
+			                  	</div>
+			              	</div>
+		        			<div class="row mb-3">
+			                	<label class="col-sm-2 col-form-label" for="input-max_image_width">{{ entry_max_image_width }}</label>
+			                	<div class="col-sm-4">
+			                		<div class="input-group">
+			                  			<input type="text" name="module_lookbook_max_image_width" value="{{ max_image_width }}" placeholder="" id="input-max_image_width" class="form-control" />
+			                  			<span class="input-group-text">pixel</span>
+			                  		</div>
+			                  	</div>
+			              	</div>
+		        			<div class="row mb-3">
+			                	<label class="col-sm-2 col-form-label" for="input-max_image_height">{{ entry_max_image_height }}</label>
+			                	<div class="col-sm-4">
+			                		<div class="input-group">
+			                  			<input type="text" name="module_lookbook_max_image_height" value="{{ max_image_height }}" placeholder="" id="input-max_image_height" class="form-control" />
+			                  			<span class="input-group-text">pixel</span>
+			                  		</div>
+			                  	</div>
+			              	</div>
+		        			<div class="row mb-3">
+			                	<label class="col-sm-2 col-form-label" for="input-max_upload_filesize">{{ entry_max_upload_filesize }}</label>
+			                	<div class="col-sm-4">
+			                		<div class="input-group">
+			                  			<input type="text" name="module_lookbook_max_upload_filesize" value="{{ max_upload_filesize }}" placeholder="" id="input-max_upload_filesize" class="form-control" />
+			                  			<span class="input-group-text">bytes</span>
+			                  		</div>
+			                  	</div>
+			              	</div>
+		        			<div class="row mb-3">
+			                	<label class="col-sm-2 col-form-label" for="input-allowed_extensions">{{ entry_allowed_extensions }}</label>
+			                	<div class="col-sm-4">
+			                  		<input type="text" name="module_lookbook_allowed_extensions" value="{{ allowed_extensions }}" placeholder="" id="input-allowed_extensions" class="form-control" />
+			                  	</div>
+			              	</div>
+		        			<div class="row mb-3">
+			                	<label class="col-sm-2 col-form-label" for="input-pin_width">{{ entry_pin_width }}</label>
+			                	<div class="col-sm-4">
+			                		<div class="input-group">
+			                  			<input type="text" name="module_lookbook_pin_width" value="{{ pin_width }}" placeholder="" id="input-pin_width" class="form-control" />
+			                  			<span class="input-group-text">pixel</span>
+			                  		</div>
+		                  		</div>
+			              	</div>
+		        			<div class="row mb-3">
+			                	<label class="col-sm-2 col-form-label" for="input-pin_height">{{ entry_pin_height }}</label>
+			                	<div class="col-sm-4">
+			                		<div class="input-group">
+			                  			<input type="text" name="module_lookbook_pin_height" value="{{ pin_height }}" placeholder="" id="input-pin_height" class="form-control" />
+			                  			<span class="input-group-text">pixel</span>
+			                  		</div>
+		                  		</div>
+			              	</div>
+		        			<div class="row mb-3">
+			                	<label class="col-sm-2 col-form-label" for="input-pin_default">{{ entry_pin_default }}</label>
+			                	<div class="col-sm-4">
+		                			<input type="text" name="module_lookbook_pin_default" value="{{ pin_default }}" placeholder="" id="input-pin_default" class="form-control" />
+		                  		</div>
+			              	</div>
+			              	<div class="row mb-3">
+				            	<label class="col-sm-2 col-form-label" for="input-pin_price">{{ entry_pin_price }}</label>
+				            	<div class="col-sm-4">
+				              		<select name="module_lookbook_pin_price" id="input-pin_price" class="form-control">
+					                	{% if pin_price %}
+					                		<option value="1" selected="selected">{{ text_yes }}</option>
+					                		<option value="0">{{ text_no }}</option>
+					                	{% else %}
+					                		<option value="1">{{ text_yes }}</option>
+					                		<option value="0" selected="selected">{{ text_no }}</option>
+					                	{% endif %}
+				              		</select>
+				            	</div>
+				          	</div>
+				          	<div class="row mb-3">
+			                	<label class="col-sm-2 col-form-label" for="input-pin_background">{{ entry_pin_background }}</label>
+			                	<div class="col-sm-4">
+			                  		<input type="text" name="module_lookbook_pin_background" value="{{ pin_background }}" placeholder="" id="input-pin_background" class="form-control" />
+			                  	</div>
+			              	</div>
+				          	<div class="row mb-3">
+			                	<label class="col-sm-2 col-form-label" for="input-pin_text">{{ entry_pin_text }}</label>
+			                	<div class="col-sm-4">
+			                  		<input type="text" name="module_lookbook_pin_text" value="{{ pin_text }}" placeholder="" id="input-pin_text" class="form-control" />
+			                  	</div>
+			              	</div>
+			              	<div class="row mb-3">
+			                	<label class="col-sm-2 col-form-label" for="input-popup_image_width">{{ entry_popup_image_width }}</label>
+			                	<div class="col-sm-4">
+			                		<div class="input-group">
+			                  			<input type="text" name="module_lookbook_popup_image_width" value="{{ popup_image_width }}" placeholder="" id="input-popup_image_width" class="form-control" />
+			                  			<span class="input-group-text">pixel</span>
+			                  		</div>
+		                  		</div>
+			              	</div>
+			              	<div class="row mb-3">
+			                	<label class="col-sm-2 col-form-label" for="input-popup_image_height">{{ entry_popup_image_height }}</label>
+			                	<div class="col-sm-4">
+			                		<div class="input-group">
+			                  			<input type="text" name="module_lookbook_popup_image_height" value="{{ popup_image_height }}" placeholder="" id="input-popup_image_height" class="form-control" />
+			                  			<span class="input-group-text">pixel</span>
+			                  		</div>
+		                  		</div>
+			              	</div>
+		              	</div>
+		              	<div class="tab-pane" id="tab-slider">
+		              		<div class="row mb-3">
+			                	<label class="col-sm-2 col-form-label" for="input-navigation">{{ entry_show_navigation }}</label>
+			                	<div class="col-sm-4">
+			                  		<select name="module_lookbook_navigation" id="input-navigation" class="form-control">	                    
+			                    		{% if navigation %}	                    
+			                    			<option value="1" selected="selected">{{ text_yes }}</option>
+			                    			<option value="0">{{ text_no }}</option>	                    
+			                    		{% else %}
+			                    			<option value="1">{{ text_yes }}</option>
+			                    			<option value="0" selected="selected">{{ text_no }}</option>
+			                    		{% endif %}
+			                  		</select>
+			                	</div>
+			              	</div>
+			              	<div class="row mb-3">
+			                	<label class="col-sm-2 col-form-label" for="input-pagination">{{ entry_show_pagination }}</label>
+			                	<div class="col-sm-4">
+			                  		<select name="module_lookbook_pagination" id="input-pagination" class="form-control">	                    
+			                    		{% if pagination %}	                    
+			                    			<option value="1" selected="selected">{{ text_yes }}</option>
+			                    			<option value="0">{{ text_no }}</option>	                    
+			                    		{% else %}
+			                    			<option value="1">{{ text_yes }}</option>
+			                    			<option value="0" selected="selected">{{ text_no }}</option>
+			                    		{% endif %}
+			                  		</select>
+			                	</div>
+			              	</div>
+			              	<div class="row mb-3">
+			                	<label class="col-sm-2 col-form-label" for="input-auto_play">{{ entry_autoplay }}</label>
+			                	<div class="col-sm-4">
+			                  		<select name="module_lookbook_auto_play" id="input-auto_play" class="form-control">	                    
+			                    		{% if auto_play %}	                    
+			                    			<option value="1" selected="selected">{{ text_yes }}</option>
+			                    			<option value="0">{{ text_no }}</option>	                    
+			                    		{% else %}
+			                    			<option value="1">{{ text_yes }}</option>
+			                    			<option value="0" selected="selected">{{ text_no }}</option>
+			                    		{% endif %}
+			                  		</select>
+			                	</div>
+			              	</div>
+			              	<div class="row mb-3">
+			                	<label class="col-sm-2 col-form-label" for="input-auto_play_timeout">{{ entry_auto_play_timeout }}</label>
+			                	<div class="col-sm-4">
+			                		<div class="input-group">
+			                			<input type="text" name="module_lookbook_auto_play_timeout" value="{{ auto_play_timeout }}" placeholder="" id="input-auto_play_timeout" class="form-control">
+			                			<span class="input-group-text">ms</span>
+			                      	</div>
+			                  	</div>
+			              	</div>
+			              	<div class="row mb-3">
+			                	<label class="col-sm-2 col-form-label" for="input-stop_auto">{{ entry_stop_auto }}</label>
+			                	<div class="col-sm-4">
+			                  		<select name="module_lookbook_stop_auto" id="input-stop_auto" class="form-control">	                    
+			                    		{% if stop_auto %}	                    
+			                    			<option value="1" selected="selected">{{ text_yes }}</option>
+			                    			<option value="0">{{ text_no }}</option>	                    
+			                    		{% else %}
+			                    			<option value="1">{{ text_yes }}</option>
+			                    			<option value="0" selected="selected">{{ text_no }}</option>
+			                    		{% endif %}
+			                  		</select>
+			                	</div>
+			              	</div>
+			              	<div class="row mb-3">
+			                	<label class="col-sm-2 col-form-label" for="input-loop">{{ entry_loop }}</label>
+			                	<div class="col-sm-4">
+			                  		<select name="module_lookbook_loop" id="input-loop" class="form-control">	                    
+			                    		{% if loop %}	                    
+			                    			<option value="1" selected="selected">{{ text_yes }}</option>
+			                    			<option value="0">{{ text_no }}</option>	                    
+			                    		{% else %}
+			                    			<option value="1">{{ text_yes }}</option>
+			                    			<option value="0" selected="selected">{{ text_no }}</option>
+			                    		{% endif %}
+			                  		</select>
+			                	</div>
+			              	</div>
+			              	<div class="row mb-3">
+			                	<label class="col-sm-2 col-form-label" for="input-next_image">{{ entry_next_image }}</label>
+			                	<div class="col-sm-4">
+		                			<input type="text" name="module_lookbook_next_image" value="{{ next_image }}" placeholder="" id="input-next_image" class="form-control">
+		                			<small class="help-block">Example: &lt;i class="fa fa-angle-right"&gt;&lt;/i&gt;</small>
+			                	</div>
+			              	</div>
+			              	<div class="row mb-3">
+			                	<label class="col-sm-2 col-form-label" for="input-prev_image">{{ entry_prev_image }}</label>
+			                	<div class="col-sm-4">
+		                			<input type="text" name="module_lookbook_prev_image" value="{{ prev_image }}" placeholder="" id="input-prev_image" class="form-control">
+		                			<small class="help-block">Example: &lt;i class="fa fa-angle-left"&gt;&lt;/i&gt;</small>
+			                	</div>
+			              	</div>
+		              	</div>
+	              	</div>
+        		</form>			
+			</div>	
+		</div>		
+	</div>
+</div>
+{{ footer }}

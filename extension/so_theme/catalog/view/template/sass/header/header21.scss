@@ -1,0 +1,465 @@
+
+//** simple and lightweight mixin library for Sass **
+//-- url : http://bourbon.io/docs ---
+@import 'bourbon/bourbon';
+
+//** Mixins for Rem Font Sizing **
+//-- url : http://hugogiraudel.com/2013/03/18/ultimate-rem-mixin/
+@import 'utilities/rem';
+
+//** Variables for responsive design in bootstrap with sass **
+//-- url : https://gist.github.com/webinfinita/11407836
+@import 'utilities/bootstrap_breakpoints';
+
+//** Makes supporting both left-to-right (LTR) and right-to-left (RTL) easy.**
+//-- url : https://github.com/tysonmatanich/directional-scss
+@import 'utilities/directional';
+
+//Mixins utilities
+@import 'utilities/theme_variables';
+@import 'utilities/utilities';
+
+/*===============================================
+    [SASS DIRECTORY ]
+    
+    [1] BLOCK HEADER
+==============================================*/
+
+.typeheader-21{
+    // MENU ON TOP
+    &.navbar-compact{
+        .header-middle{
+            padding: 10px 0;
+            margin: 0;
+        }
+        .header-bottom{
+            padding: 10px 0;
+        }
+        #cart{
+            margin-top: 3px;
+        }
+    }
+    .header-top{
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        color: #fff;
+        font-size: 13px;
+        min-height: 40px;
+        .module{
+            display: table-cell;
+            margin-bottom: 0;
+        }
+
+        .header-top-right{text-align:$right;}
+
+        .dropdown-menu{
+            li{
+                line-height: 22px;
+            }
+        }
+        .header-top-right {display: inline-block;}
+
+    }
+
+    .header-middle{
+        clear: both;
+        margin: 29px 0 22px 0;
+        .middle-right{
+            padding-top: 9px;
+        }
+    }
+
+    .header-bottom{
+        clear: both;
+        padding: 20px 0;
+    }
+
+    .telephone {
+        float: $right;
+        ul{
+            li{
+                display: inline-block;
+                position: relative;           
+                list-style: outside none none;
+                padding-#{$left}: 18px;
+                margin-#{$left}: 18px;
+                padding-#{$right}: 0;
+                &:after {
+                    background-color: rgba(255,255,255,0.4);
+                    content: "";
+                    height: 11px;
+                    position: absolute;
+                    #{$left}: 0;
+                    top: 9px;
+                    width: 1px;
+                }
+                a{
+                    color: #fff;
+                    text-transform: capitalize;
+                    i{
+                        margin-#{$right}: 5px;
+                    }
+                }
+            }
+        }
+    }
+    .lang-curr{
+        float: $right;
+    }
+
+    .signin-w{
+        padding-#{$left}: 30px;
+        float: $right;
+        color: #fff;
+        ul{
+            li{
+                float: $left;
+                a{
+                    color: #fff;
+                }
+            }
+        }
+    }
+
+    .welcome-msg{
+        color: #fff;
+        font-size: 13px;
+        line-height: 40px;
+        clear: both;
+    }
+
+    .wishlist-comp{
+        float: $right;
+        margin-#{$right}: 20px;
+        li{
+            width: 40px;
+            height: 40px;
+            list-style: none;
+            float: $left;
+            padding-top: 8px;
+            margin-#{$left}: 15px;
+            a{
+                i{
+                    font-size: 26px;
+                    color: #fff;
+                }
+                span{
+                    display: none;
+                }
+                &.top-link-wishlist{
+                    width: 36px;
+                    text-align: center;
+                    height: 32px;
+                    display: block;
+                    overflow: hidden;
+                    text-indent: -999em;
+                    &:before{
+                        font-family: 'FontAwesome';
+                        content: "\f004";
+                        font-size: 26px;
+                        color: #fff;
+                        display: block;
+                        text-indent: 0;
+                    }
+                }
+
+                    
+            } 
+        }
+    }
+
+    ul.top-link{list-style: none;margin:0; vertical-align:top;
+        display: inline-flex;
+        .dropdown-menu{
+
+        }
+		> li.language .dropdown-menu img {
+			margin-top: -3px;
+		}
+        > li{                
+            display: inline-block; 
+            position: relative;           
+            list-style: outside none none;
+            padding-#{$left}: 20px;
+            margin-#{$left}: 20px;
+            padding-#{$right}: 0;
+            font-size: 13px;
+            &.language{
+                min-height: 23px;
+                &:after {
+                    background-color: rgba(255,255,255,0.4);
+                    content: "";
+                    height: 11px;
+                    position: absolute;
+                    #{$left}: 0;
+                    top: 16px;
+                    width: 1px;
+                }
+            }
+            .btn-group{
+                display: inline;
+                line-height: 40px;
+                padding: 12px 0;
+                .btn-link{
+                    padding: 0;
+                    border: none;
+                    color: #fff;
+					&:hover{
+						color:#fff !important;
+					}
+                }
+            } 
+            .fa-angle-down{
+                font-size: 13px; padding: 0; float: none;
+            }            
+            >   a {
+                font-size: 12px;
+                color: #fff;
+                padding-#{$left}: 3px;
+            }
+        }
+    }
+
+    .account{
+        width: 42px; height: 42px; background-color: #fff;
+        border-radius: 100%; text-align: center; line-height: 42px;
+        float: $right; margin-#{$right}: 15px; position: relative;
+        span{ font-size: 18px; }
+    }
+    /*=====SEARCH ======*/
+    #sosearchpro .chosen-container-single .chosen-single{
+        height: 45px; line-height: 45px;
+        div{ width: 20px;
+            b{ background-position-y: 12px; }
+        }
+    }
+    #sosearchpro .search{
+        position: relative;
+        margin: 0;
+        width: 100%;
+        border-radius: 3px;
+        .select_category{
+            border: none;
+            border-#{$right}: 1px solid #d7d7d7;
+            background-color: #f5f5f5;
+            border-bottom-#{$left}-radius: 3px;
+            border-top-#{$left}-radius: 3px;
+            width: 22%;
+            select{
+                height: 45px;
+                line-height: 45px;
+                color: #666666;                
+                font-size: 13px;         
+                padding: 0 15px;   
+                &:hover{
+                    cursor: pointer;
+                }
+            }
+            &.icon-select{
+                &:after{
+                    color: #999;
+                    background-color: #f5f5f5;
+                    font-size: 16px;
+                    line-height: 47px;
+                    #{$right}: 0;
+                    #{$left}: auto;
+                }
+            }
+        } 
+
+        button{
+            position: absolute;
+            top: 0px;
+            #{$right}: 0px;
+            height: 45px;
+            text-align: center;
+            line-height: 45px;
+            padding: 0 30px;
+            font-size: 14px;
+            color: #fff; background-color: #252525;
+            border-radius: 0;
+            text-transform: upper-case;
+            border-bottom-#{$right}-radius: 3px;
+            border-top-#{$right}-radius: 3px;
+            i{
+                font-size: 13px;
+                color: #fff;
+            }
+        }
+        
+        input.autosearch-input{
+            border: none;
+            border-radius: 0px;   
+            border-bottom-#{$right}-radius: 4px;
+            border-top-#{$right}-radius: 4px;         
+            background-color: #fff;
+            z-index: 0;
+            height: 45px;
+            padding-#{$left}: 20px;
+            font-size: 13px;
+            width: 100%;
+            background-color: #fff;
+            color: #999;
+            &::-moz-placeholder {
+                color: #999;
+                opacity: 1; 
+            }
+            &:-ms-input-placeholder { color: #999; } 
+            &::-webkit-input-placeholder  { color: #999; } 
+            &:focus{
+                z-index: 0;
+            }
+        }
+
+    }
+  
+
+    /*BLOCK CART*/
+    .shopping_cart{
+        float: $right;
+        position: relative;
+        .btn-shopping-cart .top_cart{
+            position: relative;
+            .icon-c{
+                width: 42px;
+                height: 42px;
+                border-radius: 50%;             
+                float: $left;                
+                text-align: center;
+                line-height: 45px;
+                background-color: #fff;
+                i{
+                    font-size: 18px;
+                }
+    
+            }
+            .shopcart-inner{
+                float: $left;
+                color: #fff;
+                margin-#{$left}: 10px;
+                margin-top: 9px;
+                .text-shopping-cart{
+                    font-size: 12px;
+                    font-weight: 700;
+                    margin-top: 0px;
+                    margin-bottom: 3px;
+                    line-height: 100%;
+                    text-transform: uppercase;
+                    padding-#{$right}: 5px;
+                }
+                .total-shopping-cart{
+                    font-size: 12px;
+                    float: $left;
+                    line-height: 100%;
+                    font-weight: 700;
+                    .items_cart2{
+              
+                    }
+                    .items_cart{
+                        
+                    }
+                }
+            } 
+                
+        } 
+        .dropdown-menu{ top: 100%; #{$right}: -15px; #{$left}: auto;
+            color: #666;
+        }
+        .shoppingcart-box:before{right: 50px;}
+    }
+
+
+    /*MENU MEGA*/
+    .megamenu-style-dev{
+        .navbar-default{ background: transparent; }
+    }
+
+
+    .container-megamenu.horizontal ul.megamenu > li{
+        > a{            
+            line-height: 100%;
+            color: #fff;
+        }
+        
+        &:hover,
+        &.active,
+        &.menu_active{
+            > a{                
+                
+            }
+        }
+        
+    }    
+
+    /*-- MEGA MENU VERTICAL --*/
+    .container-megamenu.vertical{
+        position: relative;
+        .vertical-wrapper ul.megamenu .loadmore{ display: none; }
+        ul.megamenu > li .close-menu{ display: none; }
+        #menuHeading{
+            .megamenuToogle-pattern{      
+                .container{            
+                    &:after{
+                        font-family: 'FontAwesome';
+                        content: "\f107";
+                        font-size: 16px;
+                        color: #fff;
+                        position: absolute;
+                        #{$right}: 20px;
+                        top: 0;
+                        font-weight: 400;
+                    }
+                }                      
+            }
+        }  
+        @media (min-width: 992px)  {
+            .vertical-wrapper{
+                @include effect-block-hide();
+                position: absolute;
+                width: 100%;
+                top: 60px;
+            }
+            &:hover{
+                .vertical-wrapper{
+                    @include effect-block-show();
+                    top: 40px;
+                }
+            }
+        }
+
+    }
+}
+
+@media (min-width: 992px)  {
+
+}
+
+@media (min-width: 1200px) and (max-width: 1649px){
+   
+}
+@media (min-width: 1366px) and (max-width: 1649px){
+
+}
+@media (min-width: 1200px) and (max-width: 1365px){
+
+}
+.wrapper-boxed{
+
+}
+
+/*====================update opencart4===================*/
+.typeheader-21{	
+	.account .dropdown-menu li{
+		line-height:30px;
+	}
+	#sosearchpro .search{
+		flex-wrap: nowrap;
+	}
+	#sosearchpro .search .input-group-btn{
+		margin:0;
+	}
+	ul.top-link > li .btn-group .fa-caret-down{
+	    &:before{
+			content: "\f107";
+		}
+    }
+}

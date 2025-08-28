@@ -1,0 +1,240 @@
+
+//** simple and lightweight mixin library for Sass **
+//-- url : http://bourbon.io/docs ---
+@import 'bourbon/bourbon';
+
+//** Mixins for Rem Font Sizing **
+//-- url : http://hugogiraudel.com/2013/03/18/ultimate-rem-mixin/
+@import 'utilities/rem';
+
+//** Variables for responsive design in bootstrap with sass **
+//-- url : https://gist.github.com/webinfinita/11407836
+@import 'utilities/bootstrap_breakpoints';
+
+//** Makes supporting both left-to-right (LTR) and right-to-left (RTL) easy.**
+//-- url : https://github.com/tysonmatanich/directional-scss
+@import 'utilities/directional';
+
+//Mixins utilities
+@import 'utilities/theme_variables';
+@import 'utilities/utilities';
+
+/* ================================================================================ */
+
+/*.footer-container{
+  margin-top: 40px;
+}*/
+@media (min-width: 1200px){
+    #wrapper .typefooter-35 .container{
+      max-width: 1320px; padding-left: 15px; padding-right: 15px; width: 100%;
+    }
+}
+.typefooter-35{
+  background-color: #0c1555; color: #fff;
+  clear: none;  margin-top: 55px;
+  .desc-collapse.showdown{
+    overflow: visible;
+    max-height: unset;
+    &:before{ display: none; }
+  }
+  /* GENERAL */
+  .module .modtitle{
+    font-size: 24px;
+    color: #fff;
+    text-transform: uppercase;
+    font-weight: 700;
+    line-height: 30px;
+    margin: 0 0 20px;
+      
+  }
+  .box-footer{  
+    margin-top: 3px;  
+      ul.menu{
+        li{           
+              a{
+                border: 0 none;               
+                font-size: 14px;
+                padding: 0;       
+                font-weight: 400; 
+                line-height: 35px;  
+                position: relative;
+                padding-#{$left}: 0px;
+                display: inline-block;
+                color: #fff;
+                @include transition(all 0.2s ease-in-out 0s);
+                position: relative;
+                &:before{
+                  position: absolute; content: "";
+                  width: 0px; height: 1px;
+                  top: 17px; #{$left}: 0;
+                }
+                &:hover{  padding-#{$left}: 20px;
+                  @include transition(all 0.2s ease-in-out 0s);   
+                  &:before{ width: 8px; }               
+                }
+              }       
+            }
+      }
+  
+  }
+  .footer-top{  padding-top: 104px; padding-bottom: 45px;
+    @media(min-width: 1200px){
+      .col-left{ width: 29%; }
+      .col-right{ width: 71%; }
+    }
+  }
+  .box-opening{
+    h4{ font-size: 14px; font-weight: 600; }
+    ul{
+      margin-bottom: 25px;
+    }
+  }
+  .box-getapp{
+    ul{
+      li{ display: inline-block; margin-#{$right}: 10px; }
+    }
+  }
+
+  .footer-middle{ position: absolute; top: -55px; width: 100%; left: 15px;
+    .fmiddle{ float: none; margin: 0 auto;  
+      clip-path: polygon(2% 0%,98% 0%,100% 50%,100% 50%,98% 100%,2% 100%,0 50%,0 50%);
+      background-color: #fdb819;
+      padding: 33px 0 !important;
+
+    }
+  }
+  .newsletter-footer22{ 
+    margin-#{$left}: 40px;
+      .newsletter{
+        background-color: transparent !important;
+        .title-block{ float: $left; width: 40%;
+          .page-heading{           
+            color: #000;
+            font-size: 28px;
+            margin-bottom: 0px;  
+            font-weight: 700;
+            text-transform: uppercase;   
+            padding-bottom: 0px;     
+            line-height: 100%; 
+          }
+          .promotext{
+            color: #000; line-height: 100%; 
+          }
+        }
+        .block_content{ float: $left; width: 55%;
+          form.signup{
+            display: block;
+            margin: 0;
+
+            .form-group{
+              position: relative; background-color: transparent; border-radius: 23px;
+              .input-box{
+                background-color: transparent;
+              }
+              
+              #txtemail{
+                height: 45px;
+                line-height: 45px;
+                width: 100%;
+                box-shadow: none;
+                padding: side-values(0 0 0 20px);
+                border: none; font-size: 14px;         
+                background-color: #fff;
+                clip-path: polygon(3% 0%,95% 0%,100% 50%,100% 50%,95% 100%,3% 100%,0 50%,0 50%);
+                &::-moz-placeholder {
+                  color: #999;
+                    opacity: 1; 
+                }
+                &:-ms-input-placeholder { color: #999; } 
+                &::-webkit-input-placeholder  { color: #999; } 
+                  &:focus{
+                      z-index: 0;
+                  }
+              }
+            }
+            .subcribe{
+              position: absolute; top: 0; #{$right}: -1px;
+            }
+
+            .subcribe button{           
+              border: 0 none;
+              color: #fff;
+              font-weight: 400;
+              font-size: 14px;
+              height: 45px; 
+              line-height: 45px;
+              padding: 0 30px;   
+              border-radius: 0; text-align: center;
+              position: relative; overflow: hidden;
+              background-color: #0c1555; 
+              clip-path: polygon(2% 0%,90% 0%,100% 50%,100% 50%,90% 100%,2% 100%,12% 50%,12% 50%);
+              width: 140px;
+              &:hover{
+              
+              }
+            }
+          }
+        }
+      }
+  }
+
+  .footer-info{
+    ul{
+      li{
+        font-size: 16px;
+        color: #ddd;
+        display: block;
+        padding: 10px 0 15px;
+        i{ margin-#{$right}: 8px; display: inline-block; }
+
+        &:last-child span{ font-size: 22px;
+          font-weight: 700;
+        }
+      }
+    }
+  }
+  .socials{ float: $right; 
+    ul{
+      li{ float: $left; margin-#{$left}: 10px;
+        a{
+          width: 40px;
+          height: 40px;
+          border-radius: 5px;
+          background-color: #fff;
+          color: #444;
+          line-height: 40px;
+          text-align: center;
+          font-size: 18px; display: block;
+          &:hover{ color: #fff; background-color: #0c1555; }
+
+        }
+      }
+    }
+  }
+  .telephone{
+    position: relative;
+    padding-#{$left}: 60px;
+    margin: 30px 0;
+    &:before{
+      position: absolute; top: 0; #{$left}: 0; content: "";
+      width: 50px; height: 52px; 
+      background: url(#{$imgPath}icon/id35-icons.png) no-repeat -50px -145px;
+    }
+    a{
+      display: inline-block; font-size: 16px; font-weight: 700;
+    }
+  }
+  /* FOOTER BOTTOM */
+  .payment-w{
+
+  }
+  .footer-bottom{
+    padding: 15px 0; border-top: 1px solid #152070;
+    clear: both;
+      .copyright{
+        line-height: 35px; color: #999;
+      }
+      .payment-w{ text-align: $right; }
+  }
+}
+

@@ -1,0 +1,55 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  	<div class="page-header">
+    	<div class="container-fluid">
+      		<div class="float-end">
+        		<a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default btn-light"><i class="fa fa-reply"></i></a>
+      		</div>
+      		<h1>{{ heading_title }}</h1>
+		    <ol class="breadcrumb">
+		        {% for breadcrumb in breadcrumbs %}
+		        <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+		        {% endfor %}
+		    </ol>
+    	</div>
+  	</div>
+	<div class="container-fluid">
+		<div class="card">
+			<div class="card-header">
+				<h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_list }}</h3>
+			</div>	
+			<div class="card-body">	
+					<div class="table-responsive">
+						<table class="table table-bordered table-hover">
+							<thead>
+								<tr>
+									<td class="text-left">{{ column_make_model_year }}</td>
+									<td class="text-right">{{ column_action }}</td>
+								</tr>
+							</thead>
+							<tbody>                  
+								{% if mmy %}
+									{% for item in mmy %}
+										<tr>
+											<td class="text-left">{{ item.name }}</td>
+											<td class="text-right"><a href="{{ item.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
+										</tr>
+									{% endfor %}
+								{% else %}
+									<tr>
+										<td class="text-center" colspan="3">{{ text_no_results }}</td>
+									</tr>
+								{% endif %}
+							</tbody>                  
+						</table>
+					</div>
+					<div class="row">
+						<div class="col-sm-6 text-left">{{ pagination }}</div>
+						<div class="col-sm-6 text-right">{{ results }}</div>
+					</div>		
+			</div>
+		</div>		
+	</div>
+	
+</div>
+{{ footer }}

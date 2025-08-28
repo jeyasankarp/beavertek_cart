@@ -1,0 +1,173 @@
+<div class="{{direction_class}} so-brands">
+	<div class="slider-brands module {{ class_suffix }}">
+	{% if disp_title_module %}
+	<h3 class="modtitle">
+		{% if custom_url != '' %}
+			<a href="{{ custom_url }}"><span>{{ head_name }}</span></a>
+		{% else %}
+			<span>{{ head_name }}</span>
+		{% endif %}
+	</h3>
+	{% endif %}
+
+	{% if pre_text|trim is not empty  %} 
+		<div class="form-group">
+			{{ pre_text }}
+		</div>
+	{% endif %}
+	
+	
+		
+		{% if manufacturer_brands is empty %}
+			<div class="alert alert-info"><i class="fa fa-info-circle"></i> 
+				<button type="button" class="close" data-dismiss="alert">×</button>
+			</div>
+
+		{% else %}
+			{% set count_item 	= manufacturer_brands|length %}	
+			{% set cls_btn_page =  (button_page  ==  'top') ? 'buttom-type1':'button-type2' %}	
+			{% set btn_type 	=  (button_page  ==  'top') ? 'button-type1':'button-type2'%}
+			
+			{% set tag_id = 'so_brands_'~suffix %}
+			{% set class_respl = 'preset00-'~nb_column0~' preset01-'~nb_column1~' preset02-'~nb_column2~' preset03-'~nb_column3~' preset04-'~nb_column4 %}
+			{% set btn_prev = (button_page == 'top') ? '&#171':'&#139' %}
+			{% set btn_next = (button_page == 'top') ? '&#187':'&#155' %}
+			{% set i = 0 %}
+
+			<div id="{{tag_id}}" class="so-manufacturer {{cls_btn_page}} {{class_respl}} {{btn_type}}">
+				<!-- Begin extraslider-inner -->
+				<div class="manufacturer-inner manufacturer-list " data-effect="{{effect}}">
+					{% for i, item in manufacturer_brands %}
+						{% set i = i + 1 %}
+						{% if i % nb_rows  ==  1  or  nb_rows  ==  1 %} 
+						<div class="item ">
+						{% endif %} 
+
+							<div class="manufacturer-layout manufacturer-grid ">
+								<div class="manufacturer-item-container">
+									<div class="left-block">
+										{% if manufacturer_image %}
+										<div class="manufacturer-image-container">
+											<a href="{{item.href}}" title="{{ item.name }} ">
+											   <img data-sizes="auto" class="lazyload" src="{{item.thumb}}" data-src="{{item.thumb}}" alt="brand">  										   
+											</a>												
+										</div>
+										{% endif %}
+										{% if manufacturer_name %}
+										<div class="manufacturer-name-container">
+											<a href="{{item.href}}" title="{{ item.name }} ">
+											   {{item.name}}											   
+											</a>										
+										</div>
+										{% endif %} 
+										{% if manufacturer_readmore %}
+                                        <div class="manufacturer-readmore-container">	
+											<a href="{{item.href}}" title="{{ item.name }} ">
+											    {{readmore}}											   
+											</a>											
+                                        </div>	
+										{% endif %}
+									</div>
+								</div>
+								<!-- End item-wrap-inner -->
+							</div>
+							<!-- End item-wrap -->
+						{% if i % nb_rows  ==  0  or  i  ==  count_item %} 
+						</div>
+						{% endif %} 
+
+					{% endfor %}	 
+				</div>
+				<!--End manufacturer-inner -->
+
+				<script type="text/javascript">
+				jQuery(document).ready(function ($) {
+					(function (element) {
+						var $element = $(element),
+								$manufacturer = $(".manufacturer-inner", $element),
+								_delay = {{ delay }} ,
+								_duration = {{ duration }} ,
+								_effect = '{{ effect }} ';
+
+
+						$manufacturer.owlCarousel2({
+							rtl: {{ direction}},
+							margin: {{ margin }},
+							slideBy: {{ slideBy }},
+							autoplay: {{ autoplay }},
+							autoplayHoverPause: {{ autoplayHoverPause  }},
+							autoplayTimeout: {{ autoplayTimeout }} ,
+							autoplaySpeed: {{ autoplaySpeed }} ,
+							startPosition: {{ startPosition }} ,
+							mouseDrag: {{ mouseDrag }},
+							touchDrag: {{ touchDrag }} ,
+							autoWidth: false,
+							responsive: {
+								0: 	{ items: {{ nb_column4 }} } ,
+								480: { items: {{ nb_column3 }} },
+								768: { items: {{ nb_column2 }} },
+								992: { items: {{ nb_column1 }} },
+								1200: {items: {{ nb_column0 }}}
+							},
+							dots: {{ dots }} ,
+							dotsSpeed:{{ dotsSpeed }} ,
+							nav: {{ nav }} ,
+							loop: {{ loop }} ,
+							navSpeed: {{ navSpeed }} ,
+							navText: ["", ""],
+							navClass: ["owl2-prev fas", "owl2-next fas"]
+
+						});
+
+				        function _getAnimate($el) {
+				        	if (_effect == "none") return;
+				        	$manufacturer.removeClass("extra-animate");
+				        	$el.each(function (i) {
+				        		var $_el = $(this);
+				        		var i= i + 1;
+				        		$(this).css({
+				        			"-webkit-animation": _effect + " " + _duration + "ms ease both",
+				        			"-moz-animation": _effect + " " + _duration + "ms ease both",
+				        			"-o-animation": _effect + " " + _duration + "ms ease both",
+				        			"animation": _effect + " " + _duration + "ms ease both",
+				        			"-webkit-animation-delay": +i * _delay + "ms",
+				        			"-moz-animation-delay": +i * _delay + "ms",
+				        			"-o-animation-delay": +i * _delay + "ms",
+				        			"animation-delay": +i * _delay + "ms",
+				        			
+				        		}).animate({
+				        			
+				        		});
+				        		if (i == $el.size() - 1) {
+				        			$manufacturer.addClass("extra-animate");
+				        		}
+				        	});
+				        }
+				        function _UngetAnimate($el) {
+				        	$el.each(function (i) {
+				        		$(this).css({
+				        			"animation": "",
+				        			"-webkit-animation": "",
+				        			"-moz-animation": "",
+				        			"-o-animation": "",
+				        		});
+				        	});
+				        } 
+					})("#{{ tag_id  }} ");
+				});
+			</script>
+
+			</div>
+		{% endif %}
+	
+		
+	
+	{% if post_text|trim is not empty  %} 
+		<div class="form-group">
+			{{ post_text  }}
+		</div>
+	{% endif %}	
+	
+	</div> 
+
+</div>

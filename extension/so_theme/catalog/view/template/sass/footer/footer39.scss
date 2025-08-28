@@ -1,0 +1,231 @@
+
+//** simple and lightweight mixin library for Sass **
+//-- url : http://bourbon.io/docs ---
+@import 'bourbon/bourbon';
+
+//** Mixins for Rem Font Sizing **
+//-- url : http://hugogiraudel.com/2013/03/18/ultimate-rem-mixin/
+@import 'utilities/rem';
+
+//** Variables for responsive design in bootstrap with sass **
+//-- url : https://gist.github.com/webinfinita/11407836
+@import 'utilities/bootstrap_breakpoints';
+
+//** Makes supporting both left-to-right (LTR) and right-to-left (RTL) easy.**
+//-- url : https://github.com/tysonmatanich/directional-scss
+@import 'utilities/directional';
+
+//Mixins utilities
+@import 'utilities/theme_variables';
+@import 'utilities/utilities';
+
+/* ================================================================================ */
+.typefooter-39{	
+	/* GENERAL */
+	.module .modtitle{
+        color: #fff;
+        font-size: 18px;
+        line-height: 20px;
+        margin-bottom: 20px !important;  
+        font-weight: 700;        
+        padding-bottom: 0px;      
+	}
+	.box-footer{   
+		ul.menu{
+			li{           
+				a{
+					border: 0 none;               
+					font-size: 14px;      
+					font-weight: 400; 									
+					display: inline-block;  
+					color: #999999;
+					&:hover{						
+						color:#fff;
+					}
+				} 
+				margin-bottom:11px;
+				line-height: 22px;
+				&:last-child{
+					margin-bottom:0px;
+				}
+            }
+		}  
+	}	
+	.infos-footer ul li{
+		display:block;
+		font-size: 14px;
+		line-height: 22px;
+		color: #999;
+		font-weight: 400;
+		margin-bottom:20px;		
+		a{
+		  color: #999;
+		}
+		&.phone{
+		    font-size: 24px;
+		    line-height: 28px;
+		    font-weight: 800;		
+			color:#fff;
+		}		
+		&:last-child{
+		  margin-bottom:0;
+		}
+	}
+	
+	.slider-gallery{	
+		direction:ltr;
+		.contentslider {
+			.item a{
+				position:relative;
+				text-align:center;
+				img{
+					width:100%; 
+					border-radius:50px;
+					 @include transition(all 0.3s ease-in-out 0s);
+				}				
+				&:hover{
+					img{
+						opacity:0.5;
+					}
+				}
+			}
+		}
+		.owl2-controls .owl2-nav{			
+			@include owl2-nav-style39(50px,22px,#f5f5f5,$background,$mainColor,20px);			
+			.owl2-next{ #{$right}:-25px; #{$left}: auto; }
+			.owl2-prev{ #{$right}: auto; #{$left}: -25px; }
+		} 			
+		&:hover{
+			.owl2-controls .owl2-nav{
+				>div{
+					opacity:1;	
+				}
+			}
+		}
+	}
+	
+	
+	.newsletter-footer39{		
+		.newsletter{
+			background-color:transparent !important;
+			.title-block{ 
+				.page-heading{           
+					color: #fff;
+					font-size: 18px;
+					line-height: 20px;
+					margin-bottom: 20px !important;  
+					font-weight: 700;  
+				}
+				.promotext{
+					font-size: 14px;
+					color: #999;
+					margin-bottom: 10px;
+				}
+			}
+			.block_content{				
+				form.signup{
+					display: block;
+					margin: 0;
+					.form-group{
+						margin: 0;
+						display: flex;
+						flex-direction: column;
+						row-gap:10px;
+						input.form-control{
+							height: 45px;
+							line-height: 45px;
+							width: 100%; 
+							font-size: 14px;
+							box-shadow: none;
+							padding: side-values(0 0 0 20px);
+							border: none; 
+							border-radius: 22px; 
+							border-top-#{$left}-radius: 0;							
+							background-color: #434343; 
+							color:$mainColor;
+							&::-moz-placeholder {
+								color: #aaaaaa;
+								opacity: 1; 
+							}
+							&:-ms-input-placeholder { color: #aaaaaa; } 
+							&::-webkit-input-placeholder  { color: #aaa; } 
+							&:focus::-webkit-input-placeholder { color:transparent; }
+							&:focus:-moz-placeholder { color:transparent; } /* FF 4-18 */
+							&:focus::-moz-placeholder { color:transparent; } /* FF 19+ */
+							&:focus:-ms-input-placeholder { color:transparent; } /* IE 10+ */
+							&:hover,
+							&:focus{
+								background-color:#fff;
+							}
+						}
+					}
+
+					.subcribe button{  
+						background-color: $background;         
+						border: 0 none;
+						color: #fff;
+						font-weight: 700;
+						font-size: 14px;
+						height: 45px;
+						line-height: 45px;
+						padding: 0 40px;    
+						text-transform: uppercase;
+						border-radius: 22px; 
+						border-top-#{$left}-radius: 0;		
+						&:hover,
+						&:focus{
+							background-color:#fff;
+							box-shadow:none;
+							outline:none;
+							color:$mainColor;
+						}
+					}
+				}
+			}
+		}
+	}
+  
+	.footer-center .container{
+		border-top:1px solid #393939;
+		border-bottom:1px solid #393939;
+	}
+	.socials{		
+		display: flex;
+		flex-wrap: wrap;
+		gap: 10px;
+		justify-content: center;
+		li{
+		  a{
+			  color: #fff;
+			  font-size: 20px;
+			  width: 40px; 
+			  height: 40px;
+			  line-height: 42px;
+			  text-align: center;
+			  background-color: #393939;
+			  border-radius: 15px;
+			  display: block;
+			  @include transition(all 0.3s ease-in-out 0s);
+				span{
+					display: none;
+				}				
+			}
+		}
+	}
+	/* FOOTER BOTTOM */
+	.footer-bottom{
+		background-color:#222;
+		padding:30px 0 20px;
+		text-align:center;
+	}  
+  
+	.payment-w{		
+		margin-bottom:20px;
+	}	
+	.copyright{			
+		line-height: 32px; font-size: 13px; color:#aaa;
+		a{color:#aaa !important;}
+	}
+	
+}
+

@@ -1,0 +1,146 @@
+
+//** simple and lightweight mixin library for Sass **
+//-- url : http://bourbon.io/docs ---
+@import 'bourbon/bourbon';
+
+//** Mixins for Rem Font Sizing **
+//-- url : http://hugogiraudel.com/2013/03/18/ultimate-rem-mixin/
+@import 'utilities/rem';
+
+//** Variables for responsive design in bootstrap with sass **
+//-- url : https://gist.github.com/webinfinita/11407836
+@import 'utilities/bootstrap_breakpoints';
+
+//** Makes supporting both left-to-right (LTR) and right-to-left (RTL) easy.**
+//-- url : https://github.com/tysonmatanich/directional-scss
+@import 'utilities/directional';
+
+//Mixins utilities
+@import 'utilities/theme_variables';
+@import 'utilities/utilities';
+
+/* ================================================================================ */
+
+/*.footer-container{
+  margin-top: 40px;
+}*/
+.typefooter-29{
+  margin-top: 0px; border-top: 1px solid #eee; font-weight: 300;
+
+  /* GENERAL */
+  .module .modtitle{
+        color: $textColor2;
+        font-size: 18px;
+        line-height: 20px;
+        margin-bottom: 25px !important;  
+        font-weight: 500;
+        text-transform: uppercase;   
+        padding-bottom: 0px;
+      
+  }
+  .box-footer{  margin-top: 15px;
+      ul.menu{
+        li{           
+              a{
+                border: 0 none;               
+                font-size: 14px;
+                padding: 0;       
+                font-weight: 300; 
+                line-height: 36px;  
+                position: relative;
+                padding-#{$left}: 15px;
+                display: inline-block;
+                &:before{
+                  width: 4px; height: 4px; background-color: #021523;
+                  position: absolute; content: "";
+                  top: 16px;
+                  #{$left}: 0;
+                  border-radius: 50%;
+                }
+                &:hover{ text-decoration: underline; }
+              }       
+            }
+      }
+  
+  }
+  .box-opentime{ margin-top: 15px;
+    ul{
+      li{
+        position: relative; padding-#{$left}: 15px; line-height: 36px;  
+        &:before{
+          width: 4px; height: 4px; background-color: #021523;
+          position: absolute; content: "";
+          top: 16px;
+          #{$left}: 0;
+          border-radius: 50%;
+        }
+        span{ float: $right; }
+      }
+    }
+  }
+  .infos-footer{
+    ul{
+      margin-top: 20px;
+      li{
+          font-size: 14px;
+          line-height: 30px;
+          list-style: outside none none;
+          padding: 0; 
+          margin-bottom: 10px; 
+          i{
+            font-size: 18px;
+            padding-#{$right}: 10px; padding-top: 5px;
+            width: 32px; height: 42px; float: $left;
+          }   
+          a{
+            color: #666;
+            font-size: 14px; 
+          }
+         
+      }
+    }
+  }
+
+  .row-top > .container{
+    padding: 30px 0px; margin: 0 auto; float: none;
+  }
+  .footer-middle{
+    padding: 72px 0 0 0;
+  }
+  
+  
+  /* FOOTER BOTTOM */
+
+  .payment{
+    margin-top: 30px;
+  }
+  .footer-bottom{ border-top: 1px solid #ddd; font-weight: 400;
+    margin-top: 23px;
+    .container{
+      
+      padding: 20px 0;
+    }
+      .copyright-w .copyright{ width: 45%; float: $left;
+        line-height: 32px; font-size: 13px; 
+      }
+
+      .footer-links{ float: $right; 
+        ul{
+          li{
+            float: $left; margin-#{$left}: 20px;
+            a{ font-size: 13px; color: #666; line-height: 32px;  }
+          }
+        }
+      }
+
+   
+
+  }
+}
+
+
+@media (min-width: 1200px) and (max-width: 1649px){
+  .typefooter-1{
+    
+  } 
+}

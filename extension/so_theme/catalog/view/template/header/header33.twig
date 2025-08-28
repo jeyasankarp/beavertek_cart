@@ -1,0 +1,68 @@
+{#=====Get variable : Config Select Block on header=====#}
+{% set hidden_headercenter = soconfig.get_settings('toppanel_type') =='2'? 'hidden-compact' : '' %}
+{% set hidden_headerbottom = soconfig.get_settings('toppanel_type') =='1'? 'hidden-compact' : '' %}
+
+<header id="header" class=" variant typeheader-{{ typeheader ? typeheader : '1'}}">
+	<div class="header-top hidden-compact">
+		<div class="container">
+			<div class="row">
+				<div class="header-top-left col-xl-6 col-lg-6 col-md-6 col-sm-6 hidden-xs col-12">
+					{% if soconfig.get_settings('welcome_message_status') %}
+						<div class="welcome-msg">
+							{% if soconfig.get_settings('welcome_message') is not empty %}
+								{{ soconfig.decode_entities( soconfig.get_settings('welcome_message') ) }}
+							{% endif %} 
+						</div>
+					{% endif %}	
+					{% if soconfig.get_settings('phone_status') and soconfig.get_settings('contact_number') %}
+						<div class="telephone hidden-xs">
+							{{ soconfig.decode_entities( soconfig.get_settings('contact_number') ) }}
+						</div>
+					{% endif %}			
+				</div>
+				<div class="header-top-right col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-12 col-12">										
+					{% if soconfig.get_settings('lang_status') %}
+					<ul class="top-link lang-curr">
+						{% if currency %}<li class="currency"> {{ currency }}  </li> {% endif %}
+						{% if language %} <li class="language">{{ language }} </li>	{% endif %}			
+					</ul>				
+					{% endif %} 					
+						
+				</div>
+			</div>
+		</div>
+	</div>
+	{#======	HEADER CENTER	=======#} 
+	<div class="header-middle {{hidden_headercenter}}">
+		<div class="container">
+
+				<div class="logo">
+			   		{{soconfig.get_logo()}}
+			   	</div>
+				<div class="search-header-w">
+					<div class="icon-search hidden-lg hidden-md hidden-sm"><i class="fa fa-search"></i></div>								
+					{{ search_block }}
+				</div>	
+				<div class="midde-right">	
+					{% if logged %} 
+						<div class="link-lg"><a href="{{ logout }}" title="{{ text_logout }}"><i class="icom-user1"></i><span>{{ text_logout }}</span></a></div>
+					{% else %}   
+						<div class="link-lg"><a href="{{ login }}" title="{{ text_login }}"><i class="icom-user1"></i><span>{{ text_login }}</span></a></div>							
+					{% endif %}										
+					<div class="compare"><a href="{{ compare }}" title="{{ text_compare }}"><i class="fa fa-sliders"></i><span>{{ text_compare }}</span></a></div>
+					<div class="shopping_cart">							
+					 	{{ cart }}
+					</div>																		
+
+			</div>
+		</div>
+	</div>
+	<div class="header-bottom {{hidden_headerbottom}}">
+		<div class="container">
+			<div class="main-menu-w">					
+				{{ content_menu1 }}								
+			</div>
+		</div>
+	</div>
+		
+</header>

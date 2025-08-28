@@ -1,0 +1,38 @@
+
+
+<footer class="footer-container typefooter-{{typefooter ? typefooter : '1'}}">
+	{# {% if soconfig.get_settings('backtop') %} #}
+	<div class="back-to-top"><i class="fa fa-angle-up"></i></div>
+	{# {% endif %} #}
+	{#======	FOOTER TOP	=======#}  
+	{% if footer_block35 is not empty %}
+	<div class="footer-main desc-collapse showdown" id="collapse-footer">	
+		{{footer_block35}}			
+	</div>
+	
+	{% endif %}
+	
+	
+	{#======	FOOTER BOTTOM	=======#} 
+	<div class="footer-bottom">
+		<div class="container">		
+		<div class="row">			
+			
+			<div class="col-xl-6 col-lg-7 col-md-8 col-sm-8 col-xs-12 col-12 copyright-w">	
+				<div class="copyright">
+					{% if soconfig.get_settings('copyright') is empty %}
+						{{ powered }}
+					{% else %}
+						{{ soconfig.decode_entities(soconfig.get_settings('copyright'))|replace({'{year}': "now"|date("Y")}) }}
+					{% endif %}
+				</div>	
+			</div>
+			{% if soconfig.get_settings('imgpayment_status')%} 
+			<div class="col-xl-6 col-lg-5 col-md-4 col-sm-4 col-xs-12 col-12 payment-w">
+				<img src="image/{{  soconfig.get_settings('imgpayment') }}"  alt="imgpayment">
+			</div>
+			{% endif %}
+		</div>
+		</div>
+	</div>
+</footer>

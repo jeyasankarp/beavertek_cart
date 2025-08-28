@@ -1,0 +1,230 @@
+{{ header }}{{ column_left }}
+<div id="content">
+	<div class="page-header">
+    	<div class="container-fluid">
+      		<div class="float-end">
+        		<button type="submit" form="form-lookbook-slide" name="save_stay" value="1" data-bs-toggle="tooltip" title="{{ button_save_stay }}" class="btn btn-success"><i class="fa fa-save"></i> {{ text_save_stay }}</button>
+        		<button type="submit" form="form-lookbook-slide" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i> {{ text_save }}</button>
+        		<a href="{{ cancel }}" data-bs-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default btn-light"><i class="fa fa-reply"></i></a>
+        	</div>
+      		<h1>{{ heading_title }}</h1>
+      		<ol class="breadcrumb">
+        		{% for breadcrumb in breadcrumbs %}
+        			<li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        		{% endfor %}
+      		</ol>
+    	</div>
+  	</div>
+
+  	<div class="container-fluid">
+  		{% if error_warning %}
+	    	<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+	      		<!--<button type="button" class="close" data-dismiss="alert">&times;</button>-->
+	    	</div>
+	    {% endif %}
+
+	    {% if success %}
+  			<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> {{ success }}
+    			<!--<button type="button" class="close" data-dismiss="alert">&times;</button>-->
+  			</div>
+  		{% endif %}
+
+	    {% if text_layout %}
+  			<div class="alert alert-info"><i class="fa fa-info-circle"></i> {{ text_layout }}</div>
+  		{% endif %}
+		
+		<div class="card">
+			<div class="card-header">
+				<h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_form }}</h3>
+			</div>	
+			<div class="card-body">
+        		<form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-lookbook-slide" class="form-horizontal">
+        			<ul class="nav nav-tabs" role="tablist">
+			            <li class="nav-item"><a class="active nav-link" href="#tab-general" data-bs-toggle="tab">{{ tab_general }}</a></li>
+			            <li class="nav-item"><a class="nav-link" href="#tab-slides" data-bs-toggle="tab">{{ tab_slides }}</a></li>
+		          	</ul>
+		          	<div class="tab-content">
+            			<div class="tab-pane active" id="tab-general">
+		        			<div class="row mb-3 required">
+			                	<label class="col-sm-2 col-form-label" for="input-title">{{ entry_lookbook_slide_name }}</label>
+			                	<div class="col-sm-4">
+			                  		<input type="text" name="title" value="{{ title }}" placeholder="" id="input-title" class="form-control" />
+			                  		{% if error_title %}
+			                  			<div class="text-danger">{{ error_title }}</div>
+			                  		{% endif %}
+			                  	</div>
+			              	</div>
+
+			              	<div class="row mb-3">
+			                	<label class="col-sm-2 col-form-label" for="input-custom_class">{{ entry_custom_class }}</label>
+			                	<div class="col-sm-4">
+			                  		<input type="text" name="custom_class" value="{{ custom_class }}" placeholder="" id="input-custom_class" class="form-control" />
+			                  	</div>
+			              	</div>
+
+			              	<div class="row mb-3">
+			                	<label class="col-sm-2 col-form-label" for="input-navigation">{{ entry_show_navigation }}</label>
+			                	<div class="col-sm-4">
+			                  		<select name="navigation" id="input-navigation" class="form-control">
+			                  			<option value="0" {{ navigation == '0' ? 'selected="selected"' : '' }}>{{ text_use_general_config}}</option>
+			                  			<option value="1" {{ navigation == '1' ? 'selected="selected"' : '' }}>{{ text_yes }}</option>
+			                  			<option value="2" {{ navigation == '2' ? 'selected="selected"' : '' }}>{{ text_no }}</option>
+			                  		</select>
+			                	</div>
+			              	</div>
+
+			              	<div class="row mb-3">
+			                	<label class="col-sm-2 col-form-label" for="input-pagination">{{ entry_show_pagination }}</label>
+			                	<div class="col-sm-4">
+			                  		<select name="pagination" id="input-pagination" class="form-control">
+			                  			<option value="0" {{ pagination == '0' ? 'selected="selected"' : '' }}>{{ text_use_general_config}}</option>
+			                  			<option value="1" {{ pagination == '1' ? 'selected="selected"' : '' }}>{{ text_yes }}</option>
+			                  			<option value="2" {{ pagination == '2' ? 'selected="selected"' : '' }}>{{ text_no }}</option>
+			                  		</select>
+			                	</div>
+			              	</div>
+
+			              	<div class="row mb-3">
+			                	<label class="col-sm-2 col-form-label" for="input-auto_play">{{ entry_autoplay }}</label>
+			                	<div class="col-sm-4">
+			                  		<select name="auto_play" id="input-auto_play" class="form-control">
+			                  			<option value="0" {{ auto_play == '0' ? 'selected="selected"' : '' }}>{{ text_use_general_config}}</option>
+			                  			<option value="1" {{ auto_play == '1' ? 'selected="selected"' : '' }}>{{ text_yes }}</option>
+			                  			<option value="2" {{ auto_play == '2' ? 'selected="selected"' : '' }}>{{ text_no }}</option>
+			                  		</select>
+			                	</div>
+			              	</div>
+
+			              	<div class="row mb-3">
+			                	<label class="col-sm-2 col-form-label" for="input-auto_play_timeout">{{ entry_auto_play_timeout }}</label>
+			                	<div class="col-sm-4">
+			                		<div class="input-group">
+			                			<input type="text" name="auto_play_timeout" value="{{ auto_play_timeout }}" placeholder="{{ text_blank_to_use_general_config }}" id="input-auto_play_timeout" class="form-control">
+			                			<span class="input-group-text">ms</span>
+			                      	</div>
+			                  	</div>
+			              	</div>
+
+			              	<div class="row mb-3">
+			                	<label class="col-sm-2 col-form-label" for="input-stop_auto">{{ entry_stop_auto }}</label>
+			                	<div class="col-sm-4">
+			                  		<select name="stop_auto" id="input-stop_auto" class="form-control">
+			                  			<option value="0" {{ stop_auto == '0' ? 'selected="selected"' : '' }}>{{ text_use_general_config}}</option>
+			                  			<option value="1" {{ stop_auto == '1' ? 'selected="selected"' : '' }}>{{ text_yes }}</option>
+			                  			<option value="2" {{ stop_auto == '2' ? 'selected="selected"' : '' }}>{{ text_no }}</option>
+			                  		</select>
+			                	</div>
+			              	</div>
+
+			              	<div class="row mb-3">
+			                	<label class="col-sm-2 col-form-label" for="input-loop">{{ entry_loop }}</label>
+			                	<div class="col-sm-4">
+			                  		<select name="loop" id="input-loop" class="form-control">
+			                  			<option value="0" {{ loop == '0' ? 'selected="selected"' : '' }}>{{ text_use_general_config}}</option>
+			                  			<option value="1" {{ loop == '1' ? 'selected="selected"' : '' }}>{{ text_yes }}</option>
+			                  			<option value="2" {{ loop == '2' ? 'selected="selected"' : '' }}>{{ text_no }}</option>
+			                  		</select>
+			                	</div>
+			              	</div>
+
+			              	<div class="row mb-3">
+			                	<label class="col-sm-2 col-form-label" for="input-next_image">{{ entry_next_image }}</label>
+			                	<div class="col-sm-4">
+		                			<input type="text" name="next_image" value="{{ next_image }}" placeholder="{{ text_blank_to_use_general_config }}" id="input-next_image" class="form-control">
+			                	</div>
+			              	</div>
+
+			              	<div class="row mb-3">
+			                	<label class="col-sm-2 col-form-label" for="input-prev_image">{{ entry_prev_image }}</label>
+			                	<div class="col-sm-4">
+		                			<input type="text" name="prev_image" value="{{ prev_image }}" placeholder="{{ text_blank_to_use_general_config }}" id="input-prev_image" class="form-control">
+			                	</div>
+			              	</div>
+
+			              	<div class="row mb-3">
+			                	<label class="col-sm-2 col-form-label" for="input-status">{{ entry_status }}</label>
+			                	<div class="col-sm-4">
+			                  		<select name="status" id="input-status" class="form-control">	                    
+			                  			<option value="1" {{ status == '1' ? 'selected="selected"' : '' }}>{{ text_enabled }}</option>
+			                  			<option value="0" {{ status == '0' ? 'selected="selected"' : '' }}>{{ text_disabled }}</option>
+			                  		</select>
+			                	</div>
+			              	</div>
+		              	</div>
+		              	<div class="tab-pane" id="tab-slides">
+		              		<div class="table-responsive">
+		            			<table class="table table-bordered table-hover">
+		            				<thead>
+					                    <tr>
+					                      	<td style="width: 1px;" class="text-center"><input type="checkbox" id="lookbook-checkall" onclick="$('input[name*=\'lookbook\']').prop('checked', this.checked);" /></td>
+					                      	<td class="text-center">{{ column_id }}</td>
+					                      	<td class="text-left">{{ column_image }}</td>
+					                      	<td class="text-left">{{ column_name }}</td>
+					                      	<td class="text-left">{{ column_status }}</td>
+					                      	<td class="text-right">{{ column_position }}</td>
+					                    </tr>
+				                  	</thead>
+				                  	<tbody>
+				                  		{% if lookbooks %}
+			                  				{% for key, lookbook in lookbooks %}
+			                  					<tr>
+			                  						<td class="text-center">
+			                  							{% if lookbook.lookbook_id in selected %}
+								                      		<input type="checkbox" name="lookbook[{{ key }}][lookbook_id]" value="{{ lookbook.lookbook_id }}" class="btncheckbox" checked="checked" />
+								                      	{% else %}
+								                      		<input type="checkbox" name="lookbook[{{ key }}][lookbook_id]" value="{{ lookbook.lookbook_id }}" class="btncheckbox" />
+								                      	{% endif %}
+								                   	</td>
+								                   	<td class="text-left">{{ lookbook.lookbook_id }}</td>
+								                   	<td class="text-left">{% if lookbook.image %} <img src="{{ lookbook.image }}" alt="{{ lookbook.name }}" class="img-thumbnail" /> {% else %} <span class="img-thumbnail list"><i class="fa fa-camera fa-2x"></i></span> {% endif %}</td>
+								                   	<td class="text-left">{{ lookbook.name }}</td>
+								                   	<td class="text-left">{{ lookbook.status == 1 ? text_enabled : text_disabled }}</td>
+								                   	<td class="text-right"><input type="text" name="lookbook[{{ key }}][position]" value="{{ position[lookbook.lookbook_id] }}" class="form-control input-position" disabled="disabled" /></td>
+			                  					</tr>
+			                  				{% endfor %}
+			                  			{% else %}
+			                  				<tr>
+							                    <td class="text-center" colspan="6">{{ text_no_results }}</td>
+						                  	</tr>
+						               	{% endif %}
+				                  	</tbody>
+		            			</table>
+		            		</div>
+	              		</div>
+	              	</div>
+        		</form>			
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+jQuery(document).ready(function($) {
+	$('.btncheckbox').each(function() {
+		if ($(this).is(':checked')) {
+			$(this).parents('tr').find('td > .input-position').removeAttr('disabled');
+		}
+		else {
+
+		}
+	});
+
+	$('.btncheckbox').on('click', function() {
+		if ($(this).is(':checked')) {
+			$(this).parents('tr').find('td > .input-position').removeAttr('disabled');
+		}
+		else {
+			$(this).parents('tr').find('td > .input-position').attr('disabled', 'disabled');
+		}
+	});
+
+	$('#lookbook-checkall').on('click', function() {
+		if ($(this).prop("checked")) {
+			$('.input-position').removeAttr('disabled');
+		}
+		else {
+			$('.input-position').attr('disabled', 'disabled');
+		}
+	})
+})
+</script>
+{{ footer }}

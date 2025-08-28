@@ -1,0 +1,233 @@
+
+//** simple and lightweight mixin library for Sass **
+//-- url : http://bourbon.io/docs ---
+@import 'bourbon/bourbon';
+
+//** Mixins for Rem Font Sizing **
+//-- url : http://hugogiraudel.com/2013/03/18/ultimate-rem-mixin/
+@import 'utilities/rem';
+
+//** Variables for responsive design in bootstrap with sass **
+//-- url : https://gist.github.com/webinfinita/11407836
+@import 'utilities/bootstrap_breakpoints';
+
+//** Makes supporting both left-to-right (LTR) and right-to-left (RTL) easy.**
+//-- url : https://github.com/tysonmatanich/directional-scss
+@import 'utilities/directional';
+
+//Mixins utilities
+@import 'utilities/theme_variables';
+@import 'utilities/utilities';
+
+/* ================================================================================ */
+.typefooter-36{
+	background-color: #222;
+	clear: both;
+	width: 100%;
+	/* GENERAL */
+	.module .modtitle{
+        color: #fff;
+        font-size: 14px;
+        line-height: 20px;
+        margin-bottom: 10px;  
+        font-weight: 700;
+        text-transform: uppercase;      
+	}
+	.box-footer{ 
+		margin-bottom:30px;
+		ul.menu{
+			li{      
+				font-size: 13px;
+				color:#aaa;
+				a{
+					border: 0 none;               
+					font-size: 13px;
+					padding: 0;       
+					font-weight: 400; 
+					line-height: 24px;  
+					display: block;
+					color: #aaa;
+					@include transition(all 0.2s ease-in-out 0s);               
+					&:hover{ 
+					  color: #fff;
+					}
+				}       
+            }
+		}  
+	}
+	.footer-top{  
+		padding: 27px 0 30px; 
+		align-items: center;
+	} 
+	.footer-middle{ 
+		padding: 46px 15px 50px;
+	}
+	
+	.newsletter-footer36{ 
+		.newsletter{
+			background-color: transparent !important;
+			.title-block{  
+				.page-heading{           
+					color: #fff;
+					font-size: 14px;
+					line-height: 20px;
+					margin-bottom: 0px;  
+					font-weight: 700;
+					text-transform: uppercase;      
+				}
+				.promotext{
+					font-size:13px;
+					color:#aaa;
+				}
+			}
+			.block_content{
+				form.signup{
+					display: block;
+					margin: 0;
+					.form-group{
+						position: relative;
+						display: table;
+						margin:10px 0 0;
+						&:before{
+							content:"\e944";
+							font-family: 'icomoon';
+							font-size:16px;
+							color:#888;
+							display:inline-block;
+							position:absolute;
+							top:11px;
+							#{$left}: 20px;
+						}
+						.input-box{
+							background-color: #fff;  
+							vertical-align: top;
+							border-radius: 5px;
+							display: table-cell;
+						}              
+						#txtemail{
+							height: 48px;
+							line-height: 48px;
+							width: 250px;
+							@media (min-width: 1200px){ width: 350px; }
+							box-shadow: none;
+							padding: side-values(0 10px 0 48px);
+							border: none; font-size: 16px; font-weight:400;        
+							background-color: #fff; border-radius: 5px;
+							&::-moz-placeholder {
+							  color: #888;
+								opacity: 1; 
+							}
+							&:-ms-input-placeholder { color: #888; } 
+							&::-webkit-input-placeholder  { color: #888; } 
+							&:focus{
+							  z-index: 0;
+							}
+						}
+					}
+					.subcribe{
+						margin-#{$left}: 10px;
+					}
+					.subcribe button{           
+						border:1px solid #fff;;
+						color: #fff;
+						font-weight: 400;
+						font-size: 14px;
+						height: 48px; 
+						line-height: 48px;
+						padding: 0 32px;   
+						border-radius: 5px;	
+						background:transparent;
+						text-transform:uppercase;
+						&:hover{
+							border-color:$background;
+						}
+					}
+				}
+			}
+		}
+	}
+	.footer-apps{ 
+		.modtitle{
+			margin-bottom:0;
+		}
+		.pre_text{
+			font-size:13px;
+			color:#aaa;
+		}
+		ul{
+			display:flex;
+			margin:16px 0 0;
+			li{
+				display: inline-block; margin-#{$right}: 10px;
+				&:last-child{
+					margin-#{$right}: 0px;
+				}
+				img{
+					@include transition(all 0.2s ease-in-out 0s);  
+					&:hover{
+						transform: translateY(-5px);
+						-webkit-transform: translateY(-5px);
+					}
+				}
+			}
+		}
+	}
+	.footer-info{
+		ul{
+			@media (min-width: 1200px){ max-width: 94%; }
+			li{
+				color: #aaa;
+				font-size:13px;
+				line-height: 18px;
+				display: block;
+				padding: 5px 0;
+			}
+		}
+	}
+	
+	.socials{		
+		ul{
+			display: flex;
+			flex-wrap: wrap;
+			gap: 25px;
+			padding-top:5px;
+			li{
+				height:25px;
+				a{
+					font-size:24px;
+					color:#aaa;
+					display: inline-block;
+					@include transition(all 0.2s ease-in-out 0s);  
+					&:hover{
+						color:#fff;
+						transform: translateY(-5px);
+						-webkit-transform: translateY(-5px);	
+					}
+				}
+			}
+		}
+	}
+	.payment{
+		.payment-content{
+			padding-top:5px;
+			img{
+				@include transition(all 0.2s ease-in-out 0s);  
+				&:hover{
+					transform: translateY(-5px);
+					-webkit-transform: translateY(-5px);
+				}
+			}
+		}
+	}
+	
+  /* FOOTER BOTTOM */
+	.footer-bottom{ padding: 15px 0;
+		background-color:#323232;
+		border-top: 1px solid #464646;
+		.copyright{
+			line-height: 33px; color: #ccc; font-size:13px;
+			text-align:center;
+		}		
+	}
+}
+

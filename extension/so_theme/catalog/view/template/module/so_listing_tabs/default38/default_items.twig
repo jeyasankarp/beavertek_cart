@@ -1,0 +1,358 @@
+{% if type_show == 'slider' %}
+		<div class="ltabs-items-inner owl2-carousel  ltabs-slider ">
+{% else %}
+		<div class="ltabs-items-inner {{ type_show == 'loadmore' ? class_ltabs ~ ' '~ effect : ' ' }}">
+{% endif %}
+{% if child_items is not empty %}
+	{% set i = 0 %}
+	{% set k = rl_loaded is defined ? rl_loaded : 0 %}
+	{% set count = child_items|length %}
+		{% for product in child_items %}
+			{% set i = i + 1 %}
+			{% set k = k + 1 %}
+			
+			{% if type_show == 'slider' and (i % nb_rows == 1 or nb_rows == 1) %}
+				<div class="ltabs-item ">
+			{% endif %}
+			{% if type_show == 'loadmore' %}
+				<div class="ltabs-item new-ltabs-item" >
+			{% endif %}			
+			<div class="item-inner product-layout transition product-grid">
+
+				<div class="product-item-container">
+					<div class="left-block">										
+						{% if product_image %}								
+							<div class="product-thumb{{product.product_id}} product-image-container {% if product_image_num  == 2 %} {{ 'second_img' }} {% endif %}	">
+								<a class="image" href="{{ product.href }}" target="{{ item_link_target }}" title="{{ product.name_maxlength }}"  >
+									
+									{% if product_image_num ==2 %}
+										<img data-sizes="auto" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="{{ product.thumb }}" class="img-1 lazyload" alt="{{ product.name }}">
+										<img data-sizes="auto" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="{{ product.thumb2 }}" class="img-2 lazyload" alt="{{ product.name }}">
+									{% else %}
+										<img data-sizes="auto" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="{{ product.thumb }}" alt="{{ product.name }}" class="lazyload">
+									{% endif %}	
+								</a>						
+							</div>
+						{% endif %}	
+						<div class="box-label">
+							{% if product.productNew and display_new %}
+								<span class="label-product label-new">{{ objlang.get('text_new') }}</span>
+							{% endif %}
+							{% if product.special and display_sale %}
+								<span class="label-product label-sale">{# {{ objlang.get('text_sale') }} #} {{ product.discount }} </span>
+							{% endif %}
+						</div>
+
+						<div class="button-group cartinfo--right">							
+							{% if display_wishlist %}
+								<button class="btn-button wishlist" type="button" title="{{ objlang.get('button_wishlist') }}" onclick="wishlist.add('{{ product.product_id }}');"><i class="icom-heart1"></i><span>{{ objlang.get('button_wishlist') }}</span></button>
+							{% endif %}							
+
+							{% if display_compare %}
+								<button class="btn-button compare" type="button" title="{{ objlang.get('button_compare') }}" onclick="compare.add('{{ product.product_id }}');"><i class="icom-compare"></i><span>{{ objlang.get('button_compare') }}</span></button>
+							{% endif %}
+							
+							<div class="so-quickview">
+								<a class="hidden" data-product='{{ product.product_id }}' href="{{ product.href }}" target="{{ item_link_target }}" ></a>
+							</div>
+						</div>
+					
+					</div>
+					<div class="right-block">
+						<div class="category-name">
+							{% for value in product.category_info %}
+								{% if value.category_id  in category %}
+									<a href="{{ our_url.link('product/category', 'path='~value.category_id) }}">{{ value.name }}</a>
+								{% endif %}
+							{% endfor %}							
+						</div>
+					
+						{% if display_title %}
+							<h4><a href="{{ product.href }}" title="{{ product.name }}" target="{{ item_link_target }}">{{ product.name_maxlength }}</a></h4>
+						{% endif %}
+
+						{% if display_rating %}
+							<div class="rating">
+							  	{% for j in 1..5 %}
+							  		{% if product.rating < j %}
+							  			<span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
+							  		{% else %}
+							  			<span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span>
+							  		{% endif %}
+							  	{% endfor %}
+							</div>
+						{% endif %}
+						
+						{% if product.price and display_price %}
+							<div class="price">
+								  	{% if product.special is empty %}
+													    {% if (cfp_setting.module_so_call_for_price_status and product.price_0 <= 0) %} 
+														   {% if (cfp_setting.module_so_call_for_price_replace_cart) and (cfp_setting.module_so_call_for_price_replace_cart == '1') %} 			
+                                                              <a data-fancybox data-type="ajax" data-src="{{base}}index.php?route=extension/so_theme/module/so_call_for_price&product_id={{product.product_id}}" href="javascript:;" class="callforprice" style="color: #ff0000; font-weight: bold;"><i class="fa fa-phone" ></i> {{text_price_0}}</a>															
+															{% endif %} 
+															{% else %}   
+															<span class="price-new">{{ product.price }}</span>
+														{% endif %} 
+								  	{% else %}
+							  		<span class="price-new">{{ product.special }}</span>
+							  		<span class="price-old">{{ product.price }}</span>
+							  	{% endif %}
+							  	{% if product.tax %}
+							  		<span class="price-tax hidden">{{ objlang.get('text_tax') }} {{ product.tax }}</span>
+							  	{% endif %}
+							</div>
+						{% endif %}	
+
+						{% if((product.option_data and product.option_data.product_option_value) and (product.option_data.product_option_value)) %} 
+										
+						<ul id="so-colorswatch-selector-thumb{{product.product_id}}" class="so-colorswatch-productpage-icons text-center">
+							 {% for option_value in product.option_data.product_option_value %}
+								<li class="option-item">
+									<a class="" 
+										data-product-option-value-id="{{option_value.product_option_value_id}}" 
+										data-option-value-id="{{option_value.option_value_id}}" 
+										data-color-image="{{option_value.color_image}}" 
+										data-color-thumb-image="{{option_value.color_thumb_image}}" 
+										style="display: block;width: {{product.width_product_page}}px; height: {{product.height_product_page}}px; background-image: url({{option_value.image}})">
+									</a>
+								</li>							
+							 {% endfor %}
+						</ul>
+								<script type="text/javascript">
+									var ProductOptionId = '{{product_option_id}}';
+									var $window_width = $(window).width();
+									jQuery(document).ready(function($) {							
+											var default_image = $(".product-thumb{{product.product_id}} .image img").attr("data-src");
+
+											$("#input-option-{{product_option_id}}").parent().hide();
+					
+											$("#input-option-{{product_option_id}} option").each(function(){
+											  var text = $(this).text().replace(/\s{2,}/g, " ");
+											  var val = $(this).attr("value");
+											  $("#so-colorswatch-selector-thumb{{product.product_id}} li a").each(function(index, el){
+												if($(el).data("product-option-value-id")== val){
+												  $(el).attr("title", text);
+												}
+											  })
+											});
+								{% if (colorswatch_type == 'click') %}
+								
+									$("#so-colorswatch-selector-thumb{{product.product_id}} li.option-item").on('click',function(e){
+											e.stopImmediatePropagation();
+											var option_value_id = $(this).children("a").data("product-option-value-id");
+											var option_id = $(this).children("a").data("option-value-id");	
+											
+											if ($(this).hasClass("checked")) {
+												$("#so-colorswatch-selector-thumb{{product.product_id}} li.option-item").removeClass("checked");
+												$(this).removeClass("checked");
+												$("#input-option-{{product_option_id}}").val("").trigger("change");
+												$("#so-colorswatch-selector-thumb{{product.product_id}} li.selected-option > span").html("");
+
+												$(".product-thumb{{product.product_id}} .image img").attr("src", default_image);
+					
+											}
+											else {
+												$("#so-colorswatch-selector-thumb{{product.product_id}} li.option-item").removeClass("checked");
+														$(this).removeClass("checked").addClass("checked");
+														$("#input-option-{{product_option_id}}").val(option_value_id).trigger("change");
+														$("#so-colorswatch-selector-thumb{{product.product_id}} li.selected-option > span").html($(this).children("a").attr("title"));
+														
+														if ($(this).children("a").data("color-image") != "") {
+															
+															$(".product-thumb{{product.product_id}} .image img").attr("src", $(this).children("a").data("color-image"));
+
+														}
+														else {
+															$(".product-thumb{{product.product_id}} .image img").attr("src", default_image);
+														}
+
+														$("#thumb-slider  a.thumbnail").removeClass("active");
+													}
+												})							
+								{% else %}
+								
+												if ($window_width > 1199) {
+													$("#so-colorswatch-selector-thumb{{product.product_id}} li.option-item").hover(function(e){
+														e.preventDefault();
+														var option_value_id = $(this).children("a").data("product-option-value-id");
+														var option_id = $(this).children("a").data("option-value-id");
+														
+														$("#so-colorswatch-selector-thumb{{product.product_id}} li.option-item").removeClass("checked");
+														if ($(this).hasClass("checked")) {
+															$(this).removeClass("checked");
+															$("#input-option-{{product_option_id}}").val("").trigger("change");
+															
+															$(".product-thumb{{product.product_id}} .image img").attr("src", default_image);
+
+														}
+														else {
+															$(this).removeClass("checked").addClass("checked");
+															$("#input-option-{{product_option_id}}").val(option_value_id).trigger("change");
+															$("#so-colorswatch-selector-thumb{{product.product_id}} li.selected-option > span").html($(this).children("a").attr("title"));
+															
+															if ($(this).children("a").data("color-image") != "") {
+																$(".product-thumb{{product.product_id}} .image img").attr("src", $(this).children("a").data("color-image"));
+					   
+															}
+															else {
+																$(".product-thumb{{product.product_id}} .image img").attr("src", default_image);
+															}
+															 $("#thumb-slider a.thumbnail").removeClass("active");
+														}
+													});
+												}
+												else {
+													$(document).on("click", "#so-colorswatch-selector-thumb{{product.product_id}} li.option-item", function(e){
+														e.preventDefault();
+														var option_value_id = $(this).children("a").data("product-option-value-id");
+														var option_id = $(this).children("a").data("option-value-id");
+							
+														$("#so-colorswatch-selector-thumb{{product.product_id}} li.option-item").removeClass("checked");
+														if ($(this).hasClass("checked")) {
+															$(this).removeClass("checked");
+															$("#input-option-{{product_option_id}}").val("").trigger("change");
+															
+															$(".product-thumb{{product.product_id}} .image img").attr("src", default_image);
+															
+															$(".large-image > img").attr("src", default_image);
+															$(".large-image > img").attr("data-src", default_data_src);
+															$(".large-image > img").attr("data-zoom-image", default_zoom_image);
+
+															$(".zoomContainer").remove();
+															zoomImage.removeData("elevateZoom");
+															zoomImage.attr("src", default_image);
+															zoomImage.data("zoom-image", default_zoom_image);
+															zoomImage.elevateZoom(zoomConfig);
+															
+														}
+														else {
+															$(this).removeClass("checked").addClass("checked");
+															$("#input-option-{{product_option_id}}").val(option_value_id).trigger("change");
+															$("#so-colorswatch-selector-thumb{{product.product_id}} li.selected-option > span").html($(this).children("a").attr("title"));
+															
+															if ($(this).children("a").data("color-image") != "") {
+																
+																$(".product-thumb{{product.product_id}} .image img").attr("src", $(this).children("a").data("color-image"));
+																
+																$(".large-image img").attr("src", $(this).children("a").data("color-image"));
+
+																$(".zoomContainer").remove();
+																zoomImage.removeData("elevateZoom");
+																zoomImage.attr("src", $(this).children("a").data("color-image"));
+																zoomImage.data("zoom-image", $(this).children("a").data("color-image"));
+																zoomImage.elevateZoom(zoomConfig);
+																
+															}
+															else {
+																
+																$(".product-thumb{{product.product_id}} .image img").attr("src", default_image);
+																
+																$(".large-image > img").attr("src", default_image);
+																$(".large-image > img").attr("data-src", default_data_src);
+																$(".large-image > img").attr("data-zoom-image", default_zoom_image);
+
+																$(".zoomContainer").remove();
+																zoomImage.removeData("elevateZoom");
+																zoomImage.attr("src", default_image);
+																zoomImage.data("zoom-image", default_zoom_image);
+																zoomImage.elevateZoom(zoomConfig);
+																
+															}
+															 $("#thumb-slider a.thumbnail").removeClass("active");
+														}
+													})
+												}					
+								
+								{% endif %}
+									});
+								</script>						 
+						{% endif %} 
+						
+						{% if display_add_to_cart %}
+							<button class="btn-button addToCart" title="{{ objlang.get('button_cart') }}" type="button" onclick="cart.add('{{ product.product_id }}');"><i class="icom icom-cart"></i> <span>{{ objlang.get('button_cart') }}</span></button>
+						{% endif %}	
+
+						{% if display_description %} 
+							<div class="item-des">
+								{{ product.description }} 
+							</div>
+						{% endif %}
+						
+					</div>
+
+				</div>
+			</div>
+			{% if type_show == 'slider' and (i % nb_rows == 0 or i == count) %}
+			</div>
+			{% endif %}
+			
+			{% if type_show == 'loadmore' %}
+			</div>
+			{% endif %}
+
+			{% if type_show == 'loadmore' %}
+				{% set clear = 'clr1' %}
+				{% if k % 2 == 0 %} {% set clear = clear ~' clr2' %} {% endif %}
+				{% if k % 3 == 0 %} {% set clear = clear ~' clr3' %} {% endif %}
+				{% if k % 4 == 0 %} {% set clear = clear ~' clr4' %} {% endif %}
+				{% if k % 5 == 0 %} {% set clear = clear ~' clr5' %} {% endif %}
+				{% if k % 6 == 0 %} {% set clear = clear ~' clr6' %} {% endif %}
+				<div class="{{ clear }}"></div>
+			{% endif %}
+		{% endfor %}
+	{% endif %}
+</div>
+
+{% if type_show == 'slider' %}
+<script type="text/javascript">
+	jQuery(document).ready(function($){
+		var $tag_id = $('#{{ tag_id }}'), 
+		parent_active = 	$('.items-category-{{ tab_id }}', $tag_id),
+		total_product = parent_active.data('total'),
+		tab_active = $('.ltabs-items-inner',parent_active),
+		nb_column0 = {{ nb_column0 }},
+		nb_column1 = {{ nb_column1 }},
+		nb_column2 = {{ nb_column2 }},
+		nb_column3 = {{ nb_column3 }},
+		nb_column4 = {{ nb_column4 }};
+		tab_active.owlCarousel2({
+			rtl: {{ direction }},
+			nav: {{ display_nav }},
+			dots: false,	
+			margin: 30,
+			loop:  {{ display_loop }},
+			autoplay: {{ autoplay }},
+			autoplayHoverPause: {{ pausehover }},
+			autoplayTimeout: {{ autoplayTimeout }},
+			autoplaySpeed: {{ autoplaySpeed }},
+			mouseDrag: {{ mousedrag }},
+			touchDrag: {{ touchdrag }},
+			navRewind: true,
+			navText: [ '', '' ],
+			responsive: {
+				0: {
+					items: nb_column4,
+					nav: total_product <= nb_column0 ? false : (({{display_nav}}) ? true: false),
+				},
+				480: {
+					items: nb_column3,
+					nav: total_product <= nb_column0 ? false : (({{display_nav}}) ? true: false),
+				},
+				768: {
+					items: nb_column2,
+					nav: total_product <= nb_column0 ? false : (({{display_nav}}) ? true: false),
+				},
+				992: {
+					items: nb_column1,
+					nav: total_product <= nb_column0 ? false : (({{display_nav}}) ? true: false),
+				},
+				1200: {
+					items: nb_column0,
+					
+					nav: total_product <= nb_column0 ? false : (({{display_nav}}) ? true: false),
+				}
+			}
+		});
+	});
+</script>
+{% endif %}

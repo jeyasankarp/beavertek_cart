@@ -1,0 +1,967 @@
+{{ header }}{{ column_left }}
+<div id="content">
+	<div class="page-header">
+		<div class="container-fluid">
+			<div class="float-end">
+				<button type="submit" form="form-featured" data-toggle="tooltip" title="{{ entry_button_save }}" class="btn btn-primary"><i class="fa fa-save"></i> {{ entry_button_save }}</button>
+				<a class="btn btn-success" onclick="$('#action').val('save_edit');$('#form-featured').submit();" data-toggle="tooltip" title="{{ entry_button_save_and_edit }}" ><i class="fa fa-pencil-square-o"></i> {{ entry_button_save_and_edit }}</a>
+				<a class="btn btn-info" onclick="$('#action').val('save_new');$('#form-featured').submit();" data-toggle="tooltip" title="{{ entry_button_save_and_new }}" ><i class="fa fa-book"></i>  {{ entry_button_save_and_new }}</a>
+				<a href="{{ cancel }}" data-toggle="tooltip" title="{{ entry_button_cancel }}" class="btn btn-danger"><i class="fa fa-reply"></i>  {{ entry_button_cancel }}</a>
+			</div>
+		    <h1>{{ heading_title_so }}</h1>
+		    <ol class="breadcrumb">
+		        {% for breadcrumb in breadcrumbs %}
+		        <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+		        {% endfor %}
+		    </ol>
+		</div>
+	</div>
+	<div class="container-fluid">
+		{% if error.warning is defined %}
+			<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error.warning }}
+				<!--<button type="button" class="close" data-dismiss="alert">&times;</button>-->
+			</div>
+		{% endif %}
+		{% if success is defined and success %}
+			<div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ success }}
+				<!--<button type="button" class="close" data-dismiss="alert">&times;</button>-->
+			</div>
+			<div class="alert alert-info"><i class="fa fa-info-circle"></i> {{ text_layout }}
+				<!--<button type="button" class="close" data-dismiss="alert">&times;</button>-->
+			</div>
+		{% endif %}
+		
+		<div class="card">
+		  <div class="card-header">
+			<h3 class="panel-title"><i class="fa fa-pencil"></i> {{ subheading }}</h3>
+		  </div>
+		  <div class="card-body">
+				<form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-featured" class="form-horizontal">
+					<div class="rows">
+						<ul class="nav nav-tabs" role="tablist">
+							<li class="nav-item {% if selectedid == 0 %}active{% endif %}">
+								<a href="{{ link }}" class="nav-link {% if selectedid == 0 %}active{% endif %}"> <span class="fa fa-plus"></span>
+									{{ button_add_module }}
+								</a>
+							</li>
+							{% set i = 1%}
+							{% for key, module in moduletabs %}  
+								<li class="nav-item" role="presentation" {% if module.module_id == selectedid  %} class="active"{% endif %} >
+									<a class="nav-link {% if module.module_id == selectedid  %}active{% endif %}" href="{{ link }}&module_id={{ module.module_id}}" aria-controls="bannermodule-{{ key }} "  >
+										<span class="fa fa-pencil-alt"></span> {{ module.name}}
+									</a>
+								</li>
+							{% set i = i + 1 %}  
+							{% endfor %}
+						</ul>
+					</div>	
+					<div class="row">
+						<div class="col-sm-12">
+							{% set module_row = 1 %}
+							{% for module in modules %}
+								{% if selectedid %}
+									<div class="pull-right">
+										<a href="{{ action }}&delete=1" class="remove btn btn-danger" ><span><i class="fa fa-remove"></i> {{ entry_button_delete }}</span></a>
+									</div>
+								{% endif %}
+								<div  id="tab-module{{ module_row }}" class="col-sm-12">
+									<div class="row mb-3">
+										<input type="hidden" name="action" id="action" value=""/>
+										<label for="input-name-1" class="col-sm-2 col-form-label"> <b style="font-weight:bold; color:#f00">*</b> <span data-toggle="tooltip" title="{{ entry_name_desc }}">{{ entry_name }} </span></label>
+										<div class="col-sm-9">
+											<div class="col-sm-5">
+												<input type="text" name="name" value="{{ module.name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control" />
+											</div>
+											{% if error.name is defined %}
+												<div class="text-danger col-sm-12">{{ error.name }}</div>
+											{% endif %}
+										</div>
+									</div>
+									<div class="row mb-3">
+										<label class="col-sm-2 col-form-label"><b style="font-weight:bold; color:#f00">*</b> <span data-toggle="tooltip" title="{{ entry_head_name_desc }}">{{ entry_head_name }} </span></label>
+										<div class="col-sm-9 row">
+											<div class="col-sm-5">
+												{% set i = 0 %}
+												{% for language in languages %}
+													{% set i = i + 1 %}
+													<input type="text" name="module_description[{{ language.language_id }}][head_name]" placeholder="{{ entry_head_name }}" id="input-head-name-{{ language.language_id }}" value="{{ module_description[language.language_id]['head_name'] is defined ? module_description[language.language_id]['head_name'] : '' }}" class="form-control{{ i>1 ? ' d-none ' : ' first-name' }}" />
+													{% if i == 1 %}
+														<input type="hidden" class="form-control" id="input-head_name" placeholder="{{ entry_head_name }}" value="{{ module_description[language.language_id]['head_name'] is defined ? module_description[language.language_id]['head_name'] : '' }}" name="head_name" />
+													{% endif %}
+												{% endfor %}
+											</div>
+											<div class="col-sm-3">
+												<select  class="form-control" id="language">
+													{% for language in languages %}
+													<option value="{{ language.language_id }}">
+														{{ language.name }}
+													</option>
+													{% endfor %}
+												</select>
+											</div>
+											{% if error.head_name is defined %}
+												<div class="text-danger col-sm-12">{{ error.head_name }}</div>
+											{% endif %}
+										</div>
+									</div>
+									<div class="row mb-3">
+										<label class="col-sm-2 col-form-label"><span data-toggle="tooltip" title="{{ objlang.get('entry_custom_url_desc') }}">{{ objlang.get('entry_custom_url') }} </span></label>
+										<div class="col-sm-9 row">
+											<div class="col-sm-5">
+												{% set i = 0 %}
+												{% for language in languages %}
+													{% set i = i + 1 %}
+													<input type="text" name="module_description[{{ language.language_id }}][custom_url]" placeholder="{{ objlang.get('entry_custom_url') }}" id="input-custom_url-{{ language.language_id }}" value="{{ module_description[language.language_id]['custom_url'] is defined ? module_description[language.language_id]['custom_url'] : '' }}" class="form-control {{ i>1 ? ' d-none ' : ' first-url' }}" />
+													{% if i == 1 %}
+													<input type="hidden" class="form-control" id="input-custom_url" placeholder="{{ objlang.get('entry_custom_url') }}" value="{{ module_description[language.language_id]['custom_url'] is defined ? module_description[language.language_id]['custom_url'] : '' }}" name="custom_url">
+													{% endif %}
+												{% endfor %}
+											</div>
+											<div class="col-sm-3">
+												<select  class="form-control" id="language_custom">
+													{% for language in languages %}
+														<option value="{{ language.language_id }}">{{ language.name }}</option>
+													{% endfor %}
+												</select>
+											</div>
+										</div>
+									</div>
+									<div class="row mb-3">
+										<label class="col-sm-2 col-form-label"> <span data-toggle="tooltip" title="{{ entry_display_title_module_desc }}">{{ entry_display_title_module }} </span></label>
+										<div class="col-sm-9">
+											<div class="col-sm-5">
+												<select name="disp_title_module" id="input-disp_title_module" class="form-control">
+													{% if module.disp_title_module %}
+														<option value="1" selected="selected">{{ text_yes }}</option>
+														<option value="0">{{ text_no }}</option>
+													{% else %}
+														<option value="1">{{ text_yes }}</option>
+														<option value="0" selected="selected">{{ text_no }}</option>
+													{% endif %}
+												</select>
+											</div>
+										</div>
+									</div>
+									<div class="row mb-3">
+										<label class="col-sm-2 col-form-label"><span data-toggle="tooltip" title="{{ entry_status_desc }}">{{ entry_status }} </span></label>
+										<div class="col-sm-9">
+											<div class="col-sm-5">
+												<select name="status" id="input-status" class="form-control">
+													{% if module.status %}
+														<option value="1" selected="selected">{{ text_enabled }}</option>
+														<option value="0">{{ text_disabled }}</option>
+													{% else %}
+														<option value="1">{{ text_enabled }}</option>
+														<option value="0" selected="selected">{{ text_disabled }}</option>
+													{% endif %}
+												</select>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="tab-pane">
+									<ul class="nav nav-tabs" id="so_youtech">
+										<li>
+											<button class="nav-link active" id="module-tab" data-bs-toggle="tab" data-bs-target="#module" type="button" role="tab" aria-controls="nav-module" aria-selected="true">{{ objlang.get('entry_module' )}}</button>
+										</li>
+										<li>
+											<button class="nav-link" id="source_option-tab" data-bs-toggle="tab" data-bs-target="#source_option" type="button" role="tab" aria-controls="nav-source_option" aria-selected="true">{{ objlang.get('entry_source_option' )}}</button>
+										</li>
+										<li>
+											<button class="nav-link" id="image_option-tab" data-bs-toggle="tab" data-bs-target="#image_option" type="button" role="tab" aria-controls="nav-image_option" aria-selected="true">{{ objlang.get('entry_image_option' )}}</button>
+										</li>
+										<li>
+											<button class="nav-link" id="effect_option-tab" data-bs-toggle="tab" data-bs-target="#effect_option" type="button" role="tab" aria-controls="nav-effect_option" aria-selected="true">{{ objlang.get('entry_effect_option' )}}</button>
+										</li>
+										<li>
+											<button class="nav-link" id="advanced_option-tab" data-bs-toggle="tab" data-bs-target="#advanced_option" type="button" role="tab" aria-controls="nav-advanced_option" aria-selected="true">{{ objlang.get('entry_advanced_option' )}}</button>
+										</li>
+									</ul>
+									<div class="tab-content">						
+										<div class="tab-pane fade show active" id="module" role="tabpanel" aria-labelledby="module-tab">
+											<div class="row mb-3">
+												<label class="col-sm-2 col-form-label"> <span data-toggle="tooltip" title="{{ entry_class_suffix_desc }}">{{ objlang.get('entry_class_suffix') }} </span> </label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<input type="text" name="class_suffix" value="{{ module.class_suffix }}" id="input-class_suffix" class="form-control" />
+													</div>
+												</div>
+											</div>
+											<div class="row mb-3">
+												<label class="col-sm-2 col-form-label"> <span data-toggle="tooltip" title="{{ entry_nb_column0_desc }}">{{ objlang.get('entry_column0') }}</span></label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<select name="nb_column0" id="input-column_1200" class="form-control">
+															{% for option_id, option_value in nb_columns %}
+																{% set selected = option_id == module.nb_column0 ? 'selected' : '' %}
+																<option value="{{ option_id }}" {{ selected }} >{{ option_value }}</option>
+															{% endfor %}
+														</select>
+													</div>
+												</div>
+											</div>
+											<div class="row mb-3">
+												<label class="col-sm-2 col-form-label"><span data-toggle="tooltip" title="{{ entry_nb_column1_desc }}">{{ objlang.get('entry_column1') }}  </span></label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<select name="nb_column1" id="input-column_992_1199" class="form-control">
+															{% for option_id, option_value in nb_columns %}
+																{% set selected = option_id == module.nb_column1 ? 'selected' : '' %}
+																<option value="{{ option_id }}" {{ selected }} >{{ option_value }}</option>
+															{% endfor %}
+														</select>
+													</div>
+												</div>
+											</div>
+											<div class="row mb-3">
+												<label class="col-sm-2 col-form-label"><span data-toggle="tooltip" title="{{ entry_nb_column2_desc }}">{{ objlang.get('entry_column2') }}  </span></label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<select name="nb_column2" id="input-column_768_991" class="form-control">
+															{% for option_id, option_value in nb_columns %}
+																{% set selected = option_id == module.nb_column2 ? 'selected' : '' %}
+																<option value="{{ option_id }}" {{ selected }} >{{ option_value }}</option>
+															{% endfor %}
+														</select>
+													</div>
+												</div>
+											</div>
+											<div class="row mb-3">
+												<label class="col-sm-2 col-form-label"> <span data-toggle="tooltip" title="{{ entry_nb_column3_desc }}">{{ objlang.get('entry_column3') }} </span></label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<select name="nb_column3" id="input-column_480_767" class="form-control">
+															{% for option_id, option_value in nb_columns %}
+																{% set selected = option_id == module.nb_column3 ? 'selected' : '' %}
+																<option value="{{ option_id }}" {{ selected }} >{{ option_value }}</option>
+															{% endfor %}
+														</select>
+													</div>
+												</div>
+											</div>
+											<div class="row mb-3">
+												<label class="col-sm-2 col-form-label"><span data-toggle="tooltip" title="{{ entry_nb_column4_desc }}">{{ objlang.get('entry_column4') }}  </span></label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<select name="nb_column4" id="input-column_0_479" class="form-control">
+															{% for option_id, option_value in nb_columns %}
+																{% set selected = option_id == module.nb_column4 ? 'selected' : '' %}
+																<option value="{{ option_id }}" {{ selected }} >{{ option_value }}</option>
+															{% endfor %}
+														</select>
+													</div>
+												</div>
+											</div>
+											<div class="row mb-3 owl-carousel">
+												<label class="col-sm-2 col-form-label"> <span data-toggle="tooltip" title="{{ entry_nb_row_desc }}">{{ objlang.get('entry_nb_row') }}</span></label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<select name="nb_row" id="input-nb_row" class="form-control">
+															{% for option_id, option_value in nb_rows %}
+																{% set selected = option_id == module.nb_row ? 'selected' : '' %}
+																<option value="{{ option_id }}" {{ selected }} >{{ option_value }}</option>
+															{% endfor %}
+														</select>
+													</div>
+												</div>
+											</div>
+											<div class="row mb-3 slick-slide">
+												<label class="col-sm-2 col-form-label"> <span data-toggle="tooltip" title="{{ entry_position_thumbnail_desc }}">{{ entry_position_thumbnail }} </span></label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<select name="position_thumbnail" id="input-position_thumbnail" class="form-control">
+															{% for option_id, option_value in position_thumbnails %}
+																{% set selected = option_id == module.position_thumbnail ? 'selected' : '' %}
+																<option value="{{ option_id }}" {{ selected }}>{{ option_value }}</option>
+															{% endfor %}
+														</select>
+													</div>
+												</div>
+											</div>
+										</div>
+						
+										<div class="tab-pane" id="source_option">
+											<div class="row mb-3">
+												<label class="col-sm-2 col-form-label"> <b style="font-weight:bold; color:#f00">*</b> <span data-toggle="tooltip" title="{{ entry_manufacturer_desc }}">{{ entry_manufacturer }}</span></label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<input data-oc-target="list-manufacturer" type="text" name="manufacturer" value="" placeholder="{{ entry_category }}" id="input-manufacturer" class="form-control" autocomplete="off"  />
+														<ul id="list-manufacturer" class="dropdown-menu"></ul>
+														<br>
+														<div id="featured-manufacturer" class="well well-sm" >
+															{% for manufacturerItem in module.manufacturers %}
+																<div id="featured-manufacturer{{ manufacturerItem.manufacturer_id }}"><i class="fa fa-minus-circle"></i> {{ manufacturerItem.name }}
+																	<input type="hidden" name="manufacturer[]" value="{{ manufacturerItem.manufacturer_id }}" />
+																</div>
+															{% endfor %}
+														</div>
+													</div>
+													{% if error.manufacturer is defined %}
+														<div class="text-danger col-sm-12">{{ error.manufacturer }}</div>
+													{% endif %}
+												</div>
+											</div>
+
+			                                <div class="row mb-3">
+												<label class="col-sm-2 col-form-label"> <span data-toggle="tooltip" title="{{ entry_manufacturer_name_desc }}">{{ entry_manufacturer_name }}</span></label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<label class="radio-inline">
+															{% if module.manufacturer_name %}
+																<input type="radio" name="manufacturer_name" value="1" checked="checked" />
+																{{ text_yes }}
+															{% else %}
+																<input type="radio" name="manufacturer_name" value="1" />
+																{{ text_yes }}
+															{% endif %}
+														</label>
+														<label class="radio-inline">
+															{% if module.manufacturer_name %}
+																<input type="radio" name="manufacturer_name" value="0" />
+																{{ text_no }}
+															{% else %}
+																<input type="radio" name="manufacturer_name" value="0" checked="checked" />
+																{{ text_no }}
+															{% endif %}
+														</label>
+													</div>
+												</div>
+											</div>	
+			                                <div class="row mb-3">
+												<label class="col-sm-2 col-form-label"> <span data-toggle="tooltip" title="{{ entry_manufacturer_readmore_desc }}">{{ entry_manufacturer_readmore }}</span></label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<label class="radio-inline">
+															{% if module.manufacturer_readmore %}
+																<input type="radio" name="manufacturer_readmore" value="1" checked="checked" />
+																{{ text_yes }}
+															{% else %}
+																<input type="radio" name="manufacturer_readmore" value="1" />
+																{{ text_yes }}
+															{% endif %}
+														</label>
+														<label class="radio-inline">
+															{% if module.manufacturer_readmore %}
+																<input type="radio" name="manufacturer_readmore" value="0" />
+																{{ text_no }}
+															{% else %}
+																<input type="radio" name="manufacturer_readmore" value="0" checked="checked" />
+																{{ text_no }}
+															{% endif %}
+														</label>
+													</div>
+												</div>
+											</div>		
+											<div class="row mb-3">
+												<label class="col-sm-2 col-form-label"> <span data-toggle="tooltip" title="{{ entry_readmore_desc }}">{{ entry_readmore }} </span></label>
+												<div class="col-sm-9 row">
+													<div class="col-sm-5">
+														{% set i = 0 %}
+														{% for language in languages %}
+															{% set i = i + 1 %}
+															<input type="text" name="module_description[{{ language.language_id }}][readmore]" placeholder="{{ entry_readmore }}" id="input-read-more-{{ language.language_id }}" value="{{ module_description[language.language_id]['readmore'] is defined ? module_description[language.language_id]['readmore'] : '' }}" class="form-control{{ i>1 ? ' d-none ' : ' read-more' }}" />
+															{% if i == 1 %}
+																<input type="hidden" class="form-control" id="input-readmore" placeholder="{{ entry_readmore }}" value="{{ module_description[language.language_id]['readmore'] is defined ? module_description[language.language_id]['readmore'] : '' }}" name="readmore" />
+															{% endif %}
+														{% endfor %}
+													</div>
+													<div class="col-sm-3">
+														<select  class="form-control" id="language_readmore">
+															{% for language in languages %}
+															<option value="{{ language.language_id }}">
+																{{ language.name }}
+															</option>
+															{% endfor %}
+														</select>
+													</div>
+												</div>
+											</div>											
+											<div class="row mb-3">
+												<label class="col-sm-2 col-form-label"> <b style="font-weight:bold; color:#f00">*</b> <span data-toggle="tooltip" title="{{ entry_source_limit_desc }}">{{ entry_source_limit }}</span></label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<input type="text" name="source_limit" value="{{ module.source_limit }}" id="input-source_limit" class="form-control" />
+													</div>
+													{% if error.source_limit is defined %}
+														<div class="text-danger col-sm-12">{{ error.source_limit }}</div>
+													{% endif %}
+												</div>
+											</div>											
+										</div>
+						
+										<div class="tab-pane" id="image_option">
+											<div class="row mb-3">
+												<label class="col-sm-2 col-form-label"> <span data-toggle="tooltip" title="{{ entry_manufacturer_image_desc }}">{{ entry_manufacturer_image }}</span></label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<label class="radio-inline">
+															{% if module.manufacturer_image %}
+																<input type="radio" name="manufacturer_image" value="1" checked="checked" />
+																{{ text_yes }}
+															{% else %}
+																<input type="radio" name="manufacturer_image" value="1" />
+																{{ text_yes }}
+															{% endif %}
+														</label>
+														<label class="radio-inline">
+															{% if module.manufacturer_image %}
+																<input type="radio" name="manufacturer_image" value="0" />
+																{{ text_no }}
+															{% else %}
+																<input type="radio" name="manufacturer_image" value="0" checked="checked" />
+																{{ text_no }}
+															{% endif %}
+														</label>
+													</div>
+												</div>
+											</div>
+											<div class="row mb-3">
+												<label class="col-sm-2 col-form-label"> <b style="font-weight:bold; color:#f00">*</b> <span data-toggle="tooltip" title="{{ entry_width_desc }}">{{ entry_width }}</span></label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<input type="text" name="width" value="{{ module.width }}" id="input-width" class="form-control" />
+													</div>
+													{% if error.width is defined %}
+													<div class="text-danger col-sm-12">{{ error.width }}</div>
+													{% endif %}
+												</div>
+											</div>
+											<div class="row mb-3">
+												<label class="col-sm-2 col-form-label"> <b style="font-weight:bold; color:#f00">*</b> <span data-toggle="tooltip" title="{{ entry_height_desc }}">{{ entry_height }}</span></label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<input type="text" name="height" value="{{ module.height }}" id="input-height" class="form-control" />
+													</div>
+													{% if error.height is defined %}
+													<div class="text-danger col-sm-12">{{ error.height }}</div>
+													{% endif %}
+												</div>
+											</div>
+											<div class="row mb-3">
+												<label class="col-sm-2 col-form-label"> <b style="font-weight:bold; color:#f00">*</b> <span data-toggle="tooltip" title="{{ entry_placeholder_path_desc }}">{{ entry_placeholder_path }}</span></label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<input type="text" name="placeholder_path" value="{{ module.placeholder_path }}" id="input-placeholder_path" class="form-control" />
+													</div>
+													{% if error.placeholder_path is defined %}
+													<div class="text-danger col-sm-12">{{ error.placeholder_path }}</div>
+													{% endif %}
+												</div>
+											</div>
+										</div>
+						
+										<div class="tab-pane" id="effect_option">
+											<div class="row mb-3 owl-carousel">
+												<label class="col-sm-2 col-form-label"> <b style="font-weight:bold; color:#f00">*</b> <span data-toggle="tooltip" title="{{ entry_margin_desc }}">{{ entry_margin }}</span></label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<input type="text" name="margin" value="{{ module.margin }}" id="input-margin" class="form-control" />
+													</div>
+													{% if error.margin is defined %}
+														<div class="text-danger col-sm-12">{{ error.margin }}</div>
+													{% endif %}
+												</div>
+											</div>
+											<div class="row mb-3">
+												<label class="col-sm-2 col-form-label"> <b style="font-weight:bold; color:#f00">*</b> <span data-toggle="tooltip" title="{{ entry_slideBy_desc }}">{{ entry_slideBy }}</span></label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<input type="text" name="slideBy" value="{{ module.slideBy }}" id="input-slideBy" class="form-control" />
+													</div>
+													{% if error.slideBy is defined %}
+														<div class="text-danger col-sm-12">{{ error.slideBy }}</div>
+													{% endif %}
+												</div>
+											</div>
+											<div class="row mb-3">
+												<label class="col-sm-2 col-form-label"> <span data-toggle="tooltip" title="{{ entry_autoplay_desc }}">{{ entry_autoplay }}</span></label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<label class="radio-inline">
+															{% if module.autoplay %}
+																<input type="radio" name="autoplay" value="1" checked="checked" />
+																{{ text_yes }}
+															{% else %}
+																<input type="radio" name="autoplay" value="1" />
+																{{ text_yes }}
+															{% endif %}
+														</label>
+														<label class="radio-inline">
+															{% if module.autoplay %}
+																<input type="radio" name="autoplay" value="0" />
+																{{ text_no }}
+															{% else %}
+																<input type="radio" name="autoplay" value="0" checked="checked" />
+																{{ text_no }}
+															{% endif %}
+														</label>
+													</div>
+												</div>
+											</div>
+											<div class="row mb-3">
+												<label class="col-sm-2 col-form-label"> <b style="font-weight:bold; color:#f00">*</b> <span data-toggle="tooltip" title="{{ entry_autoplayTimeout_desc }}">{{ entry_autoplayTimeout }}</span></label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<input type="text" name="autoplayTimeout" value="{{ module.autoplayTimeout }}" id="input-autoplayTimeout" class="form-control" />
+													</div>
+													{% if error.autoplayTimeout is defined %}
+														<div class="text-danger col-sm-12">{{ error.autoplayTimeout }}</div>
+													{% endif %}
+												</div>
+											</div>
+											<div class="row mb-3">
+												<label class="col-sm-2 col-form-label"> <span data-toggle="tooltip" title="{{ entry_autoplayHoverPause_desc }}">{{ entry_autoplayHoverPause }}</span></label>
+												<div class="col-sm-9">	
+													<div class="col-sm-5">
+														<label class="radio-inline">
+															{% if module.autoplayHoverPause %}
+																<input type="radio" name="autoplayHoverPause" value="1" checked="checked" />
+																{{ text_yes }}
+															{% else %}
+																<input type="radio" name="autoplayHoverPause" value="1" />
+																{{ text_yes }}
+															{% endif %}
+														</label>
+														<label class="radio-inline">
+															{% if module.autoplayHoverPause %}
+																<input type="radio" name="autoplayHoverPause" value="0" />
+																{{ text_no }}
+															{% else %}
+																<input type="radio" name="autoplayHoverPause" value="0" checked="checked" />
+																{{ text_no }}
+															{% endif %}
+														</label>
+													</div>
+												</div>
+											</div>
+											<div class="row mb-3">
+												<label class="col-sm-2 col-form-label"> <b style="font-weight:bold; color:#f00">*</b> <span data-toggle="tooltip" title="{{ entry_autoplaySpeed_desc }}">{{ entry_autoplaySpeed }}</span></label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<input type="text" name="autoplaySpeed" value="{{ module.autoplaySpeed }}" id="input-autoplaySpeed" class="form-control" />
+													</div>
+													{% if error.autoplaySpeed is defined %}
+														<div class="text-danger col-sm-12">{{ error.autoplaySpeed }}</div>
+													{% endif %}
+												</div>
+											</div>
+											<div class="row mb-3">
+												<label class="col-sm-2 col-form-label"> <b style="font-weight:bold; color:#f00">*</b> <span data-toggle="tooltip" title="{{ entry_startPosition_desc }}">{{ entry_startPosition }}</span></label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<input type="text" name="startPosition" value="{{ module.startPosition }}" id="input-startPosition" class="form-control" />
+													</div>
+													{% if error.startPosition is defined %}
+														<div class="text-danger col-sm-12">{{ error.startPosition }}</div>
+													{% endif %}
+												</div>
+											</div>
+											<div class="row mb-3 owl-carousel">
+												<label class="col-sm-2 col-form-label"> <span data-toggle="tooltip" title="{{ entry_mouseDrag_desc }}">{{ entry_mouseDrag }}</span></label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<label class="radio-inline">
+															{% if module.mouseDrag %}
+																<input type="radio" name="mouseDrag" value="1" checked="checked" />
+																{{ text_yes }}
+															{% else %}
+																<input type="radio" name="mouseDrag" value="1" />
+																{{ text_yes }}
+															{% endif %}
+														</label>
+														<label class="radio-inline">
+															{% if module.mouseDrag %}
+																<input type="radio" name="mouseDrag" value="0" />
+																{{ text_no }}
+															{% else %}
+																<input type="radio" name="mouseDrag" value="0" checked="checked" />
+																{{ text_no }}
+															{% endif %}
+														</label>
+													</div>
+												</div>
+											</div>
+											<div class="row mb-3 owl-carousel">
+												<label class="col-sm-2 col-form-label"><span data-toggle="tooltip" title="{{ entry_touchDrag_desc }}">{{ entry_touchDrag }}</span></label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<label class="radio-inline">
+															{% if module.touchDrag %}
+																<input type="radio" name="touchDrag" value="1" checked="checked" />
+																{{ text_yes }}
+															{% else %}
+																<input type="radio" name="touchDrag" value="1" />
+																{{ text_yes }}
+															{% endif %}
+														</label>
+														<label class="radio-inline">
+															{% if module.touchDrag %}
+																<input type="radio" name="touchDrag" value="0" />
+																{{ text_no }}
+															{% else %}
+																<input type="radio" name="touchDrag" value="0" checked="checked" />
+																{{ text_no }}
+															{% endif %}
+														</label>
+													</div>
+												</div>
+											</div>
+											<div class="row mb-3">
+												<label class="col-sm-2 col-form-label">
+													<span data-toggle="tooltip" title="{{ entry_loop_desc }}">
+														{{ entry_loop }}
+													</span>
+												</label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<label class="radio-inline">
+															{% if module.loop %}
+																<input type="radio" name="loop" value="1" checked="checked" />
+																{{ text_yes }}
+															{% else %}
+																<input type="radio" name="loop" value="1" />
+																{{ text_yes }}
+															{% endif %}
+														</label>
+														<label class="radio-inline">
+															{% if module.loop %}
+																<input type="radio" name="loop" value="0" />
+																{{ text_no }}
+															{% else %}
+																<input type="radio" name="loop" value="0" checked="checked" />
+																{{ text_no }}
+															{% endif %}
+														</label>
+													</div>
+												</div>
+											</div>
+											<div class="row mb-3 owl-carousel">
+												<label class="col-sm-2 col-form-label"> <span data-toggle="tooltip" title="{{ entry_button_page_desc }}">{{ entry_button_page }}</span></label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<select name="button_page" id="input-button_page" class="form-control">
+															{% for option_id, option_value in button_pages %}
+																{% set selected = option_id == module.button_page ? 'selected' : '' %}
+																<option value="{{ option_id }}" {{ selected }}>{{ option_value }}</option>
+															{% endfor %}
+														</select>
+													</div>
+												</div>
+											</div>
+											<div class="row mb-3 owl-carousel">
+												<label class="col-sm-2 col-form-label"> <span data-toggle="tooltip" title="{{ entry_dots_desc }}">{{ entry_dots }}</span></label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<label class="radio-inline">
+															{% if module.dots %}
+																<input type="radio" name="dots" value="1" checked="checked" />
+																{{ text_yes }}
+															{% else %}
+																<input type="radio" name="dots" value="1" />
+																{{ text_yes }}
+															{% endif %}
+														</label>
+														<label class="radio-inline">
+															{% if module.dots %}
+																<input type="radio" name="dots" value="0" />
+																{{ text_no }}
+															{% else %}
+																<input type="radio" name="dots" value="0" checked="checked" />
+																{{ text_no }}
+															{% endif %}
+														</label>
+													</div>
+												</div>
+											</div>					
+											<div class="row mb-3 owl-carousel">
+												<label class="col-sm-2 col-form-label"> <b style="font-weight:bold; color:#f00">*</b> <span data-toggle="tooltip" title="{{ entry_dotsSpeed_desc }}">{{ entry_dotsSpeed }}</span></label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<input type="text" name="dotsSpeed" value="{{ module.dotsSpeed }}" id="input-dotsSpeed" class="form-control" />
+													</div>
+													{% if error.dotsSpeed is defined %}
+														<div class="text-danger col-sm-12">{{ error.dotsSpeed }}</div>
+													{% endif %}
+												</div>
+											</div>
+											<div class="row mb-3">
+												<label class="col-sm-2 col-form-label"><span data-toggle="tooltip" title="{{ entry_navs_desc }}">{{ entry_navs }}</span></label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<label class="radio-inline">
+															{% if module.navs %}
+																<input type="radio" name="navs" value="1" checked="checked" />
+																{{ text_yes }}
+															{% else %}
+																<input type="radio" name="navs" value="1" />
+																{{ text_yes }}
+															{% endif %}
+														</label>
+														<label class="radio-inline">
+															{% if module.navs %}
+																<input type="radio" name="navs" value="0" />
+																{{ text_no }}
+															{% else %}
+																<input type="radio" name="navs" value="0" checked="checked" />
+																{{ text_no }}
+															{% endif %}
+														</label>
+													</div>
+												</div>
+											</div>
+											<div class="row mb-3 owl-carousel">
+												<label class="col-sm-2 col-form-label"> <b style="font-weight:bold; color:#f00">*</b> <span data-toggle="tooltip" title="{{ entry_navspeed_desc }}">{{ entry_navspeed }}</span></label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<input type="text" name="navSpeed" value="{{ module.navSpeed }}" id="input-navSpeed" class="form-control" />
+													</div>
+													{% if error.navSpeed is defined %}
+														<div class="text-danger col-sm-12">{{ error.navSpeed }}</div>
+													{% endif %}
+												</div>
+											</div>
+											<div class="row mb-3 owl-carousel">
+												<label class="col-sm-2 col-form-label"> <span data-toggle="tooltip" title="{{ entry_effect_desc }}">{{ entry_effect }}</span></label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<select name="effect" id="input-effect" class="form-control">
+															{% for option_id, option_value in effects %}
+																{% set selected = option_id == module.effect ? 'selected' : '' %}
+																<option value="{{ option_id }}" {{ selected }}>{{ option_value }}</option>
+															{% endfor %}
+														</select>
+													</div>
+												</div>
+											</div>
+											<div class="row mb-3 owl-carousel">
+												<label class="col-sm-2 col-form-label"> <b style="font-weight:bold; color:#f00">*</b> <span data-toggle="tooltip" title="{{ entry_duration_desc }}">{{ entry_duration }}</span></label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<input type="text" name="duration" value="{{ module.duration }}" id="input-duration" class="form-control" />
+													</div>
+													{% if error.duration is defined %}
+														<div class="text-danger col-sm-12">{{ error.duration }}</div>
+													{% endif %}
+												</div>
+											</div>
+											<div class="row mb-3 owl-carousel">
+												<label class="col-sm-2 col-form-label"> <b style="font-weight:bold; color:#f00">*</b> <span data-toggle="tooltip" title="{{ entry_delay_desc }}">{{ entry_delay }}</span></label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<input type="text" name="delay" value="{{ module.delay }}" id="input-delay" class="form-control" />
+													</div>
+													{% if error.delay is defined %}
+														<div class="text-danger col-sm-12">{{ error.delay }}</div>
+													{% endif %}
+												</div>
+											</div>
+										</div>	
+						
+										<div class="tab-pane" id="advanced_option">
+											<div class="row mb-3">
+												<label class="col-sm-2 col-form-label"> <span data-toggle="tooltip" title="{{ entry_store_layout_desc }}">{{ entry_store_layout }} </span></label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<select name="store_layout" id="input-store_layout" class="form-control">
+															{% for option_id, option_value in store_layouts %}
+																{% set selected = option_id == module.store_layout ? 'selected' : '' %}
+																<option value="{{ option_id }}" {{ selected }}>{{ option_value }}</option>
+															{% endfor %}
+														</select>
+													</div>
+												</div>
+											</div>
+											<div class="row mb-3">
+												<label class="col-sm-2 col-form-label"> <span data-toggle="tooltip" title="{{ entry_pre_text_desc }}">{{ entry_pre_text }}</span></label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<textarea name="pre_text" id="input-pre_text" class="form-control">{{ module.pre_text }}</textarea>
+													</div>
+												</div>
+											</div>
+											<div class="row mb-3">
+												<label class="col-sm-2 col-form-label"> <span data-toggle="tooltip" title="{{ entry_post_text_desc }}">{{ entry_post_text }}</span></label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<textarea name="post_text" id="input-post_text" class="form-control">{{ module.post_text }}</textarea>
+													</div>
+												</div>
+											</div>
+											<div class="row mb-3">
+												<label class="col-sm-2 col-form-label">
+													<span data-toggle="tooltip" title="{{ entry_use_cache_desc }}">{{ entry_use_cache }}</span>
+												</label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<label class="radio-inline">
+															{% if module.use_cache %}
+																<input type="radio" name="use_cache" value="1" checked="checked" />
+																{{ text_yes }}
+															{% else %}
+																<input type="radio" name="use_cache" value="1" />
+																{{ text_yes }}
+															{% endif %}
+														</label>
+														<label class="radio-inline">
+															{% if module.use_cache %}
+																<input type="radio" name="use_cache" value="0" />
+																{{ text_no }}
+															{% else %}
+																<input type="radio" name="use_cache" value="0" checked="checked" />
+																{{ text_no }}
+															{% endif %}
+														</label>
+													</div>
+												</div>
+											</div>
+											<div class="row mb-3" id="input-cache_time_form">
+												<label class="col-sm-2 col-form-label">
+													<span data-toggle="tooltip" title="{{ entry_cache_time_desc }}">{{ entry_cache_time }}</span>
+												</label>
+												<div class="col-sm-9">
+													<div class="col-sm-5">
+														<input type="text" name="cache_time" value="{{ module.cache_time }}" id="input-cache_time" class="form-control" />
+													</div>
+													{% if error.cache_time is defined %}
+													<div class="text-danger col-sm-12">{{ error.cache_time }}</div>
+													{% endif %}
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								{% set module_row = module_row + 1 %}
+							{% endfor %}
+						</div>
+					</div>
+				</form>		  
+		  </div>
+		</div>  
+  	</div>
+	<script type="text/javascript"><!--
+		$('input[name=\'manufacturer\']').autocomplete({
+			source: function(request, response) {
+				$.ajax({
+					url: 'index.php?route=extension/so_theme/module/so_brands|autocomplete_manufacturer&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request),
+					dataType: 'json',
+					success: function(json) {
+						response($.map(json, function(item) {
+							return {
+								label: item['name'],
+								value: item['manufacturer_id']
+							}
+						}));
+					}
+				});
+			},
+			select: function(item) {
+				$('input[name=\'manufacturer\']').val('');
+				
+				$('#featured-manufacturer' + item['value']).remove();
+				
+				$('#featured-manufacturer').append('<div id="featured-manufacturer' + item['value'] + '"><i class="fa fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="manufacturer[]" value="' + item['value'] + '" /></div>');	
+			}
+		});
+		
+		$('#featured-manufacturer').delegate('.fa-minus-circle', 'click', function() {
+			$(this).parent().remove();
+		});
+		
+		//$('#so_youtech a:first').tab('show');
+		
+		
+		/* Cache */
+		if($("input[name='use_cache']:radio:checked").val() == '0')	{
+			$('#input-cache_time_form').hide();
+		}else	{
+			$('#input-cache_time_form').show();
+		}
+		$("input[name='use_cache']").change(function(){
+			val = $(this).val();
+			if(val ==0)		{
+				$('#input-cache_time_form').hide();
+			}else		{
+				$('#input-cache_time_form').show();
+			}
+		});
+		
+		/*language*/
+		$('#language').change(function(){
+			var that = $(this), opt_select = $('option:selected', that).val() , _input = $('#input-head-name-'+opt_select);
+			$('[id^="input-head-name-"]').addClass('d-none');
+			_input.removeClass('d-none');
+		});
+
+		$('.first-name').change(function(){
+			$('input[name="head-name"]').val($(this).val());
+		});
+		
+		$('#language_readmore').change(function(){
+			var that = $(this), opt_select = $('option:selected', that).val() , _input = $('#input-read-more-'+opt_select);
+			$('[id^="input-read-more-"]').addClass('d-none');
+			_input.removeClass('d-none');
+		});		
+		
+		$('.read-more').change(function(){
+			$('input[name="readmore"]').val($(this).val());
+		});		
+
+		$('#language_custom').change(function(){
+			var that = $(this), opt_select = $('option:selected', that).val() , _input = $('#input-custom_url-'+opt_select);
+			$('[id^="input-custom_url-"]').addClass('d-none');
+			_input.removeClass('d-none');
+		});
+	
+		$('.first-url').change(function(){
+			$('input[name="custom_url"]').val($(this).val());
+		});
+		
+		/*Display News */
+		if($("input[name='display_new']:radio:checked").val() == '0')	{
+			$('#input-date_day_form').hide();
+		}else	{
+			$('#input-date_day_form').show();
+		}
+		$("input[name='display_new']").change(function(){
+			val = $(this).val();
+			if(val ==0)		{
+				$('#input-date_day_form').hide();
+			}else		{
+				$('#input-date_day_form').show();
+			}
+		});
+		
+		jQuery(document).ready(function ($) {
+			var button = '<div class="remove-caching" style="margin-left: 15px"><button type="button" onclick="remove_cache()" title="{{ entry_button_clear_cache }}" class="btn btn-danger"><i class="fa fa-remove"></i> {{ entry_button_clear_cache }}</button></div>';
+			var button_min = '<div class="remove-caching" style="margin-left: 7px"><button type="button" onclick="remove_cache()" title="{{ entry_button_clear_cache }}" class="btn btn-danger"><i class="fa fa-remove"></i> </button></div>';
+			if($('#column-left').hasClass('active')){
+				$('#column-left #stats').after(button);
+			}else{
+				$('#column-left #stats').after(button_min);
+			}
+			$('#button-menu').click(function(){
+				$('.remove-caching').remove();
+				if($(this).parents().find('#column-left').hasClass('active')){
+					$('#column-left #stats').after(button);
+				}else{
+					$('#column-left #stats').after(button_min);
+				}
+			});
+		});
+		function remove_cache(){
+			var success_remove = '{{ success_remove }}';
+			$.ajax({
+				type: 'POST',
+				url: '{{ linkremove }}',
+				data: {	is_ajax_cache_lite: 1},
+				success: function () {
+					var html = '<div class="alert alert-success cls-remove-cache"> '+success_remove+' <button type="button" class="close" data-dismiss="alert">&times;</button></div>';
+					if(!($('.page-header .container-fluid .alert-success')).hasClass('cls-remove-cache')){
+						$('.page-header .container-fluid').append(html);
+					}
+				},
+			});
+		}
+	//--></script>
+</div>
+{{ footer }}

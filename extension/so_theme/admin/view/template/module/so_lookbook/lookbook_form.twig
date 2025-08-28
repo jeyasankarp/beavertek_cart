@@ -1,0 +1,161 @@
+{{ header }}{{ column_left }}
+<div id="content">
+	<div class="page-header">
+    	<div class="container-fluid">
+      		<div class="float-end">
+        		<button type="submit" form="form-lookbook" name="save_stay" value="1" data-bs-toggle="tooltip" title="{{ button_save_stay }}" class="btn btn-success"><i class="fa fa-save"></i> {{ text_save_stay }}</button>
+        		<button type="submit" form="form-lookbook" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i> {{ text_save }}</button>
+        		<a href="{{ cancel }}" data-bs-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default btn-light"><i class="fa fa-reply"></i></a>
+        	</div>
+      		<h1>{{ heading_title }}</h1>
+      		<ol class="breadcrumb">
+        		{% for breadcrumb in breadcrumbs %}
+        			<li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        		{% endfor %}
+      		</ol>
+    	</div>
+  	</div>
+
+  	<div class="container-fluid">
+  		{% if error_warning %}
+	    	<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+	      		<!--<button type="button" class="close" data-dismiss="alert">&times;</button>-->
+	    	</div>
+	    {% endif %}
+
+	    {% if success %}
+    		<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> {{ success }}
+      			<!--<button type="button" class="close" data-dismiss="alert">&times;</button>-->
+    		</div>
+    	{% endif %}
+
+		<div class="card">
+			<div class="card-header">
+				<h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_form }}</h3>
+			</div>	
+			<div class="card-body">
+        		<form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-lookbook" class="form-horizontal">
+        			<div class="row mb-3 required">
+	                	<label class="col-sm-2 col-form-label" for="input-lookbook_name">{{ entry_lookbook_name }}</label>
+	                	<div class="col-sm-10">
+	                  		<input type="text" name="name" value="{{ name }}" placeholder="{{ entry_lookbook_name }}" id="input-name" class="form-control" />
+	                  		{% if error_name %}
+	                  			<div class="text-danger">{{ error_name }}</div>
+	                  		{% endif %}
+	                  	</div>
+	              	</div>
+
+	              	<div class="row mb-3">
+	                	<label class="col-sm-2 col-form-label" for="input-status">{{ entry_status }}</label>
+	                	<div class="col-sm-10">
+	                  		<select name="status" id="input-status" class="form-control">	                    
+	                    		{% if status %}	                    
+	                    			<option value="1" selected="selected">{{ text_enabled }}</option>
+	                    			<option value="0">{{ text_disabled }}</option>	                    
+	                    		{% else %}
+	                    			<option value="1">{{ text_enabled }}</option>
+	                    			<option value="0" selected="selected">{{ text_disabled }}</option>
+	                    		{% endif %}
+	                  		</select>
+	                	</div>
+	              	</div>
+	              	<input type="hidden" id="default_pin_text" value="{{ pin_default }}">
+					<input type="hidden" id="ok_text" value="{{ text_save }}">
+					<input type="hidden" id="delete_text" value="{{ text_delete }}">
+					<input type="hidden" id="cancel_text" value="{{ text_cancel }}">
+					<input type="hidden" id="add_text" value="{{ text_add_pin }}">
+					<input type="hidden" id="pin_width" value="{{ pin_width }}">
+					<input type="hidden" id="pin_height" value="{{ pin_height }}">
+					<input type="hidden" id="check_product_url" value="{{ check_product_url }}" />
+					<input type="hidden" id="load_product_url" value="{{ load_product_url }}" />
+
+	              	<div id="LookbookImageBlock">
+	              		{% if fullImage != '' %}
+	              			<img id="LookbookImage" src="{{ fullImage }}" />
+	              		{% else %}
+	              			<h4 id="LookbookImage" style="color:red;">File {{ fullImage }} doesn't exists.</h4>
+	              		{% endif %}
+	              	</div>
+	              	<div id="maket_image"></div>
+	              	<input id="image" name="image" data-ui-id="" value="{{ image }}" type="hidden" class="required-entry _required" />
+	              	<p class="note" style="clear:both; float:left;">{{ text_allowed_file_extensions }} {{ allowed_extensions_config }}</p>
+	              	<input id="pins" name="pins" data-ui-id="" value="{{ pins }}" type="hidden" />
+        		</form>			
+			</div>	
+		</div>	
+	</div>
+</div>
+
+<script type="text/javascript">
+jQuery(document).ready(function($) {
+	$('img#LookbookImage').on('load', function(){
+		InitHotspotBtn();
+	});
+
+	img_uploader = new qq.FileUploader({
+		element: document.getElementById('maket_image'),
+		action: "{{ action_upload }}",
+		params: {"form_key": "{{ user_token }}"},
+		multiple: false,
+		allowedExtensions: ["{{ allowed_extensions }}"],
+		sizeLimit: {{ sizeLimit }},
+		onComplete: function(id, fileName, responseJSON){
+			if (responseJSON.success) {
+				if ($('#LookbookImageBlock')) {
+				  	$.each($('#LookbookImageBlock').children(),function(index) {
+						$(this).remove();
+				  	});
+				}
+				$('#LookbookImageBlock').append('<img id="LookbookImage" src="'+responseJSON.base_url + 'image/catalog/so_lookbook/' + responseJSON.filename+'" alt="'+responseJSON.filename+'" width="'+responseJSON.dimensions.width+'" height="'+responseJSON.dimensions.height+'"/>');
+
+				$('img#LookbookImage').on('load', function(){
+				   	$(this).attr('width',responseJSON.dimensions.width);
+				   	$(this).attr('height',responseJSON.dimensions.height);
+				   	InitHotspotBtn();
+				});                       
+				$('#image').val('catalog/so_lookbook/'+responseJSON.filename);
+				$('#image').removeClass('validation-failed');
+			}
+		}
+	})
+});
+
+function InitHotspotBtn() {
+	if ($("img#LookbookImage").attr("id")) {
+		{% if pins != '' %}
+			var annotObj = $("img#LookbookImage").annotateImage({            				    
+				editable: true,
+				useAjax: false,
+				notes: {{ pins }},
+				input_field_id: "pins"                                          
+			});
+		{% else %}
+			var annotObj = $("img#LookbookImage").annotateImage({            				    
+				editable: true,
+				useAjax: false,
+				input_field_id: "pins"                                          
+			});
+		{% endif %}
+		console.log(annotObj);
+		return annotObj;
+	}else{
+		return false;
+	}
+}
+
+function setBlankPinLabel(){
+	$("#image-annotate-label").val("");
+}
+</script>
+
+<style>
+	.image-annotate-area, .image-annotate-edit-area {
+		background: #{{ background }};
+		color: #{{ color }};
+		-webkit-border-radius: {{ radius }}px;
+		-moz-border-radius: {{ radius }}px;
+		border-radius: {{ radius }}px;
+		line-height: {{ pin_height }}px;
+	}
+</style>
+{{ footer }}

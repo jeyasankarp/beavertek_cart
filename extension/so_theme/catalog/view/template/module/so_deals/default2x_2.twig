@@ -1,0 +1,67 @@
+<script>
+	var listdeal{{ module }} = [];
+</script>
+<div class="module {{ direction_class }} {{ class_suffix }}">
+	<div class="head-title">
+
+		{% if disp_title_module %}
+		<div class="modtitle">
+			{% if custom_url != '' %}
+				<a href="{{ custom_url }}"><span>{{ head_name }}</span></a>
+			{% else %}
+				<span>{{ head_name }}</span>
+			{% endif %}
+		</div>
+		{% endif %}
+		<div class="time-endin">
+				<div class="time-title">{{ text_time_left }}</div>
+				<div class="cslider-item-timer">
+					<div class="product_time_maxprice"></div>
+				</div>
+				{% set maxPriceToDate ='' %}
+				{% for product in list %}
+					{% set maxPriceToDate =  product.specialPriceToDate  %}
+					{% if maxPriceToDate < product.specialPriceToDate  %}
+						{% set maxPriceToDate =  product.specialPriceToDate  %}
+					{% endif %}
+				{% endfor %}
+				
+				<script type="text/javascript">
+					
+					listdeal{{ module }}.push('product_time_maxprice|{{ maxPriceToDate }}')
+					 
+				</script>
+			</div>
+
+			{% if pre_text != '' %}				
+				{{ pre_text }}				
+			{% endif %}
+		
+		
+	</div>
+
+	
+	<div class="modcontent">
+		{% if list is defined and list %}
+		    {% set tag_id = 'so_deals_' ~ random() ~ "now"|date("mdYHis") %}
+		    {% set class_respl = 'preset00-'~nb_column0~' preset01-'~nb_column1~' preset02-'~nb_column2~' preset03-'~nb_column3~' preset04-'~nb_column4 %}
+		    {% set i = 0 %}
+		    {% set count_item = list|length %}
+		    {% if include_js == 'owlCarousel' %}
+				{{ include ("./extension/so_theme/catalog/view/template/module/so_deals/"~store_layout~"_carousel.twig") }}		    	
+		    {% elseif include_js == 'slick' %}
+		    	{{ include ("./extension/so_theme/catalog/view/template/module/so_deals/"~store_layout~"_slick.twig") }}
+		    {% else %}
+		    	{{ '' }}
+		    {% endif %}
+		{% else %}
+	    	{{ objlang.get('text_noitem') }}
+	    {% endif %}
+	</div>
+	
+	{% if post_text != '' %}
+		<div class="form-group">
+			{{ post_text }}
+		</div>
+	{% endif %}
+</div>

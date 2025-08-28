@@ -1,0 +1,90 @@
+{#=====Get variable : Config Select Block on header=====#}
+{% set hidden_headercenter = soconfig.get_settings('toppanel_type') =='2'? 'hidden-compact' : '' %}
+{% set hidden_headerbottom = soconfig.get_settings('toppanel_type') =='1'? 'hidden-compact' : '' %}
+
+<header id="header" class=" variant typeheader-{{ typeheader ? typeheader : '1'}}">
+	{#======	HEADER TOP	=======#}  
+	<div class="header-top hidden-compact">
+		<div class="topbar-close">
+			<span class="button-ex"><i class="icom-x"></i></span>
+		</div>
+		<div class="container-full">
+			<div class="row">				
+				<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">					
+					{% if soconfig.get_settings('welcome_message_status') %}
+						<div class="hidden-xs welcome-msg">
+							{% if soconfig.get_settings('welcome_message') is not empty %}
+								{{ soconfig.decode_entities( soconfig.get_settings('welcome_message') ) }}
+							{% endif %} 
+						</div>
+					{% endif %}	
+					{% if soconfig.get_settings('phone_status') and soconfig.get_settings('contact_number') %}
+						<div class="telephone">
+							{{ soconfig.decode_entities( soconfig.get_settings('contact_number')) }}
+						</div>
+					{% endif %}	
+					
+				</div>				
+			</div>
+		</div>
+	</div>
+	
+	{#======	HEADER CENTER	=======#} 
+	<div class="header-middle {{hidden_headercenter}}">
+		<div class="container-full">
+			<div class="row">			
+				<div class="navbar-logo col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12">
+					<div class="logo">
+				   		{{soconfig.get_logo()}}
+				   	</div>
+				</div>
+				<div class="main-menu col-xl-6 col-lg-6 col-md-3 col-sm-4 col-4">					
+					{{ content_menu1 }}								
+				</div>
+				<div class="middle2 col-xl-3 col-lg-3 col-md-6 col-sm-12 col-8">	
+					<div class="search-header-w">
+						<div class="icon-search"><i class="icom-search1"></i></div>								
+						{{ search_block }}
+					</div>	
+					
+					<ul class="top-link list-inline signin-w">							
+						<li class="account" id="my_account">
+							<a href="{{ account }}" title="{{ text_account }} " class="dropdown-toggle" data-bs-toggle="dropdown"><i class="icom-user1"></i><span class="hidden">{{ text_my_account }}</span><!--span class="fa fa-angle-down"></span--></a>
+							<ul class="dropdown-menu ">							
+								<li><a href="{{ compare }}" title="{{ text_compare }}">{{ text_compare }}</a></li>
+								{% if soconfig.get_settings('checkout_status') %}
+									<li class="checkout"><a href="{{ checkout }} " title="{{ text_checkout }} "><span >{{ text_checkout }} </span></a></li>
+								{% endif %} 
+								{% if logged %}
+									<li><a href="{{ account }}" title="{{ text_account }}">{{ text_account }}</a></li>
+									<li><a href="{{ order }}" title="{{ text_order }}">{{ text_order }}</a></li>
+									<li><a href="{{ transaction }}" title="{{ text_transaction }}">{{ text_transaction }}</a></li>
+									<li><a href="{{ download }}" title="{{ text_download }}">{{ text_download }}</a></li>
+									<li><a href="{{ logout }}" title="{{ text_logout }}"><!--i class="fa fa-sign-out" aria-hidden="true"></i--> {{ text_logout }}</a></li>
+								{% else %}
+									<li><a href="{{ login }}" title="{{ text_login }}">{{ text_login }}</a></li>
+									<li><a href="{{ register }}" title="{{ text_register }}">{{ text_register }}</a></li>									
+								{% endif %}															
+							</ul>
+						</li>
+					</ul>
+					
+					<div class="wishlist hidden-xs top-link-wishlist"><a href="{{ wishlist }}" title="{{ text_wishlist }} "><i class="icom-heart1"></i></a></div>
+					
+					<div class="shopping_cart">							
+					 	{{ cart }}
+					</div>	
+					
+					<div id="icon_setting" class="icons_bar_item">
+						<div class="icon-setting dropdown-toggle" data-bs-toggle="dropdown"><i class="icom-settings1"></i></div>	
+						<ul class="top-link list-inline lang-curr icon_dropdown dropdown-menu clearfix">
+							{% if language %} <li class="language">{{ language }} </li>	{% endif %}		
+							{% if currency %} <li class="currency"> {{ currency }}  </li> {% endif %}						
+						</ul>
+					</div>	
+					
+				</div>	
+			</div>
+		</div>
+	</div>		
+</header>

@@ -1,0 +1,268 @@
+
+//** simple and lightweight mixin library for Sass **
+//-- url : http://bourbon.io/docs ---
+@import 'bourbon/bourbon';
+
+//** Mixins for Rem Font Sizing **
+//-- url : http://hugogiraudel.com/2013/03/18/ultimate-rem-mixin/
+@import 'utilities/rem';
+
+//** Variables for responsive design in bootstrap with sass **
+//-- url : https://gist.github.com/webinfinita/11407836
+@import 'utilities/bootstrap_breakpoints';
+
+//** Makes supporting both left-to-right (LTR) and right-to-left (RTL) easy.**
+//-- url : https://github.com/tysonmatanich/directional-scss
+@import 'utilities/directional';
+
+//Mixins utilities
+@import 'utilities/theme_variables';
+@import 'utilities/utilities';
+
+/* ================================================================================ */
+
+@media(min-width: 1650px){
+  .typefooter-25 .so-page-builder .container{ padding: 0; }
+}
+@media (min-width: 1200px) and (max-width: 1650px){
+    .typefooter-25 .so-page-builder .container{
+        max-width: 1650px; padding: 0; width: calc(100% - 30px);
+    }
+}
+@media(min-width: 1650px){
+    .wrapper-full .typefooter-25 .container{
+        width: 1600px; padding: 0;
+    }
+}
+
+.common-home .typefooter-25{
+  margin-top: 60px;
+}
+.typefooter-25{
+  margin-top: 0px;
+
+  /* GENERAL */
+  .box-footer .modtitle{
+        color: #222;
+        font-size: 18px;
+        line-height: 20px;
+        margin-bottom: 15px !important;  
+        font-weight: 600;
+        text-transform: capitalize;   
+        padding-bottom: 0px;       
+  }
+  .module{  
+      ul.menu{
+        li{ padding: 3px 0;   
+              a{
+                border: 0 none;               
+                padding: 0;                   
+                font-weight: 400; 
+                line-height: 100%;  
+                position: relative;                
+                display: inline-block;
+                transition: all 0.2s ease-in-out 0s;
+                color: #666; font-size: 14px;
+                padding-#{$left}: 0;
+                &:before{
+                  position: absolute; top: 5px; #{$left}: 0; opacity: 0; transition: all 0.2s ease-in-out 0s;
+                  content: ""; width: 4px; height: 4px; border-radius: 100%;
+                }
+                &:hover{
+                  padding-#{$left}: 12px;
+                    &:before{ opacity: 1; }
+                }
+              }       
+            }
+      }
+  }
+  .footer-top{ padding: 20px 0; }
+  .service-top ul li{
+    float: $left; width: 20%;
+    .sv-icon{
+      float: $left;
+      width: 70px;
+      height: 70px;
+      background-color: #fff;
+      overflow: hidden;
+      border-radius: 50%;
+      -moz-border-radius: 50%;
+      -webkit-border-radius: 50%;
+    }
+    .sv-info{
+      margin-#{$left}: 80px;
+      padding-top: 13px; 
+      .sv-title{ text-transform: uppercase;
+        font-weight: 600; color: #222;
+        margin-bottom: 2px; }
+      p{ font-size: 13px; color: #666666; margin: 0; }
+    }
+  }
+  .so-popular-tag{
+    .box-heading{
+      background-color: transparent;       
+      line-height: 20px;
+      margin-bottom: 0px;          
+      padding: 0px; 
+      span{
+        color: #222;
+        font-size: 18px;font-weight: 600;
+        text-transform: capitalize; 
+      }  
+    }
+    .box-content{ border: none; padding: 20px; }
+      a{
+          float: $left;
+          font-size: 13px !important; color: #666;
+          padding: 10px 15px;
+          border: none;
+          border-radius: 3px;
+          margin: side-values(0 5px 5px 0);
+          line-height: 100%;
+          background-color: #f5f5f5;
+          &:hover{
+              background-color: $background;
+          }
+      }
+  }
+  @media (min-width: 1200px) and (max-width: 1650px){
+    .col-contact{
+      padding: 0;
+    }
+  }
+  .box-contact{
+    ul li{ margin-bottom: 13px;
+      i{color: #222; font-size: 18px; width: 35px;}
+      &.email i{ font-size: 16px; }
+    }
+  }
+  .row-middle{ border-radius: 5px; margin: 45px 0 20px 0; }
+  .footer-middle{
+    padding-top: 50px;
+  }
+  .newsletter-footer22{
+      .newsletter{
+        background-color: transparent !important;
+        .title-block .promotext{ display: none; }
+        .title-block{ width: 35%; float: $left; font-size: 18px; color: #222; font-weight: 600; text-transform: capitalize; line-height: 44px; }
+        .block_content{ margin: 28px 0;
+          margin-#{$left}: 35%;
+          padding-#{$right}: 20px;
+          form.signup{
+            display: block;
+            margin: 0; border-radius: 22px;
+            box-shadow: 0 2px 5px rgba(0,0,0,.08);
+        -moz-box-shadow: 0 2px 5px rgba(0,0,0,.08);
+        -webkit-box-shadow: 0 2px 5px rgba(0,0,0,.08);
+        -o-box-shadow: 0 2px 5px rgba(0,0,0,.08); 
+            .form-group{
+              position: relative;
+              input.form-control{
+                border-radius: 22px;
+                height: 44px;
+                line-height: 44px;
+                width: 100%;
+                box-shadow: none;
+                padding: side-values(0 0 0 25px);
+                border: none;           
+                background-color: #fff;    
+                font-size: 14px;
+                &::-moz-placeholder {
+                      color: #222;
+                        opacity: 1; 
+                    }
+                    &:-ms-input-placeholder { color: #222; } 
+                    &::-webkit-input-placeholder  { color: #222; } 
+                      &:focus{
+                          z-index: 0;
+                      }
+                }
+            }
+
+              .subcribe{
+                position: absolute;
+                  top: 0px;
+                  #{$right}: 0px;
+                  button{       
+                  border: 0 none;
+                  color: #222;
+                  font-weight: 600;
+                  font-size: 14px;
+                  height: 44px;
+                  line-height: 44px;
+                  padding: 0 20px;    
+                  text-transform: uppercase;
+                  border-top-#{$right}-radius: 22px;
+                  border-bottom-#{$right}-radius: 22px;
+       
+              }
+              } 
+              
+          }
+        }
+      }
+  }
+
+  .apps{ float: $right;
+    ul li{ display: inline-block; margin-#{left}: 9px; }
+  }
+  .socials{
+    margin: 25px 15px;
+    li{ display: inline-block; margin: side-values(0 5px 0 0);
+      a{
+        width: 44px; height: 44px; background-color: #fff; font-size: 18px;
+        color: #222; display: block; line-height: 44px; text-align: center;
+        border-radius: 50%;
+        -moz-border-radius: 50%;
+        -webkit-border-radius: 50%;
+        box-shadow: 0 5px 5px rgba(0,0,0,.08);
+        -moz-box-shadow: 0 5px 5px rgba(0,0,0,.08);
+        -webkit-box-shadow: 0 5px 5px rgba(0,0,0,.08);
+        -o-box-shadow: 0 5px 5px rgba(0,0,0,.08);      
+      }
+    }
+  }
+
+
+
+
+
+
+  /* FOOTER BOTTOM */
+  .copyright{
+    font-size: 13px;
+  }
+  .payment-w{
+    text-align: $right;
+  }
+  .footer-bottom{
+    padding: 12px 0; margin-bottom: 20px;
+      .copyright{
+        color: #666; font-size: 13px;
+        margin-top: 1px;
+        
+      }
+  }
+
+
+}
+
+
+@media (min-width: 1200px) and (max-width: 1649px){
+  
+}
+
+/*====================update opencart4===================*/
+@media (max-width: 767px){
+	.box-footer{
+		margin-bottom:30px;
+	}
+	.typefooter-25 .so-popular-tag .box-content{
+		padding:20px 0;
+	}
+	footer.typefooter-25 .service-top ul {
+		display: block;
+		overflow-x: hidden;
+		padding: 0 15px;
+	}
+}

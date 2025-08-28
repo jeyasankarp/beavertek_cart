@@ -1,0 +1,210 @@
+
+//** simple and lightweight mixin library for Sass **
+//-- url : http://bourbon.io/docs ---
+@import 'bourbon/bourbon';
+
+//** Mixins for Rem Font Sizing **
+//-- url : http://hugogiraudel.com/2013/03/18/ultimate-rem-mixin/
+@import 'utilities/rem';
+
+//** Variables for responsive design in bootstrap with sass **
+//-- url : https://gist.github.com/webinfinita/11407836
+@import 'utilities/bootstrap_breakpoints';
+
+//** Makes supporting both left-to-right (LTR) and right-to-left (RTL) easy.**
+//-- url : https://github.com/tysonmatanich/directional-scss
+@import 'utilities/directional';
+
+//Mixins utilities
+@import 'utilities/theme_variables';
+@import 'utilities/utilities';
+
+/* ================================================================================ */
+
+/*.footer-container{
+  margin-top: 40px;
+}*/
+@media (min-width: 1650px){
+    .typefooter-21{
+        .container{
+            max-width: 1600px; width: 100%; padding: 0;
+        }
+    }
+}
+@media (min-width: 1365px) and (max-width: 1650px){
+    .typefooter-21{
+        .container{
+            max-width: 1300px; width: 100%; padding: 0;
+        }
+    }
+}
+.common-home .typefooter-21{ margin-bottom: 25px; padding: 0; }
+.typefooter-21{
+   background-color: #f2f2f2; padding: 20px 0;
+  .footer-main{
+    background-color: #fff; border-radius: 5px;
+  }
+  /* GENERAL */
+  .module .modtitle{
+        color: #fff;
+        font-size: 18px;
+        line-height: 20px;
+        margin-bottom: 15px !important;  
+        font-weight: 600;
+        text-transform: capitalize;   
+        padding-bottom: 0px;       
+  }
+  .module{  
+      ul.menu{
+        li{           
+              a{
+                border: 0 none;               
+                padding: 0;                   
+                font-weight: 400; 
+                line-height: 30px;  
+                position: relative;                
+                display: inline-block;
+                transition: all 0.2s ease-in-out 0s;
+                color: #666666; font-size: 15px;
+                
+                &:hover{
+                  font-style: italic;
+                }
+              }       
+            }
+      }
+  }
+
+  .no-padding{
+    padding: 0;
+  }
+  .footer-middle{
+    padding: side-values(40px 22px 35px 35px);
+    @media (min-width: 1200px){
+      .col-fright{ width: 74%; padding-#{$left} : 50px;  }
+      .col-news{ width: 26%; }
+    }
+  }
+  .footer-top{ border-bottom: 1px solid #e3e3e3; display: inline-block; width: 100%; padding: 18px 40px;
+    .findstore{ font-size: 16px; float: $left; margin-#{$left}: 20px; 
+      a i{ padding-#{$right}: 5px; }
+    }
+    .footer-links{ float: $right;  
+      ul{
+        li{ display: inline-block; margin: 0 17px;
+          a{ color: #333; font-size: 16px; }
+        }
+      }
+    }
+  }
+  .col-socials ul{ margin-#{$right}: 35px; margin-top: 10px; 
+    @media (min-width: 1200px){ margin-#{$right}: 0px; }
+  }
+  .col-payment a img{ margin-top: 10px; }
+  .col-payment,
+  .col-socials{
+    h3{ font-size: 15px; color: #666; font-weight: 400; }
+  }
+  .socials{
+    li{ display: inline-block; margin: side-values(0 10px 10px 0);
+      a{
+        width: 40px; height: 40px; background-color: #52555c; font-size: 16px;
+        border-radius: 3px; color: #fff; display: block; line-height: 40px; text-align: center;
+      }
+    }
+  }
+  .newsletter-footer21{
+      .newsletter{
+        background-color: transparent !important;
+        .title-block{       
+          .page-heading{           
+             font-weight: 600; font-size: 17px; color: #222; text-transform: uppercase;
+             position: relative; margin-bottom: 15px;        
+          }
+          .promotext{
+      
+          }
+        }
+        .block_content{
+ 
+          form.signup{
+            display: block;
+            margin-top: 11px;
+ 
+            .form-group{
+              position: relative;
+              .input-box{
+                background-color: #fff;  
+                vertical-align: top;
+                padding-#{$right}: 120px;
+                border-radius: 0px;
+              }
+              .subcribe{
+                position: absolute;
+                top: 0;
+                #{$right}: 0;
+              }
+
+              #txtemail{
+                height: 50px;
+                line-height: 50px;
+                width: 100%;
+                box-shadow: none;
+                padding: side-values(0 0 0 15px);
+                border: 1px solid #e1e1e1;           
+                background-color: #fff; border-radius: 0;
+                &::-moz-placeholder {
+                  color: #999;
+                    opacity: 1; 
+                }
+                &:-ms-input-placeholder { color: #999; } 
+                &::-webkit-input-placeholder  { color: #999; } 
+                  &:focus{
+                      z-index: 0;
+                  }
+              }
+            }
+
+            .subcribe button{           
+              border: 0 none;
+              color: #fff;
+              font-weight: 400;
+              font-size: 14px;
+              height: 50px;
+              line-height: 50px;
+              padding: 0 30px;    
+              @media (min-width: 1200px){ padding: 0 22px; }
+              text-transform: uppercase;
+              &:hover{
+              
+              }
+            }
+          }
+        }
+      }
+  }
+
+  .row-bottom{ clear: both; margin: 0; border-top: 1px solid #e1e1e1; padding: 15px;}
+
+  /* FOOTER BOTTOM */
+  
+  .footer-bottom{
+    width: 50%; 
+    @media (min-width: 1200px){
+    margin: 0 auto;
+    text-align: center; 
+    }
+      position: relative; top: -68px; height: 0;
+    
+    .copyright{ color: #6e6e6e; font-size: 14px; padding: 24px 15px; }
+
+   
+  }
+
+
+}
+
+
+@media (min-width: 1200px) and (max-width: 1649px){
+  
+}

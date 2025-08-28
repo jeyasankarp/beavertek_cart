@@ -1,0 +1,338 @@
+
+
+
+//** simple and lightweight mixin library for Sass **
+//-- url : http://bourbon.io/docs ---
+@import 'bourbon/bourbon';
+
+//** Mixins for Rem Font Sizing **
+//-- url : http://hugogiraudel.com/2013/03/18/ultimate-rem-mixin/
+@import 'utilities/rem';
+
+//** Variables for responsive design in bootstrap with sass **
+//-- url : https://gist.github.com/webinfinita/11407836
+@import 'utilities/bootstrap_breakpoints';
+
+//** Makes supporting both left-to-right (LTR) and right-to-left (RTL) easy.**
+//-- url : https://github.com/tysonmatanich/directional-scss
+@import 'utilities/directional';
+
+//Mixins utilities
+@import 'utilities/theme_variables';
+@import 'utilities/utilities';
+
+/*===============================================
+    [SASS DIRECTORY ]
+    
+    [1] BLOCK HEADER
+
+    
+==============================================*/
+@media(min-width: 1200px){
+    .wrapper-full .typeheader-30 .container{
+        max-width: 1710px; padding: 0 15px;
+        width: 100%;
+    }
+}
+.common-home .typeheader-30{ border-bottom: none; }
+.typeheader-30{ border-bottom: 1px solid #ddd;
+    // MENU ON TOP
+    &.navbar-compact{
+        .header-middle{
+            padding: 10px 0;
+        }
+    }
+
+    .account{ position: relative; display: inline-block; float: $left; margin-#{$left}: 20px;
+        i{ font-size: 26px; color: #666666; }
+        .dropdown-menu{ width: 150px;
+            li a{ font-size: 14px; }
+        }
+    }
+    .wishlist{ display: inline-block; float: $left; margin-#{$left}: 20px;
+        i{ font-size: 26px; color: #666666; }
+    }
+    .midde-right{ float: $right; margin-top: 5px; }
+
+    .telephone{
+        background-color: #ffecf3; padding: 0 20px; line-height: 35px;
+        font-size: 16px; float: $left; margin-#{$right}: 40px; margin-top: -3px;
+    }
+
+    /*=====SEARCH ======*/
+    .search-header{ 
+        position: relative; float: $left;       
+        .icon-search{  padding: 0 5px;                          
+            i{ font-size: 24px; color: #666; }            
+            &:hover{
+                cursor: pointer;                
+            }
+        }
+        #sosearchpro .search{
+            @include effect-block-hide();
+            position: absolute; z-index: 99;
+            top: 100%;
+            #{$right}: -1px; #{$left}: auto;
+            margin-#{$right}: 0;
+            padding: 0;
+            width: 270px;
+            button{
+                padding: 0 15px;
+            }
+        }
+    }
+    #sosearchpro{
+        .text-keyword{ padding-#{$left}: 20px; margin-top: 5px;
+            .title-key b{ font-weight: 400; color: #545454; }
+            .item-key a{ color: #898989; text-decoration: underline; }
+        }
+        .search{
+            position: relative;
+            margin: 0; 
+            border: 1px solid #ddd; height: 40px;
+            .select_category{
+                display: none;
+            }
+            button{
+                position: absolute;
+                top: 1px;
+                #{$right}: 1px;
+                height: 36px;
+                text-align: center;
+                line-height: 40px;
+                padding: 0 8px;
+                font-size: 14px;
+                color: #ddd; 
+                border-radius: 0;
+                background-color: #fff;
+                i{
+                    font-size: 16px;
+                    color: #444; 
+                }
+                span{ display: none; }
+            }
+            
+            input{
+                border: none;
+                border-radius: 0px;       
+                z-index: 0;
+                height: 38px;
+                padding-#{$left}: 20px;
+                font-size: 12px;
+                width: 100%;
+                background-color: #fff;
+                color: #999;
+                &::-moz-placeholder {
+                    color: #999;
+                    opacity: 1; 
+                }
+                &:-ms-input-placeholder { color: #999; } 
+                &::-webkit-input-placeholder  { color: #999; } 
+                &:focus{
+                    z-index: 0;
+                }
+            }
+            
+        }
+    } 
+    .search-header #sosearchpro .search.nav-open{
+        @include effect-block-show();
+    }
+    .search-screen{
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        background-color: rgba(255,255,255,0);
+        //z-index: -1;
+        -webkit-transition: all 0.3s ease;
+        -moz-transition: all 0.3s ease;
+        -ms-transition: all 0.3s ease;
+        -o-transition: all 0.3s ease;
+        transition: all 0.3s ease;
+        opacity: 0;
+        visibility: hidden;
+    }
+    .search-screen.nav-open{
+        opacity: 1; visibility: visible; z-index: 90;
+    }
+
+    /*BLOCK CART*/
+    .shopping_cart{
+        float: $left; margin-#{$left}: 20px;
+        position: relative;
+        .btn-shopping-cart .top_cart{
+            position: relative;
+            .icon-c{ width: 24px; height: 24px; line-height: 24px; text-align: center;
+                background: url(#{$imgPath}icon/id29-cart.png) no-repeat; float: $left;
+                i{ display: none; }                
+            }
+            .shopcart-inner{
+                float: $left;
+                color: #fff;
+                padding-#{$left}: 10px;       
+                position: relative;
+                
+                .text-shopping-cart{
+                    display: none;
+                }
+                .total-shopping-cart{
+                    .items_cart2,
+                    .items_carts{
+                        display: none;
+                    }
+                    .items_cart{
+                        width: 15px; 
+                        height: 15px;
+                        line-height: 15px;    
+                        text-align: center;
+                        @include border-radius(100%);
+                        position: absolute;
+                        top: 0px;
+                        #{$left}: -13px;
+                        font-size: 10px; 
+                        color: #fff;   
+                        border: none; 
+                    }
+                }
+            } 
+                
+        } 
+        .dropdown-menu{ top: 100%; #{$right}: -13px; #{$left}: auto;
+            color: #666;
+        }
+        .shoppingcart-box:before{right: 50px;}
+    }
+
+    /*MENU MEGA*/
+    .megamenu-style-dev{
+        .navbar-default{ background: transparent; }
+    }
+
+    .container-megamenu.horizontal{ margin-top: 5px; }
+    .container-megamenu.horizontal ul.megamenu > li{
+        margin-#{$right}: 1px;
+        &.item-special{
+            display: none;
+        }
+        > a{            
+            line-height: 100%; padding: side-values(0 30px 0 0px); line-height: 40px; margin: 0 !important; 
+            color: #222; font-size: 14px; text-transform: uppercase;                       
+            @media(min-width: 1200px) and (max-width: 1500px){
+                padding-#{$right}: 13px;
+            }
+            > strong{ font-weight: 400; }
+        }
+        
+        &:hover,
+        &.active,
+        &.menu_active{
+            > a{                
+                color: #222;
+            }
+        }    
+    }    
+
+    .header-middle{ padding: 30px 0;
+        .menu-left{ width: 60px; float: $left;}
+        .main-menu-w{  }
+        .middle1{
+            .logo{ float: $right; position: absolute; top: 0; #{$right}: 0; }
+        }
+    }
+    /*-- MEGA MENU VERTICAL --*/
+
+    .container-megamenu.vertical{
+        position: relative;    
+        #menuHeading{
+            .megamenuToogle-wrapper{
+                background-color: transparent;
+            }
+            .megamenuToogle-pattern{                      
+                .container{   
+                    color: #222; background-color: #fff; overflow: hidden;
+                    border-radius: 0; text-align: center;
+                    padding: 0 !important;
+                    text-shadow: none; line-height: 30px; 
+                    font-weight: 400; font-size: 12px; text-transform: capitalize;
+                    height: 40px; text-indent: -999em;
+                    > div{ width: 20px; margin: 0 auto;
+                        padding-top: 13px; float: none;
+                        span {
+                            background-color: #222; width: 20px; height: 2px; margin: 4px 0;
+                            &:nth-child(4){ display: none; }
+                        }
+                    } 
+                    
+                }                      
+            }
+        }  
+        @media (min-width: 992px){
+            .vertical-wrapper ul.megamenu .loadmore{     
+                i{ display: none; }
+            }
+            .vertical-wrapper ul.megamenu > li.with-sub-menu > a > b.fa{ padding-#{$right}: 15px; }
+            .vertical-wrapper ul.megamenu > li > a{ 
+                //color: #fff; font-size: 13px;
+            }
+            .vertical-wrapper{
+                @include effect-block-hide();
+                position: absolute;
+                width: 100%;
+                top: 70px;
+            }
+            &:hover{
+                #menuHeading .megamenuToogle-pattern .container > div span{ background-color: $background; }
+                .vertical-wrapper{
+                    @include effect-block-show();
+                    top: 49px;
+                }
+            }
+            .vertical-wrapper ul.megamenu{
+                //background-color: #fff; 
+                box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
+                padding: 0; width: 210px;
+                > li{ padding-#{$left}: 15px; 
+                    &.loadmore{ padding: sie-values(14px 0 14px 15px); }                    
+                    &.hidden-index26{ display: none; }
+                    &:hover,
+                    &.active{
+                        > a{ color: $background; }
+                    } 
+                    > a{ line-height: 23px; 
+                        i.fa{ display: none; }
+                    }                   
+                }
+            }
+        }
+
+    }
+}
+
+/*====================update opencart4===================*/
+.typeheader-30{				
+	.dropdown-menu{
+		top:100%;
+	}
+	#sosearchpro .search input{
+		margin:0;
+	}
+	#sosearchpro .search .input-group-btn{
+		margin:0;
+	}
+	ul.top-link > li .btn-group .fa-caret-down{
+	    &:before{
+			content: "\f107";
+		}
+    }
+	@media (min-width: 992px){
+		.container-megamenu.vertical .vertical-wrapper ul.megamenu {						
+			> li.active, 
+			> li:hover {
+				box-shadow: none;	
+			}
+		}
+	}
+}
+

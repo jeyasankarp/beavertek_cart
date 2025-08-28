@@ -1,0 +1,223 @@
+
+//** simple and lightweight mixin library for Sass **
+//-- url : http://bourbon.io/docs ---
+@import 'bourbon/bourbon';
+
+//** Mixins for Rem Font Sizing **
+//-- url : http://hugogiraudel.com/2013/03/18/ultimate-rem-mixin/
+@import 'utilities/rem';
+
+//** Variables for responsive design in bootstrap with sass **
+//-- url : https://gist.github.com/webinfinita/11407836
+@import 'utilities/bootstrap_breakpoints';
+
+//** Makes supporting both left-to-right (LTR) and right-to-left (RTL) easy.**
+//-- url : https://github.com/tysonmatanich/directional-scss
+@import 'utilities/directional';
+
+//Mixins utilities
+@import 'utilities/theme_variables';
+@import 'utilities/utilities';
+
+/* ================================================================================ */
+.typefooter-38{	
+	.so-page-builder .container{ padding: 0; }
+	/* GENERAL */
+	.module .modtitle{
+        color: #000;
+        font-size: 18px;
+        line-height: 20px;
+        margin-bottom: 20px !important;  
+        font-weight: 700;        
+        padding-bottom: 0px;      
+	}
+	.box-footer{   
+		ul.menu{
+			li{           
+				a{
+					border: 0 none;               
+					font-size: 14px;      
+					font-weight: 400; 					
+					@include transition(all 0.3s ease-in-out 0s);					
+					display: inline-block;   
+					&:hover{
+						padding-#{$left}: 12px;
+					}
+				} 
+				margin-bottom:11px;
+				line-height: 22px;
+				&:last-child{
+					margin-bottom:0px;
+				}
+            }
+		}  
+	}
+	.infos-footer{
+		@include breakpoint(lg){
+			padding-#{$right}: 56px;
+		}
+		ul{				
+			li{
+				font-size: 14px;			  
+				list-style:none;
+				padding: 0; 
+				display:flex;
+				flex-wrap: wrap;
+				align-items: center;				
+				margin-bottom:18px;
+				line-height: 22px; 
+				&:last-child{
+					margin-bottom: 0px; 
+				}
+				i{
+					font-size: 18px;
+					padding-#{$right}: 20px;
+					color:$textColor2 ;
+				}   
+				a{
+					color: #888;
+					font-size: 14px; 
+				}
+				span{
+					width:calc(100% - 40px);
+				}
+			}
+		}
+	}
+	.footer-middle{
+		padding: 56px 15px;
+	}
+	.newsletter-footer4{
+		padding:29px 0;
+		.newsletter{
+			background-color:transparent !important;
+			.title-block{  
+				width: 46%;
+				float: $left;   
+				@media (min-width: 1200px){
+					margin-top:9px;
+				}
+				.page-heading{           
+					font-size: 18px;    
+					color: #fff;
+					text-transform:capitalize;
+				}
+				.promotext{
+					font-size: 14px;
+					color: #fff;
+					display: none;
+				}
+			}
+			.block_content{
+				width: 54%;        
+				float: $left;
+				form.signup{
+					display: block;
+					margin: 0;
+					.form-group{
+						position: relative;
+						margin: 0;
+						.input-box{
+							background-color: #fff;  
+							vertical-align: top;
+							padding-#{$right}: 120px;
+							border-radius: 22px;
+						}
+						.subcribe{
+							position: absolute;
+							top: 0;
+							#{$right}: 0;
+						}
+
+						input.form-control{
+							height: 44px;
+							line-height: 44px;
+							width: 100%; 
+							font-size: 14px;
+							box-shadow: none;
+							padding: side-values(0 0 0 20px);
+							border: none; 
+							border-radius: 5px;       
+							background-color: #fff;    
+							&::-moz-placeholder {
+								color: #222;
+								opacity: 1; 
+							}
+							&:-ms-input-placeholder { color: #222; } 
+							&::-webkit-input-placeholder  { color: #222; } 
+							&:focus{
+								z-index: 0;
+							}
+						}
+					}
+
+					.subcribe button{  
+						background-color: #000;         
+						border: 0 none;
+						color: #fff;
+						font-weight: 400;
+						font-size: 14px;
+						height: 44px;
+						line-height: 44px;
+						padding: 0 25px;    
+						text-transform: uppercase;
+						border-radius: 5px;  
+						&:hover{
+							color: $linkColor;
+						}
+					}
+				}
+			}
+		}
+	}
+  
+	.socials{
+		padding:29px 0;
+		display: flex;
+		flex-wrap: wrap;
+		gap: 6px;
+		li{
+		  a{
+			  color: #222;
+			  font-size: 18px;
+			  width: 44px; height: 44px;
+			  line-height: 44px;
+			  text-align: center;
+			  background-color: #fff;
+			  border-radius: 22px;
+			  display: block;
+			  @include transition(all 0.2s ease-in-out 0s);
+				span{
+					display: none;
+				}
+				&:hover{
+					transform: translateY(-10px);
+					-webkit-transform: translateY(-10px);
+				}
+			}
+		}
+	}
+  
+  /* FOOTER BOTTOM */
+	.payment-w{
+		text-align: $right;
+		img{
+			@include transition(all 0.2s ease-in-out 0s);
+			&:hover{
+				transform: translateY(-10px);
+					-webkit-transform: translateY(-10px);
+			}
+		}
+	}
+	.footer-bottom{
+		border-top: 1px solid #eeeeee;
+		.container{
+			padding: 20px 15px;
+		}
+		.copyright{			
+			line-height: 32px; font-size: 13px; color:#888;
+			a{color:#888 !important;}
+		}
+	}
+}
+

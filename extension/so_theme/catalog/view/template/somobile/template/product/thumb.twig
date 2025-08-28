@@ -1,0 +1,84 @@
+{#====  Variables url parameter ==== #}
+
+		<div class="product-layout ">
+			<div class="product-item-container">
+				<div class="left-block">
+					<div class="product-image-container">
+						<a href="{{ href }} " title="{{ name }} " class="image">
+							<img  data-sizes="auto" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="{{ thumb }}"  title="{{ name }} " class="lazyload img-responsive" />
+						</a>
+					</div>
+					
+					{% if price  and  special  %} 
+					<div class="box-label">
+						{#=======Discount Label======= #}
+						{% if soconfig.get_settings('discount_status')  %} 
+							<span class="label-product label-sale">
+								 {{ discount }}
+							</span>
+						{% endif %} 						
+					</div> 
+					{% endif %}
+				</div>
+				
+				<div class="right-block">
+					<div class="button-group">
+						{% if soconfig.get_settings('addcart_status') %}
+						{% if (cfp_setting.module_so_call_for_price_status and price_0 <= 0) %} 
+						{% else %} 
+							<button class="addToCart btn-button" type="button" title="{{ button_cart }}" onclick="cart.add('{{ product_id }}', '{{ minimum }}');"><i class="fa fa-shopping-basket"></i><!--span>{{ button_cart }}</span--></button>{% endif %}					
+						{% endif %}
+						
+						{% if soconfig.get_settings('wishlist_status') %}
+						<button class="wishlist btn-button" type="button" title="{{ button_wishlist }}" onclick="wishlist.add('{{ product_id }}');"><i class="fa fa-heart"></i><!--span>{{ button_wishlist }}</span--></button>
+						{% endif %} 
+
+						{% if soconfig.get_settings('compare_status') %}
+						<button class="compare btn-button" type="button" title="{{ button_compare }}" onclick="compare.add('{{ product_id }}');"><i class="fa fa-random"></i><!--span>{{ button_compare }}</span--></button>
+						{% endif %} 						
+					</div>
+					
+					{% if soconfig.get_settings('rating_status') %} 
+					<div class="ratings">
+						<div class="rating-box">
+						{% for i in 1..5 %}
+						{% if rating < i %} 
+							<span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i></span>
+						{% else %}   
+							<span class="fa fa-stack"><i class="fa fa-star fa-stack-1x"></i><i class="fa fa-star-o fa-stack-1x"></i></span>
+						{% endif %} 
+						{% endfor %}
+						</div>
+						<a class="rating-num"  href="{{ href }}" rel="nofollow" target="_blank" ></a>
+					</div>	
+					{% endif %}
+					
+					<h4><a href="{{ href }}">{{ name }} </a></h4>
+					
+					{% if price %} 
+					<div class="price">
+						{% if not special %} 
+							<span class="price-new">
+							{% if (cfp_setting.module_so_call_for_price_status and price_0 <= 0) %} 	
+								{% if (cfp_setting.module_so_call_for_price_replace_cart and cfp_setting.module_so_call_for_price_replace_cart == '1') %} 
+									 <a data-fancybox data-type="ajax" data-src="{{base}}index.php?route=extension/so_theme/module/so_call_for_price&product_id=product_id" href="javascript:;" class="callforprice" style="color: #ff0000; font-weight: bold;"><i class="fa fa-phone" ></i> {{text_price_0}}</a> 
+								{% endif %} 
+							{% else %}
+								{{ price }}
+							{% endif %} 
+							</span>
+						{% else %}   
+							<span class="price-new">{{ special }} </span> <span class="price-old">{{ price }} </span>
+						{% endif %} 
+					</div>
+					{% endif %}
+					
+				</div>
+			</div>
+		</div>
+
+<script type="text/javascript">
+jQuery(document).ready(function($){
+    reinitView();
+});
+</script>

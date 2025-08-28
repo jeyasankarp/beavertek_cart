@@ -1,0 +1,11 @@
+textarea.form-control.inquiry_detail {
+	height: 256px;
+}
+.so-callforprice-form .form-error .form-control {
+	border-color: rgb(241, 51, 64);
+	background-color: rgb(255, 241, 242);
+}
+
+.so-callforprice-form {
+	padding: 20px 30px 20px 10px;
+}

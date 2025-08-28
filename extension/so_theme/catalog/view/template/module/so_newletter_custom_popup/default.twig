@@ -1,0 +1,14 @@
+{% if layout == "layout_default" %}
+	{{ include 		
+						("./extension/so_theme/catalog/view/template/module/so_newletter_custom_popup/default_layout_default.twig") }}
+{% elseif layout == "layout_popup" %}
+	{{ include 		
+						("./extension/so_theme/catalog/view/template/module/so_newletter_custom_popup/default_layout_popup.twig") }}
+{% elseif layout == "value_layout15" %}
+	{{ include 		
+						("./extension/so_theme/catalog/view/template/module/so_newletter_custom_popup/default_layout15.twig") }}
+{% else %}
+	{{ include 		
+						("./extension/so_theme/catalog/view/template/module/so_newletter_custom_popup/default_layout37.twig") }}
+{% endif %}
+

@@ -1,0 +1,91 @@
+@include breakpoint(lg){
+	.container{
+		width:1200px;
+		overflow: visible;
+		padding-#{$left}: 15px;
+		padding-#{$right}: 15px;
+	}
+	.layout-1,
+	.layout-2{
+		.container{
+			padding-#{$left}: 0;
+			padding-#{$right}: 0;
+		}
+	}
+	
+	
+	//SHOW MORE Footer
+	footer #collapse-footer{max-height: 100%;
+		&:before{display:none;}
+	}
+
+	
+}
+@media (min-width: 1200px) and (max-width: 1649px){
+	#content .so-groups-sticky{
+		width: 40px;
+	}
+	
+}
+/*====================update opencart4===================*/
+.row {
+    --bs-gutter-x: 30px;
+}
+@media (min-width: 1200px){
+	.container, .container-lg, .container-md, .container-sm, .container-xl {
+		max-width: 100%;
+	}
+}
+@media (min-width: 1200px){
+	.hidden-lg {
+		display: none!important;
+	}
+}
+@media (min-width: 992px) and (max-width: 1199px){
+	.hidden-md {
+		display: none!important;
+	}
+}
+@media (min-width: 768px) and (max-width: 991px){
+	.hidden-sm {
+		display: none!important;
+	}
+	
+}
+@media (min-width: 768px){
+	.form-inline .form-control {
+		width: auto;
+		display: inline-block;
+	}
+	.form-inline .form-group {
+		display: inline-block;
+	}
+}
+@media (min-width: 768px){
+	.navbar-toggle{
+		display: none;
+	}
+}
+@media (max-width: 767px){
+	.hidden-xs {
+		display: none!important;
+	}
+}
+@media (max-width: 991px){
+	.responsive ul.megamenu > li.home, 
+	ul.megamenu > li.search, 
+	.megamenu .fa-angle-right, 
+	.megamenu .caret {
+		display: none !important;
+	}
+}
+
+
+
+
+
+
+
+
+
+

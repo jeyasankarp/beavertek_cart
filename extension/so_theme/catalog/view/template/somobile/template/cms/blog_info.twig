@@ -1,0 +1,50 @@
+{{ header }}
+<div id="cms-blog" class="container product-listing">
+  <div class="row">
+    {{ column_left }}
+	{% if column_left and column_right %}
+		{% set class = 'col-sm-6 fluid-allsidebar' %}
+	{% elseif column_left or column_right %}
+		{% set class = 'col-lg-9 col-md-12 col-sm-12 fluid-sidebar' %}
+	{% else %}
+		{% set class = 'col-sm-12' %}
+	{% endif %}
+	
+    <div id="content" class="{{ class }}">
+		{{ content_top }}
+		{% if column_left or column_right %}
+			<a href="javascript:void(0)" class="btn btn-primary open-sidebar hidden-lg hidden-md form-group"><i class="fa fa-bars"></i> {{ text_sidebar }} </a>
+			<div class="sidebar-overlay "></div>
+		{% endif %}
+		
+		<div class="article-detail">			
+			{% if image %}
+			<div class="article-image">
+				<img src="{{ image }}" alt="{{ heading_title }}" title="{{ heading_title }}" class="mb-5"/>
+			</div>
+			{% endif %}
+			<h1 class="article-title">{{ heading_title }}</h1>
+			<div class="article-info">
+				<span class="author"><span>{{ text_by }}  </span><a href="{{ filter_author }}">{{ author }}</a></span> 
+				<span class="date">{{ date_added }}</span>
+				<span class="comment_count">{{ comment_total }} {{ text_comment }}</span> 
+			</div>
+			<div class="article-description mb-5">{{ description }}</div>
+			{% if tags %}
+			<div class="article-tags">
+				{{ text_tags }}
+				{% for tag in tags %}
+					<a href="{{ tag.href }}">{{ tag.tag }}</a>{% if not loop.last %},{% endif %}
+				{% endfor %}
+			</div>
+			{% endif %}
+			{% if comment %}
+			<div id="comment-container">{{ comment }}</div>
+			{% endif %}
+		</div>
+		{{ content_bottom }}
+    </div>
+    {{ column_right }}
+  </div>
+</div>
+{{ footer }}

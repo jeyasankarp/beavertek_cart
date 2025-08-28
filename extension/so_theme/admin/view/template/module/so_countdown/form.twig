@@ -1,0 +1,217 @@
+{{ header }}
+{{ column_left }}
+<div id="content">
+  	<div class="page-header">
+    	<div class="container-fluid">
+      		<div class="float-end">
+        		<button type="submit" form="form-so-countdown" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i> {{ button_save }}</button>
+                <a class="btn btn-success" onclick="$('#action').val('save_edit');$('#form-so-countdown').submit();" data-toggle="tooltip" title="{{ button_savestay }}" ><i class="fa fa-pencil-square-o"></i> {{ button_savestay }}</a>
+        		<a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-danger"><i class="fa fa-reply"></i> {{ button_cancel }}</a>
+        	</div>
+                <h1>{{ heading_title }}</h1>
+				<ol class="breadcrumb">
+					{% for breadcrumb in breadcrumbs %}
+					<li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+					{% endfor %}
+				</ol>
+    	</div>
+  	</div>
+  	<div class="container-fluid">
+  		{% if error_warning %}
+    		<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+      			<!--<button type="button" class="close" data-dismiss="alert">&times;</button>-->
+    		</div>
+    	{% endif %}
+    	{% if success %}
+    		<div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ success }}
+      			<!--<button type="button" class="close" data-dismiss="alert">&times;</button>-->
+    		</div>
+    	{% endif %}
+		
+		<div class="card">
+			<div class="card-header">
+				<i class="fas fa-pencil-alt"></i> {{ text_edit }}
+			</div>
+			<div class="card-body">
+	   			<form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-so-countdown" class="form-horizontal">
+	   				<input type="hidden" name="action" id="action" value=""/>
+	   				<ul class="nav nav-tabs" id="CheckoutTab">
+						<li><a class="nav-link active" data-bs-target="#tab-module-setting" data-bs-toggle="tab"><i class="fa fa-cog fa-fw"></i> {{ tab_module_setting }}</a></li>
+					</ul>
+					<div class="tab-content">
+						<div class="tab-pane active in" id="tab-module-setting">
+							<div class="row mb-3">
+								<label class="col-sm-2 col-form-label" for="input-status"><span data-toggle="tooltip" title="" data-original-title="{{ text_status_help }}">{{ text_status }}</span></label>
+								<div class="col-sm-3">
+									<select name="status" id="input-status" class="form-control">
+										{% if status is defined and status == 1 %}
+			                				<option value="1" selected="selected">{{ text_enabled }}</option>
+			                				<option value="0">{{ text_disabled }}</option>
+			                			{% else %}
+			                				<option value="1">{{ text_enabled }}</option>
+			                				<option value="0" selected="selected">{{ text_disabled }}</option>
+			                			{% endif %}
+			                		</select>
+				  				</div>
+							</div>
+							<div class="row mb-3 required">
+								<label class="col-sm-2 col-form-label" for="input-name"><span data-toggle="tooltip" title="" data-original-title="{{ text_name_help }}">{{ text_name }}</span></label>
+								<div class="col-sm-3">
+									<input type="text" id="input-name" name="name" value="{{ name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control" />
+                                    {% if error_name %}
+                                        <div class="text-danger">{{ error_name }}</div>
+                                    {% endif %}
+				  				</div>
+							</div>
+							<div class="row mb-3">
+								<label class="col-sm-2 col-form-label" for="input-priority"><span data-toggle="tooltip" title="" data-original-title="{{ text_priority_help }}">{{ text_priority }}</span></label>
+								<div class="col-sm-3">
+									<input type="text" id="input-priority" name="priority" value="{{ priority }}" placeholder="{{ entry_priority }}" id="input-name" class="form-control" />
+				  				</div>
+							</div>
+							<div class="row mb-3 required">
+								<label class="col-sm-2 col-form-label" for="input-width"><span data-toggle="tooltip" title="" data-original-title="{{ text_width_help }}">{{ text_width }}</span></label>
+								<div class="col-sm-3">
+									<input type="text" id="input-width" name="width" value="{{ width }}" placeholder="{{ entry_width }}" id="input-name" class="form-control" />
+                                    {% if error_width %}
+                                        <div class="text-danger">{{ error_width }}</div>
+                                    {% endif %}
+				  				</div>
+							</div>
+                            <div class="row mb-3">
+								<label class="col-sm-2 col-form-label" for="input-opacity"><span data-toggle="tooltip" title="" data-original-title="{{ text_opacity_help }}">{{ text_opacity }}</span></label>
+								<div class="col-sm-3">
+									<input type="text" id="input-opacity" name="opacity" value="{{ opacity }}" placeholder="{{ entry_opacity }}" id="input-name" class="form-control" />
+				  				</div>
+							</div>
+							<div class="row mb-3">
+								<label class="col-sm-2 col-form-label" for="input-display-countdown"><span data-toggle="tooltip" title="" data-original-title="{{ text_display_countdown_help }}">{{ text_display_countdown }}</span></label>
+								<div class="col-sm-3">
+									{% if display_countdown is defined and display_countdown == 1 %}
+										<label class="radio-inline"><input type="radio" name="display_countdown" value="1" checked />{{ text_yes }}</label>
+	                                    <label class="radio-inline"><input type="radio" name="display_countdown" value="0" />{{ text_no }}</label>
+	                               	{% else %}
+	                               		<label class="radio-inline"><input type="radio" name="display_countdown" value="1"  />{{ text_yes }}</label>
+	                                    <label class="radio-inline"><input type="radio" name="display_countdown" value="0" checked />{{ text_no }}</label>
+	                               	{% endif %}
+				  				</div>
+							</div>
+							<div class="row mb-3">
+								<label class="col-sm-2 col-form-label" for="input-date-start"><span data-toggle="tooltip" title="" data-original-title="{{ text_date_start_help }}">{{ text_date_start }}</span></label>
+								<div class="col-sm-3">
+									<div class="input-group">
+                                        <input type="text" name="date_start" value="{{ date_start }}" placeholder="" data-date-format="YYYY-MM-DD HH:mm:ss" class="form-control datetime" />
+                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                    </div>
+				  				</div>
+							</div>
+							<div class="row mb-3">
+								<label class="col-sm-2 col-form-label" for="input-date-expire"><span data-toggle="tooltip" title="" data-original-title="{{ text_date_expire_help }}">{{ text_date_expire }}</span></label>
+								<div class="col-sm-3">
+									<div class="input-group">
+                                        <input type="text" name="date_expire" value="{{ date_expire }}" placeholder="" data-date-format="YYYY-MM-DD HH:mm:ss" class="form-control datetime  " />
+                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                    </div>
+                                    {% if error_date %}
+                                        <div class="text-danger clear clr clearfix">{{ error_date }}</div>
+                                    {% endif %}
+				  				</div>
+							</div>
+							<div class="row mb-3 ">                                
+                                <div class="col-sm-10">
+                                    <ul class="nav nav-tabs" id="language">
+										{% set i=0 %}
+										{% for language in languages %}
+											<li>
+											<button class="nav-link {% if i == 0 %}active{% endif %}" data-bs-toggle="tab" data-bs-target="#language{{ language.language_id }}" type="button" role="tab" aria-selected="true"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" /> {{ language.name }}</button>
+											</li>
+										{% set i=i+1 %}	
+										{% endfor %}
+                                    </ul>
+                                    <div class="tab-content">
+									    {% set i=0 %}
+                                    	{% for language in languages %}
+	                                        <div class="tab-pane {% if i == 0 %}active{% endif %}" id="language{{ language.language_id }}">
+                                                <div class="row mb-3 ">
+                                                    <label class="col-sm-2 col-form-label" for="input-heading-title"><span data-toggle="tooltip" title="" data-original-title="{{ text_heading_title_help }}">{{ text_heading_title }}</span></label>
+                                                    <div class="col-sm-10">
+                                                        <input type="text" name="popup_description[{{ language.language_id }}][heading_title]" value="{{ popup_description[language.language_id].heading_title is defined ? popup_description[language.language_id].heading_title : '' }}" placeholder="" class="form-control" />
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-3 ">
+                                                    <label class="col-sm-2 col-form-label" for="input-description{{ language.language_id }}"><span data-toggle="tooltip" title="" data-original-title="{{ text_content_help }}">{{ text_content }}</span></label>
+    	                                            <div class="col-sm-10">
+                                                        <textarea name="popup_description[{{ language.language_id }}][description]" id="input-description{{ language.language_id }}" data-oc-toggle="ckeditor" data-lang="{{ ckeditor }}" class="form-control">{{ popup_description[language.language_id] is defined ? popup_description[language.language_id].description : '' }}</textarea>
+                                                    </div>
+                                                </div>
+	                                        </div>
+											{% set i=i+1 %}	
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+				                <label class="col-sm-2 col-form-label" for="input-content"><span data-toggle="tooltip" title="" data-original-title="{{ text_image_help }}">{{ text_image }}</span></label>
+										<div class="card image">
+									      <img src="{{ thumb }}" alt="" title="" id="thumb-image" data-oc-placeholder="{{ placeholder }}" class="card-img-top"/> <input type="hidden" name="image" value="{{ image }}" id="input-image"/>
+										  <div class="card-body">
+											<button type="button" data-oc-toggle="image" data-oc-target="#input-image" data-oc-thumb="#thumb-image" class="btn btn-primary btn-sm btn-block"><i class="fas fa-pencil-alt"></i> {{ button_edit }}</button>
+											<button type="button" data-oc-toggle="clear" data-oc-target="#input-image" data-oc-thumb="#thumb-image" class="btn btn-warning btn-sm btn-block"><i class="fas fa-trash-alt"></i> {{ button_clear }}</button>
+										  </div>
+										</div>									
+			              	</div>
+			              	<div class="row mb-3 ">
+                                <label class="col-sm-2 col-form-label">{{ entry_store }}</label>
+                                <div class="col-sm-10">
+                                    <div class="table-responsive">
+                                        <table id="layouts_table" class="table table-bordered table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <td style="width: 1px;"><input type="checkbox" onclick="$('input[name*=\'popup_store\']').prop('checked', this.checked);" /></td>
+                                                    <td class="text-left">{{ text_name }}</td>
+                                                    <td class="text-left">{{ text_link }}</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            	{% if 0 in popup_store_id %}
+                                            		<tr>
+                                            			<td><input type="checkbox" name="popup_store[]" value="0" checked="checked" /></td>
+                                            			<td>{{ text_default }}</td>
+                                            			<td><input type="text" name="popup_link[0]" class="form-control" value="{{ popup_link[0].link is defined ? popup_link[0].link : '' }}" /></td>
+                                            		</tr>
+                                            	{% else %}
+                                            		<tr>
+                                            			<td><input type="checkbox" name="popup_store[]" value="0" /></td>
+                                            			<td>{{ text_default }}</td>
+                                            			<td><input type="text" name="popup_link[0]" class="form-control" value="{{ popup_link[0].link is defined ? popup_link[0].link : '' }}" /></td>
+                                            		</tr>
+                                            	{% endif %}
+                                            	{% for store in stores %}
+                                                <tr>
+                                                    <td>
+                                                    	{% if store.store_id in popup_store_id %}
+                                                    		<input type="checkbox" name="popup_store[]" value="{{ store.store_id }}" checked="checked" />
+                                                    	{% else %}
+                                                    		<input type="checkbox" name="popup_store[]" value="{{ store.store_id }}" />
+                                                    	{% endif %}
+                                                    </td>
+                                                    <td>{{ store.name }}</td>
+                                                    <td><input type="text" name="popup_link[{{ store.store_id }}]" class="form-control" value="{{ popup_link[store.store_id].link is defined ? popup_link[store.store_id].link : '' }}" /></td>
+                                                </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+						</div>
+					</div>
+	   			</form>			
+			</div>
+		</div>	
+	</div>
+</div>
+{{ footer }}
+<script type="text/javascript">
+$('textarea[data-oc-toggle=\'ckeditor\']').ckeditor();
+</script>
